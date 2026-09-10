@@ -197,7 +197,7 @@ export const getAportesByPlanta = async(id: string) => {
 
 /** API REST DE FUNCION BUSQUEDA */
 export const findDescripcion = (palabra: string) =>
-    axios.get(`https://webgarden-backend.onrender.com/sistemaWeb/api/buscar_descripcion/ `, {
+    axios.get(`https://webgarden-backend.onrender.com/sistemaWeb/api/buscar_descripcion/`, {
       params: { palabra }
 });
 
