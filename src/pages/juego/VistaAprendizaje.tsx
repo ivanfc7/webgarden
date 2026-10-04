@@ -106,7 +106,7 @@ export function VistaAprendizaje(){
                                 >  
                                     {aprendizaje.fuente}
                                 </ReactMarkdown>
-                                <div className="mt-3">
+                                {/* <div className="mt-3">
                                 <p className="font-bold">Video relacionado:</p>
                                 <iframe
                                     width="300"
@@ -117,7 +117,7 @@ export function VistaAprendizaje(){
                                     allowFullScreen
                                     className="rounded-md mt-2"
                                 ></iframe>
-                                </div>
+                                </div> */}
                             </div>
                             </div>
                         )}
