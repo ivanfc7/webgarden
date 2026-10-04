@@ -58,11 +58,11 @@ export function ProgresoJuego({
                 <div className="border-t border-amber-100 pt-3 mt-4">
                     <h3 className="font-bold text-amber-800 mb-3">OBJETOS ENCONTRADOS</h3>
                     <div className="flex flex-wrap gap-2">
-                        {listaManzanas.map((item, index) => (
+                        {listaManzanas.map((index) => (
                             <img key={`manzana-${index}`} src={manzanaIcono} alt="Manzana" className="w-8 h-8 object-contain"/>
                         ))}
 
-                        {listaNueces.map((item, index) => (
+                        {listaNueces.map((index) => (
                             <img key={`nuez-${index}`} src={nuezIcono} alt="Nuez" className="w-8 h-8 object-contain"/>
                         ))}
 
@@ -71,12 +71,11 @@ export function ProgresoJuego({
                         )}
                     </div>
                 </div>
-
                 <div className="border-t border-amber-100 pt-3 mt-4">
                     <div className="flex justify-between items-center">
                         <span className="font-semibold text-gray-700">Vidas</span>
                         <div className="flex gap-1">
-                            {listaVidas.map((item, index) => (
+                            {listaVidas.map((index) => (
                                 <img
                                     key={`vida-${index}`}
                                     src={corazonIcono}
@@ -86,7 +85,6 @@ export function ProgresoJuego({
                         </div>
                     </div>
                 </div>
-
                 <button onClick={onSiguiente} className="w-full mt-5 py-2.5 rounded-xl bg-emerald-700 text-white font-bold hover:bg-emerald-800 active:scale-[0.98] transition-all cursor-pointer">Vamos</button>
             </div>
         </div>

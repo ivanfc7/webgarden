@@ -4,8 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import { toast } from "react-hot-toast";
 import { SquareArrowDown, SquareArrowLeft, SquareArrowRight, SquareArrowUp, XIcon } from "lucide-react";
 import { saveAprendizajeDesbloqueado, saveMensajeDesbloqueado, updateContadorAprendizaje, updateContadorMensajes, getProgresoJuego, updateFechaJuego } from "../../assets/utils/sistema.api";
-import { listaMensajes, cantidadMensjaes } from "../../assets/utils/ConsejosGame";
-import { listaTemas, cantidadTemas } from "../../assets/utils/AprendizajeGame";
+import { listaMensajes } from "../../assets/utils/ConsejosGame";
+import { listaTemas } from "../../assets/utils/AprendizajeGame";
 import { ConsejoAbeja } from "./ConsejoAbeja";
 import corazon from '/img_juego/vida.png';
 import { ProgresoJuego } from './ProgresoJuego';
@@ -36,7 +36,7 @@ type props = {
     onJuegoCompletado: () => void;
 }
 
-export function PanelGame({ onJuegoCompletado }: props) {
+export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
     const [mapa, setMapa] = useState<string[][]>(mapas(0));
     const [nivel, setNivel] = useState(0);
     const [manzanasPendientes, setManzanasPendientes] = useState(0);
@@ -66,7 +66,7 @@ export function PanelGame({ onJuegoCompletado }: props) {
 
     const [totalConsejosDesbloqueados, setTotalConsejosDesbloqueados] = useState(0);
     const [totalTemasDesbloqueados, setTotalTemasDesbloqueados] = useState(0);
-    const [aviso, setAviso] = useState('');
+    const [aviso] = useState('');
 
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
     const [gano, setGano] = useState(false);
@@ -174,7 +174,7 @@ export function PanelGame({ onJuegoCompletado }: props) {
         }
 
         if (mapa[nuevaX][nuevaY] === 'B') {
-            var controlVidas = vidas - 1;
+            let controlVidas = vidas - 1;
             setVidas(controlVidas);
             audioBasura.play();
             if (controlVidas === 0) {
