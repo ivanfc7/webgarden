@@ -14,15 +14,19 @@ type Respuesta = {
 export function RecomendacionTipo1({especie,tipoPlanta,etapa, descripcion}: Respuesta){
     const divRef = useRef(null);
 
-    const descargarRecomendacion = async () =>{
-        if(divRef.current === null) return;
-
+    const descargarRecomendacion = async () => {
+        if (!divRef.current) return;
+    
         const dataUrl = await toPng(divRef.current);
+    
+        const fecha = new Date();
+        const fechaFormateada = fecha.toLocaleDateString('es-BO').replace(/\//g, '-');
+    
         const link = document.createElement('a');
-        link.download = 'mi-imagen.png';
+        link.download = `recomendacion-${fechaFormateada}.png`;
         link.href = dataUrl;
         link.click();
-    }
+    };
 
     return(
         <div>

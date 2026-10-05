@@ -18,15 +18,21 @@ type Respuesta = {
 export function RecomendacionTipo2({laPlanta, tierra, clima, hojas}: Respuesta){
     const divRef = useRef(null);
     
-    const descargarRecomendacion = async () =>{
-        if(divRef.current === null) return;
-
+    const descargarRecomendacion = async () => {
+        if (!divRef.current) return;
+    
         const dataUrl = await toPng(divRef.current);
+    
+        const fecha = new Date();
+        const fechaFormateada = fecha.toISOString()
+            .replace(/[:.]/g, '-')
+            .slice(0, 19);
+    
         const link = document.createElement('a');
-        link.download = 'mi-imagen.png';
+        link.download = `recomendacion-${fechaFormateada}.png`;
         link.href = dataUrl;
         link.click();
-    }
+    };
 
     function toTipoPlanta(value: string): TipoPlanta | null {
         switch(value){

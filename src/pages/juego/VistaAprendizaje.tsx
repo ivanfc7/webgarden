@@ -71,56 +71,74 @@ export function VistaAprendizaje(){
                         {/* CONTENIDO EXPANDIBLE */}
                         {expandidoIndex === index && (
                             <div className="p-4 md:p-6 bg-amber-50">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="prosa max-w-none">
-                            <ReactMarkdown
-                                components={{
-                                    h2: ({ children }) => <h2 className="text-xl font-semibold mb-2 mt-4">{children}</h2>,
-                                    ul: ({ children }) => <ul className="list-disc list-inside pl-4 mb-4">{children}</ul>,
-                                    p: ({ children }) => <p className="mb-4 text-justify">{children}</p>,
-                                }}
-                            >
-                                {aprendizaje.contenido}
-                            </ReactMarkdown>
-                            </div>
-                                <div className="flex justify-center">
-                                <img
-                                    src={aprendizaje.imagen}
-                                    alt="Ilustración"
-                                    className="rounded-md  h-auto max-w-xs md:max-w-xl"
-                                />
-                                </div>
-                            </div>
 
-                            <div className="mt-6 text-sm text-gray-700">
-                                <p className="font-bold">Fuentes:</p>
-                                <ReactMarkdown
-                                    components={{
-                                        p: ({ children }) => <p className="mb-2 text-sm">{children}</p>,
-                                        a: ({ children, href }) => (
-                                        <a href={href} target="_blank" className="underline text-emerald-900 font-semibold">
-                                            {children}
-                                        </a>
-                                        ),
-                                    }}
-                                >  
-                                    {aprendizaje.fuente}
-                                </ReactMarkdown>
-                                {/* <div className="mt-3">
-                                <p className="font-bold">Video relacionado:</p>
-                                <iframe
-                                    width="300"
-                                    height="185"
-                                    src={aprendizaje.video}
-                                    title="YouTube video player"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    className="rounded-md mt-2"
-                                ></iframe>
-                                </div> */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+
+                                    {/* TEXTO */}
+                                    <div className="prosa max-w-none">
+                                        <ReactMarkdown
+                                            components={{
+                                                h2: ({ children }) => (
+                                                    <h2 className="text-xl font-semibold mb-2 mt-4">
+                                                        {children}
+                                                    </h2>
+                                                ),
+                                                ul: ({ children }) => (
+                                                    <ul className="list-disc list-inside pl-4 mb-4">
+                                                        {children}
+                                                    </ul>
+                                                ),
+                                                p: ({ children }) => (
+                                                    <p className="mb-4 text-justify">
+                                                        {children}
+                                                    </p>
+                                                ),
+                                            }}
+                                        >
+                                            {aprendizaje.contenido}
+                                        </ReactMarkdown>
+                                    </div>
+
+                                    {/* IMAGEN */}
+                                    <div className="flex justify-center items-start">
+                                        <img
+                                            src={aprendizaje.imagen}
+                                            alt="Ilustración"
+                                            className="rounded-md w-auto h-auto max-w-xs md:max-w-md object-contain"
+                                        />
+                                    </div>
+
+                                </div>
+
+                                {/* FUENTES */}
+                                <div className="mt-6 text-sm text-gray-700">
+                                    <p className="font-bold">Fuentes:</p>
+
+                                    <ReactMarkdown
+                                        components={{
+                                            p: ({ children }) => (
+                                                <p className="mb-2 text-sm">
+                                                    {children}
+                                                </p>
+                                            ),
+                                            a: ({ children, href }) => (
+                                                <a
+                                                    href={href}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="underline text-emerald-900 font-semibold"
+                                                >
+                                                    {children}
+                                                </a>
+                                            ),
+                                        }}
+                                    >
+                                        {aprendizaje.fuente}
+                                    </ReactMarkdown>
+                                </div>
+
                             </div>
-                            </div>
-                        )}
+                        )}                       
                         </div>
                     ))}
                 </div>
