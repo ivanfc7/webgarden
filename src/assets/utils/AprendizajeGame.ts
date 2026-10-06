@@ -131,53 +131,6 @@ Imagen recuperada de: [Aprende en casa](https://nemdigitalstorage.blob.core.wind
     },
     {
         id: 6,
-        titulo: "Proyectos de reforestación",
-        imagen: "/img_juego/aprendizaje/ecosia.jpg",
-        contenido: `Plantar árboles es un acto noble y responsable con el medio ambiente, de esa manera contribuimos a recuperar todo lo que la humanidad a talado a lo largo del tiempo, este acto se le conoce como reforestación.
-        
-La reforestación debe realizarse de forme consciente y voluntaria puesto que el hecho de sembrar un «plantin» y esperar a que crezca es un primer paso, se debe de cuidar la planta hasta que alcance cierta estatura y madurez. Quizá no siempre está a nuestro alcance plantar un árbol, sin embargo, existen medios vía internet con los que se puede realizar esta acción.
-
-## Ecosia, un motor de búsqueda ecológico 
-
-Imagina el hecho de contribuir al planeta con el simplemente hecho de realizar una búsqueda por internet. Esa es la primicia que dio nacer al motor de búsqueda Ecosia.
-
-Este es un motor que destina el 80% de sus ingresos por publicidad a proyectos de plantación de árboles en diferentes partes del mundo. Ecosia nació en 2009 de la mano de Christian Kroll, Desde entonces, Ecosia ha crecido hasta convertirse en uno de los principales motores de búsqueda alternativos a Google
-
-### ¿Como funciona?
-
-Su función es sencilla como cualquier motor de búsqueda se introduce aquello que se pretende buscar y se obtienen los resultados correspondientes, pero con un punto importante Ecosia muestra anuncios junto a los resultados de búsqueda, que son su principal fuente de ingresos.
-Según sus datos, se necesitan unos 45 clics en promedio en los anuncios para financiar la plantación de un árbol.
-
-Debido a que la seguridad es importante Ecosia no guarda ni vende los datos personales de sus búsquedas, y borra los registros después de una semana.
-
-### ¿Como tener Ecosia?
-
-Es simple poder contar con dicho motor hay tres opciones para ello
-
-- Descargar la aplicación móvil 
-- Buscar desde su página web (www.ecosia.org)
-- Revisafr la documentación correspondiente al navegador o instalar el navegador web Ecosia
-
-## Microsoft y su aporte ambiental
-
-Microsoft adopto una mecánica en su navegador principal 'Microsoft Edge' una especia de juego denominado «E-Tree»; esto con el fin de que mediante un progreso en dicho juego se llegue a plantar un árbol en nombre del usuario.
-La mecánica consistía en regar un árbol virtual, para conseguir el ítem que simboliza el agua; el usuario debía completar una serie de retos diarios navegando y realizando búsquedas en internet.
-
-Aunque la mecánica lucia interesante, Microsoft Edge ha anunciado que desde el 4 de julio de 2025 se interrumpe el programa de árbol electrónico que según ellos fue por la participación limitada de los usuarios.
-
-Actualmente «E-Tree» ya no figura en la barra de navegación del navegador Edge donde solía estar. 
-        `,
-        fuente: `Resumen en base a los Textos:
-
-[Punto Comunica - Ecosia: el buscador web ecológico que planta árboles](https://www.puntocomunica.com/ecosia-el-buscador-web-ecologico-que-planta-arboles/)
-
-[Soporte de Microsfot - E Tree](https://support.microsoft.com/es-es/topic/preguntas-m%C3%A1s-frecuentes-sobre-%C3%A1rboles-electr%C3%B3nicos-en-microsoft-edge-msn-el-tiempo-y-cartera-d6fde56e-b61d-4990-bd69-7a503ed64895)
-
-Imagen recuperada de: [Ecosia](https://www.ecosia.org/?c=es)`,
-        video: "https://www.youtube.com/embed/eSs1T_tL6aQ?si=8QCWvANtdQMLT9q2"
-    },
-    {
-        id: 7,
         titulo: "Beneficios del contacto con la naturaleza",
         imagen: "/img_juego/aprendizaje/4099384.jpg",
         contenido: `A lo largo del tiempo numerosos estudios han demostrado que exponerse a entornos llenos de naturaleza como bosques, parques, jardines es muy beneficioso para aliviar el estrés que acumulamos a lo largo del día a día.
