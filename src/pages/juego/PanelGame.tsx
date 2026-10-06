@@ -277,7 +277,7 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
     };
     useEffect(() => {
         // Cuando se consiguen 3 M
-        if (manzanas === 3  && manzanas % 3 === 0 && !grupoMDesbloqueado) {
+        if (manzanas > 0 && manzanas % 3 === 0 && !grupoMDesbloqueado) {
             toast.success('Un consejo ha sido Desbloqueado');
             console.log('Grupo de 3 M completado');
             console.log('Desbloqueando consejo...');
@@ -287,7 +287,7 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
         }
 
         // Cuando se consiguen 3 N
-        if (nueces === 3  && nueces % 3 === 0 && !grupoNDesbloqueado) {
+        if (nueces > 0 && nueces % 3 === 0 && !grupoNDesbloqueado) {
             toast.success('Un tema de aprendizaje ha sido Desbloqueado');
             console.log('Grupo de 3 N completado');
             console.log('Desbloqueando tema de aprendizaje...');
@@ -700,22 +700,18 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
                                     {gano ? 5 : nivel} / 5
                                 </span>
                             </div>
-
-                            {/* Aprendizajes */}
                             <div className="flex justify-between items-center">
                                 <span className="font-semibold text-gray-700">
-                                    Aprendizajes desbloqueados
+                                    Consejos desbloqueados
                                 </span>
 
                                 <span className="font-bold text-emerald-800">
                                     {Math.floor(manzanas / 3)} / {objetivoRecurso.M / 3}
                                 </span>
                             </div>
-
-                            {/* Consejos */}
                             <div className="flex justify-between items-center">
                                 <span className="font-semibold text-gray-700">
-                                    Consejos desbloqueados
+                                    Aprendizajes desbloqueados
                                 </span>
 
                                 <span className="font-bold text-emerald-800">
