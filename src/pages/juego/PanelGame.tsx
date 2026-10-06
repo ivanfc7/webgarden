@@ -70,8 +70,8 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
 
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
     const [gano, setGano] = useState(false);
-    const [cantidadMsj, setCantidadMsj] = useState(0);
-    const [cantidadApzj, setCantidadApzj] = useState(0);
+    // const [cantidadMsj] = useState(0);
+    // const [cantidadApzj] = useState(0);
     const [encontroItemEspecial, setEncontroItemEspecial] = useState(false);
     const [mostrarConsejoAbeja, setMostrarConsejoAbeja] = useState(false);
     const [mostrarModalAbeja, setMostrarModalAbeja] = useState(false);
@@ -380,7 +380,7 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
     }, []);
 
     async function guardarProgresoMensajes() {
-        const mensaje = listaMensajes(cantidadMsj);
+        const mensaje = listaMensajes(totalConsejosDesbloqueados);
 
         const mensajeDesbloqueado: MensajeData = {
             progreso: Number(location.pathname.split('/').pop()),
@@ -397,7 +397,7 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
     }
 
     async function guardarProgresoAprendizaje() {
-        const tema = listaTemas(cantidadApzj);
+        const tema = listaTemas(totalTemasDesbloqueados);
         const aprendizajeDesbloqueado: AprendizajeData = {
             progreso: Number(location.pathname.split('/').pop()),
             titulo: tema[1],
