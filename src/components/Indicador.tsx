@@ -24,7 +24,7 @@ export function Indicador(){
         nombreSeccion = 'Mis Temas de Aprendizajes';
     }
     if (locacion.pathname.startsWith('/consejos-encontrados')) {
-        nombreSeccion = 'Mensajes para tomar en cuenta con las plantas y arboles';
+        nombreSeccion = 'Consejos para tomar en cuenta';
     }
     return(
         <h4 className="text-sm sm:text-base rounded-lg">{nombreSeccion}</h4>

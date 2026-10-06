@@ -153,7 +153,7 @@ export function VistaGame() {
                                     <p className="font-bold text-emerald-900">Completa la misión diaria</p>
                                     <p className="text-gray-700 text-sm">
                                         Cada partida tiene una misión diferente.
-                                        Recorre los 5 laberintos y consigue los objetosnecesarios para completar tu reto.
+                                        Recorre los 5 laberintos y consigue los objetos necesarios para completar tu reto.
                                     </p>
                                 </div>
                             </div>
