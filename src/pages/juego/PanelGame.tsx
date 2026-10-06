@@ -364,17 +364,20 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
     };
 
     useEffect(() => {
-        async function obtenerIndiceMensajes() {
-            const progresoActual = await getProgresoJuego();
-            setCantidadMsj(progresoActual.data[0].cantidadMsjDesbloqueados);
-        }
-        async function obtenerIndiceAprendizajes() {
-            const progresoActual = await getProgresoJuego();
-            setCantidadApzj(progresoActual.data[0].cantidadApzjDesbloqueados);
-        }
-        obtenerIndiceMensajes();
-        obtenerIndiceAprendizajes();
-    });
+        const cargarProgreso = async () => {
+            const res = await getProgresoJuego();
+            if (res.data.length > 0) {
+                setTotalConsejosDesbloqueados(
+                    res.data[0].cantidadMsjDesbloqueados
+                );
+                setTotalTemasDesbloqueados(
+                    res.data[0].cantidadApzjDesbloqueados
+                );
+            }
+        };
+    
+        cargarProgreso();
+    }, []);
 
     async function guardarProgresoMensajes() {
         const mensaje = listaMensajes(cantidadMsj);
