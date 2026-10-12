@@ -42,7 +42,7 @@ export function VistaGame() {
         habilitarBtnMensajes();
         habilitarBtnAprendizajes();
         verificarFechaJuego();
-    });
+    }, []);
 
     const mostrarReflexiones = () => {
         navegacion('/consejos-encontrados/' + location.pathname.split('/').pop());
@@ -84,7 +84,7 @@ export function VistaGame() {
             </div>
             {habilitarJuego ? (
                 <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-full w-full bg-fixed bg-transparent">
-                    <PanelGame onJuegoCompletado={() => setHabilitarJuego(false)} />
+                    <PanelGame habilitarJuego={habilitarJuego} onJuegoCompletado={() => setHabilitarJuego(false)} />
                 </div>
             ) : (
                 <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-svh w-full bg-fixed bg-transparent pt-8">

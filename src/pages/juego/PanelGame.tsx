@@ -1,6 +1,7 @@
 import { Celda } from "./Celda";
 import { mapas, cantidadNiveles, contarObjetos, obtenerObjetivoDiario } from "../../assets/utils/NivelesGame";
 import { useEffect, useState, useRef } from "react";
+import { useParams } from 'react-router-dom';
 import { toast } from "react-hot-toast";
 import { SquareArrowDown, SquareArrowLeft, SquareArrowRight, SquareArrowUp, XIcon } from "lucide-react";
 import { saveAprendizajeDesbloqueado, saveMensajeDesbloqueado, updateContadorAprendizaje, updateContadorMensajes, getProgresoJuego, updateFechaJuego } from "../../assets/utils/sistema.api";
@@ -33,10 +34,11 @@ type AprendizajeData = {
 }
 
 type props = {
+    habilitarJuego: boolean;
     onJuegoCompletado: () => void;
 }
 
-export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
+export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>) {
     const [mapa, setMapa] = useState<string[][]>(mapas(0));
     const [nivel, setNivel] = useState(0);
     const [manzanasPendientes, setManzanasPendientes] = useState(0);
@@ -61,7 +63,7 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
     });
 
     const camaraRef = useRef<HTMLDivElement>(null);
-    const [mostrarProgreso, setMostrarProgreso] = useState(true);
+    const [mostrarProgreso, setMostrarProgreso] = useState(false);
     const [puedeAvanzar, setPuedeAvanzar] = useState(false);
 
     const [totalConsejosDesbloqueados, setTotalConsejosDesbloqueados] = useState(0);
@@ -70,8 +72,6 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
 
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
     const [gano, setGano] = useState(false);
-    // const [cantidadMsj] = useState(0);
-    // const [cantidadApzj] = useState(0);
     const [encontroItemEspecial, setEncontroItemEspecial] = useState(false);
     const [mostrarConsejoAbeja, setMostrarConsejoAbeja] = useState(false);
     const [mostrarModalAbeja, setMostrarModalAbeja] = useState(false);
@@ -84,6 +84,14 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
     const audioItemEncontrado = new Audio(itemEncontrado);
     const audioBasura = new Audio(itemBasuraEncontrado);
     const audioCesped = new Audio(descubrirCesped);
+
+    const { id } = useParams<{ id: string }>();
+
+    useEffect(() => {
+        if (habilitarJuego) {
+            setMostrarProgreso(true);
+        }
+    }, [habilitarJuego]);
 
     useEffect(() => {
         for (let i = 0; i < mapa.length; i++) {
@@ -184,13 +192,21 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
         }
 
         if (mapa[nuevaX][nuevaY] === 'M') {
-            setManzanas(manzanas + 1);
+            let nuevasManzanas = manzanas + 1;
+            setManzanas(nuevasManzanas);
+            if (nuevasManzanas % 3 !== 0) {
+                setGrupoMDesbloqueado(false);
+            }
             audioBasura.play();
             setManzanasPendientes(manzanasPendientes + 1);
         }
 
         if (mapa[nuevaX][nuevaY] === 'N') {
-            setNueces(nueces + 1);
+            let nuevasNueces = nueces + 1;
+            setNueces(nuevasNueces);
+            if (nuevasNueces % 3 !== 0) {
+                setGrupoNDesbloqueado(false);
+            }
             audioBasura.play();
             setNuecesPendientes(nuecesPendientes + 1);
         }
@@ -199,7 +215,7 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
             audioBasura.play();
             setEncontroItemEspecial(true);
             setMostrarConsejoAbeja(true);
-            toast.success('Pillaste un consejo');
+            toast.success('Pillaste a una abeja 🐝');
         }
     };
 
@@ -264,8 +280,6 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
         setManzanasPendientes(0);
         setNuecesPendientes(0);
         setEncontroItemEspecial(false);
-        setGrupoMDesbloqueado(false);
-        setGrupoNDesbloqueado(false);
     };
     const continuarProgreso = () => {
         if (puedeAvanzar) {
@@ -383,9 +397,13 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
 
     async function guardarProgresoMensajes() {
         const mensaje = listaMensajes(totalConsejosDesbloqueados);
-
+        const progresoId = parseInt(id || '', 10);
+        if (isNaN(progresoId)) {
+            console.error("No se pudo obtener un ID de progreso válido de la URL:", id);
+            return;
+        }
         const mensajeDesbloqueado: MensajeData = {
-            progreso: Number(location.pathname.split('/').pop()),
+            progreso: progresoId,
             titulo: mensaje[1],
             descripcion: mensaje[2],
             desbloqueado: true,
@@ -400,8 +418,13 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
 
     async function guardarProgresoAprendizaje() {
         const tema = listaTemas(totalTemasDesbloqueados);
+        const progresoId = parseInt(id || '', 10);
+        if (isNaN(progresoId)) {
+            console.error("No se pudo obtener un ID de progreso válido de la URL:", id);
+            return;
+        }
         const aprendizajeDesbloqueado: AprendizajeData = {
-            progreso: Number(location.pathname.split('/').pop()),
+            progreso: progresoId,
             titulo: tema[1],
             contenido: tema[2],
             imagen: tema[3],
@@ -412,6 +435,7 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
         try {
             await saveAprendizajeDesbloqueado(aprendizajeDesbloqueado);
             await updateContadorAprendizaje();
+            console.log("Aprendizaje y contador actualizados en Turso con éxito.");
         } catch (error) {
             console.log(error);
         }
@@ -636,8 +660,8 @@ export function PanelGame({ onJuegoCompletado }: Readonly<props>) {
                     <div className="flex flex-row space-x-6 items-center">
                         <p className="font-semibold text-lg flex items-center gap-1">
                             Vidas:
-                            {listaVidas.map((item, index) => (
-                                <img key={index} src={corazon} alt={item} width={24} height={24} />
+                            {listaVidas.map((item) => (
+                                <img src={corazon} alt={item} width={24} height={24} />
                             ))}
                         </p>
                     </div>

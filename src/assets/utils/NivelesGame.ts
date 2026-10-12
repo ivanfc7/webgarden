@@ -82,45 +82,31 @@ export const obtenerObjetivoDiario = () => {
     return objetivos[indice];
 };
 
-// Genera una distribución diaria balanceada de 8 ítems en 5 niveles
-const obtenerPlanDiario = (
-    objetivo: { M: number; N: number }
-): string[][] => {
-
-    const bolsaTotal = [
+const obtenerPlanDiario = (objetivo: { M: number; N: number }): string[][] => {
+    const bolsaTotal = barajarArreglo([
         ...Array(objetivo.M).fill('M'),
         ...Array(objetivo.N).fill('N'),
         'E'
-    ];
+    ]);
 
-    const bolsaMezclada = barajarArreglo(bolsaTotal);
-    const niveles: string[][] = [
-        [],
-        [],
-        [],
-        [],
-        []
-    ];
-
-    // Distribuir los objetos entre los 5 laberintos
-    bolsaMezclada.forEach((item, indice) => {
-        const nivel = indice % 5;
-        niveles[nivel].push(item);
-    });
-
-    // Garantizar que el quinto laberinto tenga al menos un objeto
-    if (niveles[4].length === 0) {
-        const nivelOrigen = niveles.findIndex(
-            (nivel, indice) => indice !== 4 && nivel.length > 1
+    // Se necesitan al menos 5 objetos para ocupar los 5 laberintos.
+    if (bolsaTotal.length < 5) {
+        throw new Error(
+            'La misión debe generar al menos 5 objetos para ocupar todos los laberintos.'
         );
+    }
 
-        if (nivelOrigen !== -1) {
-            const objeto = niveles[nivelOrigen].pop();
+    const niveles: string[][] = [[],[],[],[],[]];
 
-            if (objeto) {
-                niveles[4].push(objeto);
-            }
-        }
+    // Asignar primero un objeto a cada laberinto.
+    for (let i = 0; i < 5; i++) {
+        niveles[i].push(bolsaTotal.pop()!);
+    }
+
+    // Distribuir aleatoriamente los objetos restantes.
+    for (const item of barajarArreglo(bolsaTotal)) {
+        const nivel = Math.floor(Math.random() * 5);
+        niveles[nivel].push(item);
     }
     return niveles;
 };
