@@ -51,8 +51,8 @@ export function MisAfiches(){
                     <div>
                         <div className="max-w-md mx-auto mt-10 text-center">
                             <Wind size={120} className="mx-auto text-emerald-900 opacity-60" />
-                            <p className="dark:text-teal-900 font-semibold">Historial de aportes vacio !!</p>
-                            <p className="dark:text-gray-500">Ve a la actividad "Aporte Ambiental" para agregar</p>
+                            <p className="dark:text-teal-900 font-semibold">Historial vacio !!</p>
+                            <p className="dark:text-gray-500">Ve a la actividad "Captura de Carbono" para agregar</p>
                         </div>
                     </div>
                 ): (

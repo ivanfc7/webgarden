@@ -56,7 +56,7 @@ export function Step2Cantidad({atras, siguiente, datos, datoActual}: Acciones){
                 </form>                
             </div>  
               
-            <button className="cursor-pointer ml-2 mr-2 rounded-lg mt-10 bg-amber-200 p-2 hover:bg-amber-300" onClick={atras}> ⮜ Volver</button>
+            <button className="cursor-pointer ml-2 mr-2 rounded-lg mt-10 bg-amber-200 p-2 hover:bg-amber-300" onClick={atras}> &#9664; Volver</button>
         </div>
     )
 }

@@ -53,7 +53,7 @@ export function Step1Especie({siguiente, datos}: Acciones){
                         </select>
                         <br />
                         {errors.nombrePlanta && <span className="text-orange-600">No elegiste una planta</span>}
-                        <button className="cursor-pointer rounded-lg mt-10 bg-sky-200 p-2 hover:bg-sky-300" type="submit">Avanzar ⮞</button>
+                        <button className="cursor-pointer rounded-lg mt-10 bg-sky-200 p-2 hover:bg-sky-300" type="submit">Avanzar &#9654;</button>
                     </div>
                 )}
             </div>

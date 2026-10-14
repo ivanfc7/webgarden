@@ -144,10 +144,10 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
                 </div>
 
                 <div className="flex justify-between mt-10">
-                    <button type="button" onClick={atras} className="cursor-pointer rounded-lg bg-amber-200 p-2 hover:bg-amber-300">⮜ Volver</button>
+                    <button type="button" onClick={atras} className="cursor-pointer rounded-lg bg-amber-200 p-2 hover:bg-amber-300">&#9664; Volver</button>
                     <button type="submit" 
                         className="text-white font-bold cursor-pointer rounded-lg bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300"
-                    > Ver Resultados ⮞</button>
+                    > Ver Resultados &#9654;</button>
                 </div>
             </form>
         </div>

@@ -145,7 +145,7 @@ export function Step4Resultado({datos}: Acciones){
                   <input type="number" className="hidden" {...register('cantidad')} defaultValue={datos.cantidadPlantas}/>
                   <input type="number" className="hidden" {...register('carbonoTotal')} defaultValue={datos.carbonoTotal.toFixed(2)}/>
                   <input type="number" className="hidden" {...register('co2Total')} defaultValue={datos.CO2Total.toFixed(2)}/>
-                  <button onClick={guardarResumen} className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Si! ⮞</button>
+                  <button onClick={guardarResumen} className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Si! &#10003;</button>
                 </form>
               </div>
             </div>         

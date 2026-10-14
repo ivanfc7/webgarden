@@ -5,7 +5,7 @@ export function Indicador(){
 
     const rutas: {[key:string]:string}={
         '/inicio': 'Bienvenido !! 👏',
-        '/aporte-ambiental': 'Impacto Ambiental del Árbol',
+        '/aporte-ambiental': 'Captura de Carbono',
         '/conociendo-tu-planta': 'Conociendo tus Plantas',
         '/mis-plantas': 'Mis Plantas 🌿',
     };
@@ -18,7 +18,7 @@ export function Indicador(){
         nombreSeccion = rutas[locacion.pathname];
     }
     if (locacion.pathname.startsWith('/juego-educativo')) {
-        nombreSeccion = 'Juego - El Jardin';
+        nombreSeccion = 'Juego y aprende';
     }
     if (locacion.pathname.startsWith('/mis-aprendizajes')) {
         nombreSeccion = 'Mis Temas de Aprendizajes';
