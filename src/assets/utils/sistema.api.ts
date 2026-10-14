@@ -182,7 +182,6 @@ export const updateEtapa = async(id:string, nuevaEtapa:string)=>{
 export const createAporte = async(
     aporte: {
         cantidad: number, 
-        oxigenoTotal: number, 
         carbonoTotal: number, 
         co2Total: number
     }

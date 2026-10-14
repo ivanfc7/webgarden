@@ -1,6 +1,5 @@
 interface Aporte {
     cantidad: number;
-    oxigenoTotal: number;
     co2Total: number;
     carbonoTotal: number;
     fechaRegistro: string;
@@ -13,7 +12,6 @@ import { useParams } from "react-router-dom";
 import { getAportesByPlanta, getPlantaById } from "../../assets/utils/sistema.api";
 import { Wind } from 'lucide-react';
 import { Tarjetas } from "./TarjetaAporte";
-import { CuadroOxigeno } from "./CuadroOxigeno";
 
 export function MisAfiches(){
     const [lista, setLista] = useState<Aporte[]>([]);
@@ -48,8 +46,7 @@ export function MisAfiches(){
             <br /> 
             <a href="/mis-plantas" className="text-green-700 text-sm font-medium m-15 hover:underline">Mis Plantas </a>
             <div className="p-3 max-w-4xl w-full mx-auto">
-                <CuadroOxigeno /> <br />
-                <p className="text-2xl font-bold text-green-800">Historial de tu planta: {formatear(especie)}</p>
+                <p className="text-2xl font-bold text-green-800">Historial de tu árbol {formatear(especie)}</p>
                 {lista.length === 0 ?(
                     <div>
                         <div className="max-w-md mx-auto mt-10 text-center">
