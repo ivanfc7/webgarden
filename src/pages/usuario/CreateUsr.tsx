@@ -65,7 +65,7 @@ export function CreateUsr(){
                         <label htmlFor="ocultarName" className="text-sm text-gray-700 cursor-pointer">Ya tengo un correo registrado</label>
                     </div>
                     <div className="mt-2">
-                        <button type="submit" className="cursor-pointer w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">Vamos</button>
+                        <button type="submit" className="cursor-pointer w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">&#9993; Recibir Correo</button>
                     </div>
                 </form>
             </div>
