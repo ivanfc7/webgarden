@@ -16,7 +16,7 @@ interface ResultadoArbol {
     co2: number;
 }
 
-function calcularOxigenoPorPlanta(planta: {altura: number, espesura: number}): number[]{
+function calcularCarbonoPorPlanta(planta: {altura: number, espesura: number}): number[]{
     /** Primero calculamos el volumen del arbol */ 
     const numero_PI: number = Math.PI;
     var DAP: number = planta.espesura/numero_PI;
@@ -41,13 +41,9 @@ function calcularOxigenoPorPlanta(planta: {altura: number, espesura: number}): n
     var CR: number = CAT * 0.24;
 
     var C_almacenado: number = CAT + CR;
-    
-    // /** Calcular la produccion de oxigeno del arbol/planta */
-    const molCO2: number = 44;
-    // const molO: number = 32;
-    // var O2_generado = C_almacenado*(molO/molCO2);
 
-    /** CO2 absorbido equivalent */
+    /** CO2 absorbido equivalente */
+    const molCO2: number = 44;
     const molC: number = 12;
     var CO2_absorbido: number = C_almacenado*(molCO2/molC);
     
@@ -65,7 +61,7 @@ export const calcularImpacto = (datos: DatosPlanta) => {
 
     for (let i = 0; i < cantidad; i++) {
         const planta = datos.plantas[i];
-        var resultadosParciales : number[] = calcularOxigenoPorPlanta(planta);
+        var resultadosParciales : number[] = calcularCarbonoPorPlanta(planta);
         carbonoTotal = carbonoTotal + resultadosParciales[0];
         CO2Total = CO2Total + resultadosParciales[1];
         resultados.push({

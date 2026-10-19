@@ -72,7 +72,7 @@ const barajarArreglo = <T>(arreglo: T[]): T[] => {
     return copia;
 };
 
-export const obtenerObjetivoDiario = () => {
+const obtenerObjetivoDiario = () => {
     const objetivos = [
         { M: 3, N: 3 },
         { M: 6, N: 3 },
@@ -111,7 +111,7 @@ const obtenerPlanDiario = (objetivo: { M: number; N: number }): string[][] => {
     return niveles;
 };
 
-const objetivoDiario = obtenerObjetivoDiario();
+export const objetivoDiario = obtenerObjetivoDiario();
 const planDiario = obtenerPlanDiario(objetivoDiario);
 const mapaOriginal = [nivel1, nivel2, nivel3, nivel4, nivel5];
 const mapaCopia = barajarArreglo(mapaOriginal);

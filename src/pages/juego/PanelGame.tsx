@@ -1,5 +1,5 @@
 import { Celda } from "./Celda";
-import { mapas, cantidadNiveles, contarObjetos, obtenerObjetivoDiario } from "../../assets/utils/NivelesGame";
+import { mapas, cantidadNiveles, contarObjetos, objetivoDiario } from "../../assets/utils/NivelesGame";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from 'react-router-dom';
 import { toast } from "react-hot-toast";
@@ -56,7 +56,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     );
     const [grupoMDesbloqueado, setGrupoMDesbloqueado] = useState(false);
     const [grupoNDesbloqueado, setGrupoNDesbloqueado] = useState(false);
-    const [objetivoRecurso] = useState(obtenerObjetivoDiario);
+    const [objetivoRecurso] = useState(objetivoDiario);
     const [tamanoCamara, setTamanoCamara] = useState({
         ancho: 0,
         alto: 0
@@ -66,8 +66,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     const [mostrarProgreso, setMostrarProgreso] = useState(false);
     const [puedeAvanzar, setPuedeAvanzar] = useState(false);
 
-    const [totalConsejosDesbloqueados, setTotalConsejosDesbloqueados] = useState(0);
-    const [totalTemasDesbloqueados, setTotalTemasDesbloqueados] = useState(0);
     const [aviso] = useState('');
 
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
@@ -139,15 +137,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             window.removeEventListener('resize', actualizarTamanoCamara);
         };
     }, []);
-
-    useEffect(() => {
-        const cargarProgreso = async () => {
-            const res = await getProgresoJuego();
-            setTotalConsejosDesbloqueados(res.data[0].cantidadMsjDesbloqueados)
-            setTotalTemasDesbloqueados(res.data[0].cantidadApzjDesbloqueados)
-        };
-        cargarProgreso();
-    }, [totalConsejosDesbloqueados, totalTemasDesbloqueados]);
 
     useEffect(() => {
         const reconocerTecla = (event: KeyboardEvent) => {
@@ -379,65 +368,68 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
         }, 800)
     };
 
-    useEffect(() => {
-        const cargarProgreso = async () => {
-            const res = await getProgresoJuego();
-            if (res.data.length > 0) {
-                setTotalConsejosDesbloqueados(
-                    res.data[0].cantidadMsjDesbloqueados
-                );
-                setTotalTemasDesbloqueados(
-                    res.data[0].cantidadApzjDesbloqueados
-                );
-            }
-        };
-    
-        cargarProgreso();
-    }, []);
-
     async function guardarProgresoMensajes() {
-        const mensaje = listaMensajes(totalConsejosDesbloqueados);
         const progresoId = parseInt(id || '', 10);
         if (isNaN(progresoId)) {
             console.error("No se pudo obtener un ID de progreso válido de la URL:", id);
             return;
         }
-        const mensajeDesbloqueado: MensajeData = {
-            progreso: progresoId,
-            titulo: mensaje[1],
-            descripcion: mensaje[2],
-            desbloqueado: true,
-        }
+    
         try {
+            const res = await getProgresoJuego();
+            const cantidadMensajes = res.data[0].cantidadMsjDesbloqueados;
+
+            const mensaje = listaMensajes(cantidadMensajes);
+
+            const mensajeDesbloqueado: MensajeData = {
+                progreso: progresoId,
+                titulo: mensaje[1],
+                descripcion: mensaje[2],
+                desbloqueado: true,
+            };
             await saveMensajeDesbloqueado(mensajeDesbloqueado);
             await updateContadorMensajes();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            console.error(
+                "Error al guardar aprendizaje:",
+                error.response?.status,
+                error.response?.data
+            );
         }
     }
 
     async function guardarProgresoAprendizaje() {
-        const tema = listaTemas(totalTemasDesbloqueados);
         const progresoId = parseInt(id || '', 10);
         if (isNaN(progresoId)) {
             console.error("No se pudo obtener un ID de progreso válido de la URL:", id);
             return;
         }
-        const aprendizajeDesbloqueado: AprendizajeData = {
-            progreso: progresoId,
-            titulo: tema[1],
-            contenido: tema[2],
-            imagen: tema[3],
-            fuente: tema[4],
-            video: tema[5],
-            desbloqueado: true,
-        };
+
         try {
+            const res = await getProgresoJuego();
+            const cantidadAprendizaje = res.data[0].cantidadApzjDesbloqueados;
+
+            const tema = listaTemas(cantidadAprendizaje);
+
+            const aprendizajeDesbloqueado: AprendizajeData = {
+                progreso: progresoId,
+                titulo: tema[1],
+                contenido: tema[2],
+                imagen: tema[3],
+                fuente: tema[4],
+                video: tema[5],
+                desbloqueado: true,
+            };
+
             await saveAprendizajeDesbloqueado(aprendizajeDesbloqueado);
             await updateContadorAprendizaje();
             console.log("Aprendizaje y contador actualizados en Turso con éxito.");
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            console.error(
+                "Error al guardar aprendizaje:",
+                error.response?.status,
+                error.response?.data
+            );
         }
     }
     const TAMANO_CELDA = 70;
