@@ -119,9 +119,15 @@ export function Layout1(){
                     setMostrarDescripcion(true); 
                 } catch (err: any) {
                     if (err.response && err.response.status === 404) {
-                        setError(`No se encontró información para "${especie}". Puedes escribir una descripción realizando una busqueda en Google.`);
+                        setError(
+                            `No se encontró una descripción adecuada para "${especie}". ` +
+                            "Puedes buscar información en Google y copiar una descripción en el campo de texto."
+                          );
                       } else {
-                        setError("Ocurrió un error al buscar la descripción.");
+                        setError(
+                            "La búsqueda es ambigua o no corresponde claramente a una planta. " +
+                            "Prueba de nuevo o busca información en Google y escribir una descripción manualmente."
+                          );
                         console.log(err);
                       }
                       setDescripcion("");
@@ -158,7 +164,7 @@ export function Layout1(){
                 <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                     <div>
                         <label className="text-sm font-medium">Escribe la especie de tu planta</label>
-                        <input type="text" onChange={(e) => {
+                        <input type="text" placeholder="Pino, Limon, Girasol" onChange={(e) => {
                                 const valor = e.target.value;
                                 setEspecie(valor);
                                 setValue('especie', valor); 
