@@ -376,7 +376,7 @@ export function Layout1(){
                         <input type="text" className="hidden" {...register('tipo', {required:true})} value={tipoPlanta}/>
                         <input type="text" className="hidden" {...register('descripcion', {required:true})} value={descripcion}/>
                         <input type="text" className="hidden" {...register('etapa', {required:true})} value={clasificar(etapa)}/>
-                        <button className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Guardar ⮞</button>    
+                        <button className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Guardar &#10003;</button>    
                     </form>
                 </section> 
             </div>

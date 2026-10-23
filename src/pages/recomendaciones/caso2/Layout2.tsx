@@ -139,41 +139,79 @@ export function Layout2() {
                         </section>
                         <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                             <p className="text-xl dark:text-teal-900 font-semibold mb-2">El clima actual de la ciudad</p>
-                            <div className="grid grid-cols-3 p-3">
-                                <div className="p-2 mx-auto flex justify-center">
-                                    <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                                ${clima.includes('caluroso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                        <input className="hidden" type="radio" value="caluroso"
-                                            onChange={e => setClima(e.target.value)}
-                                            checked={clima.includes('caluroso')}
-                                            name="ciima" />
-                                        <span className="flex justify-center"><Sun /></span>
-                                        <span className="text-sm font-medium">Soleado / Caluroso </span>
-                                    </label>
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-2 sm:p-3">
+                                    <div className="flex justify-center p-1 sm:p-2">
+                                        <label
+                                            className={`w-full h-full cursor-pointer border rounded-lg p-2 sm:p-3 text-center transition-all
+                                                ${clima.includes('caluroso')
+                                                    ? 'border-green-500 bg-green-50'
+                                                    : 'border-gray-300'}`}
+                                        >
+                                            <input
+                                                className="hidden"
+                                                type="radio"
+                                                value="caluroso"
+                                                onChange={e => setClima(e.target.value)}
+                                                checked={clima.includes('caluroso')}
+                                                name="clima"
+                                            />
+                                            <span className="flex justify-center mb-1">
+                                                <Sun className="w-5 h-5 sm:w-6 sm:h-6" />
+                                            </span>
+                                            <span className="text-xs sm:text-sm font-medium block">
+                                                Soleado / Caluroso
+                                            </span>
+                                        </label>
+                                    </div>
+
+                                    <div className="flex justify-center p-1 sm:p-2">
+                                        <label
+                                            className={`w-full h-full cursor-pointer border rounded-lg p-2 sm:p-3 text-center transition-all
+                                                ${clima.includes('lluvioso')
+                                                    ? 'border-green-500 bg-green-50'
+                                                    : 'border-gray-300'}`}
+                                        >
+                                            <input
+                                                className="hidden"
+                                                type="radio"
+                                                value="lluvioso"
+                                                onChange={e => setClima(e.target.value)}
+                                                checked={clima.includes('lluvioso')}
+                                                name="clima"
+                                            />
+                                            <span className="flex justify-center mb-1">
+                                                <CloudRain className="w-5 h-5 sm:w-6 sm:h-6" />
+                                            </span>
+                                            <span className="text-xs sm:text-sm font-medium block">
+                                                Lluvioso
+                                            </span>
+                                        </label>
+                                    </div>
+
+                                    <div className="flex justify-center p-1 sm:p-2">
+                                        <label
+                                            className={`w-full h-full cursor-pointer border rounded-lg p-2 sm:p-3 text-center transition-all
+                                                ${clima.includes('nublado')
+                                                    ? 'border-green-500 bg-green-50'
+                                                    : 'border-gray-300'}`}
+                                        >
+                                            <input
+                                                className="hidden"
+                                                type="radio"
+                                                value="nublado"
+                                                onChange={e => setClima(e.target.value)}
+                                                checked={clima.includes('nublado')}
+                                                name="clima"
+                                            />
+                                            <span className="flex justify-center mb-1">
+                                                <Cloudy className="w-5 h-5 sm:w-6 sm:h-6" />
+                                            </span>
+                                            <span className="text-xs sm:text-sm font-medium block">
+                                                Templado / Nublado
+                                            </span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div className="p-2 mx-auto flex justify-center">
-                                    <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                                ${clima.includes('lluvioso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                        <input className="hidden" type="radio" value="lluvioso"
-                                            onChange={e => setClima(e.target.value)}
-                                            checked={clima.includes('lluvioso')}
-                                            name="clima" />
-                                        <span className="flex justify-center"><CloudRain /></span>
-                                        <span className="text-sm font-medium"> LLuvioso </span>
-                                    </label>
-                                </div>
-                                <div className="p-2 mx-auto flex justify-center">
-                                    <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                                ${clima.includes('nublado') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                        <input className="hidden" type="radio" value="nublado"
-                                            onChange={e => setClima(e.target.value)}
-                                            checked={clima.includes('nublado')}
-                                            name="clima" />
-                                        <span className="flex justify-center"> <Cloudy /> </span>
-                                        <span className="text-sm font-medium">Templado / nublado </span>
-                                    </label>
-                                </div>
-                            </div>
                         </section>
                         <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                             <p className="text-xl dark:text-teal-900 font-semibold mb-2">Las hojas de tu planta</p>

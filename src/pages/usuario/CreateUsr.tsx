@@ -11,13 +11,15 @@ type Newuser = {
 export function CreateUsr(){
     const {register, handleSubmit, formState:{errors}} = useForm<Newuser>();
     const [ocultarNombre, setOcultarNombre] = useState(false);
+    const [enviandoCorreo, setEnviandoCorreo] = useState(false);
 
-    const crearCuenta = handleSubmit(data => {
+    const crearCuenta = handleSubmit(async (data) => {
+        if (enviandoCorreo) return;
         const datos:Newuser={
             first_name: ocultarNombre?"": data.first_name,
             email: data.email,
         }
-        generarLink(datos);
+        await generarLink(datos);
     });
 
     const generarLink = async (data: Newuser) => {
@@ -30,6 +32,8 @@ export function CreateUsr(){
         } catch (error) {
             console.log(error);
             toast.error('Hubo un error');
+        }finally {
+            setEnviandoCorreo(false);
         }
     }
 
@@ -46,7 +50,13 @@ export function CreateUsr(){
                                 message: "El nombre no debe contener números ni símbolos"
                             },
                             minLength: { value: 3, message: "Nombre demasiado corto" }}) } 
-                            className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" placeholder="Nombre completo"/>
+                            className={`border text-sm rounded-lg block w-full p-2.5
+                                focus:outline-none transition-colors
+                                ${
+                                    ocultarNombre
+                                        ? "bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed"
+                                        : "bg-white border-green-300 text-black focus:ring-green-500 focus:border-green-500"
+                                }`} placeholder="Nombre completo"/>
                             {errors.first_name && <span className="text-red-600 text-xs mt-1">{errors.first_name.message}</span>} 
                     </div>
                     <div>
@@ -65,7 +75,45 @@ export function CreateUsr(){
                         <label htmlFor="ocultarName" className="text-sm text-gray-700 cursor-pointer">Ya tengo un correo registrado</label>
                     </div>
                     <div className="mt-2">
-                        <button type="submit" className="cursor-pointer w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">&#9993; Recibir Correo</button>
+                        <button
+                            type="submit"
+                            disabled={enviandoCorreo}
+                            className={`w-full flex items-center justify-center gap-2
+                                text-white font-medium rounded-lg text-sm px-5 py-2.5
+                                text-center focus:ring-4 focus:outline-none
+                                focus:ring-green-300 dark:focus:ring-green-800
+                                ${
+                                    enviandoCorreo
+                                        ? "bg-green-400 cursor-not-allowed opacity-80"
+                                        : "bg-green-500 hover:bg-green-600 dark:bg-green-500 dark:hover:bg-green-600 cursor-pointer"
+                                }`}
+                        >
+                            {enviandoCorreo && (
+                                <svg
+                                    className="w-4 h-4 animate-spin"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <circle
+                                        className="opacity-25"
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        stroke="currentColor"
+                                        strokeWidth="4"
+                                    />
+                                    <path
+                                        className="opacity-75"
+                                        fill="currentColor"
+                                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                                    />
+                                </svg>
+                            )}
+
+                            {enviandoCorreo ? "Enviando correo..." : "✉ Recibir Correo"}
+                        </button>
                     </div>
                 </form>
             </div>
