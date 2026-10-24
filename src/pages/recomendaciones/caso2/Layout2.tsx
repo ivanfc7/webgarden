@@ -86,7 +86,7 @@ export function Layout2() {
                         </select>
                     )}
                 </section>
-                {lista.length > 0 && (
+                {idPlanta && (
                     <div>
                         <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                             <p className="text-xl dark:text-teal-900 font-semibold mb-2">Tipo de tierra en el que estan tus plantas</p>
