@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProgresoJuego, getFechaJuego } from "../../assets/utils/sistema.api";
 import { Lock, Blocks, Book, Paperclip } from "lucide-react";
+import { hayNovedad, marcarComoVisto } from "../../assets/utils/NovedadesJuego";
 
 export function VistaGame() {
     const navegacion = useNavigate();
@@ -16,6 +17,18 @@ export function VistaGame() {
 
     const mostrarInstruccion = () => setMostrar(true);
     const cerrarInstruccion = () => setMostrar(false);
+
+    const [novedades, setNovedades] = useState({
+        consejos: false,
+        aprendizajes: false
+    });
+    
+    useEffect(() => {
+        setNovedades({
+            consejos: hayNovedad("consejos"),
+            aprendizajes: hayNovedad("aprendizajes")
+        });
+    }, []);
 
     useEffect(() => {
         async function habilitarBtnMensajes() {
@@ -45,40 +58,33 @@ export function VistaGame() {
     }, []);
 
     const mostrarReflexiones = () => {
+        marcarComoVisto("consejos");
         navegacion('/consejos-encontrados/' + location.pathname.split('/').pop());
     }
 
     const mostrarAprendizajes = () => {
+        marcarComoVisto("aprendizajes");
         navegacion('/mis-aprendizajes/' + location.pathname.split('/').pop());
     }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
             <BarraNavegacion />
-            <div className="relative p-2 m-0 flex flex-wrap items-center justify-end md:justify-center gap-1">
+            <div className="relative p-2 m-0 flex flex-wrap items-center justify-end gap-1">
                 <div className="absolute left-2 top-1/2 -translate-y-1/2">
                     <Salir />
                 </div>
-                <button onClick={mostrarInstruccion} className="flex items-center justify-center gap-2 px-4 py-1.5 m-1 text-sm font-semibold transition-all duration-300 shadow-sm border bg-amber-700 text-white text-center border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">
-                    <Blocks size={14} />
-                    <span className="whitespace-nowrap hidden md:inline-block">¿Cómo jugar?</span>
-                </button>
-                <button onClick={mostrarReflexiones} disabled={!habilitarBtnMsj} className={`flex items-center justify-center gap-2 px-4 py-1.5 m-1 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm border ${habilitarBtnMsj ? 'bg-amber-700 text-white border-yellow-400 hover:bg-amber-800 cursor-pointer' : 'bg-amber-700 text-white/60 border-yellow-400 cursor-not-allowed'}`}>
-                    {!habilitarBtnMsj ? (
-                        <Lock size={14} />
-                    ) : (
-                        <Paperclip size={14} />
-                    )}
-                    <span className="whitespace-nowrap hidden md:inline-block">Para tomar en cuenta</span>
-                </button>
-                <button onClick={mostrarAprendizajes} disabled={!habilitarBtnApzj} className={`flex items-center justify-center gap-2 px-4 py-1.5 m-1 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm border ${habilitarBtnApzj ? 'bg-amber-700 text-white border-yellow-400 hover:bg-amber-800 cursor-pointer' : 'bg-amber-700 text-white/60 border-yellow-400 cursor-not-allowed'}`}>
-                    {!habilitarBtnApzj ? (
-                        <Lock size={14} />
-                    ) : (
-                        <Book size={14} />
-                    )}
-                    <span className="whitespace-nowrap hidden md:inline-block">
-                        Aprendizaje
+                <button
+                    onClick={mostrarInstruccion}
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 m-1
+                    bg-amber-100 text-amber-800 border-2 border-yellow-400
+                    rounded-full text-sm font-semibold shadow-md
+                    transition-all duration-300 hover:bg-amber-200 hover:shadow-lg
+                    cursor-pointer"
+                >
+                    <Blocks size={16} />
+                    <span className="whitespace-nowrap">
+                        ¿Cómo jugar?
                     </span>
                 </button>
             </div>
@@ -89,6 +95,59 @@ export function VistaGame() {
             ) : (
                 <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-svh w-full bg-fixed bg-transparent pt-8">
                     <VistaGameOver />
+                    <div className="flex flex-wrap items-center justify-center gap-3 w-full my-4">
+                        <button
+                            onClick={mostrarReflexiones}
+                            disabled={!habilitarBtnMsj}
+                            className={`relative flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold border-2 border-yellow-400 shadow-md transition-all duration-300
+                                ${
+                                    habilitarBtnMsj
+                                        ? "bg-amber-100 text-amber-800 hover:bg-amber-200 hover:shadow-lg cursor-pointer"
+                                        : "bg-amber-100/60 text-amber-800/50 cursor-not-allowed"
+                                }`}
+                        >
+                            {!habilitarBtnMsj ? (
+                                <Lock size={16} />
+                            ) : (
+                                <div>
+                                    {novedades.consejos && (
+                                        <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-red-600 border-2 border-amber-100" />
+                                    )}
+                                     <Paperclip size={16} />
+                                </div>
+                            )}
+
+                            <span className="whitespace-nowrap">
+                                Para tomar en cuenta
+                            </span>
+                        </button>
+
+                        <button
+                            onClick={mostrarAprendizajes}
+                            disabled={!habilitarBtnApzj}
+                            className={`relative flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold border-2 border-yellow-400 shadow-md transition-all duration-300
+                                ${
+                                    habilitarBtnApzj
+                                        ? "bg-amber-100 text-amber-800 hover:bg-amber-200 hover:shadow-lg cursor-pointer"
+                                        : "bg-amber-100/60 text-amber-800/50 cursor-not-allowed"
+                                }`}
+                        >
+                            {!habilitarBtnApzj ? (
+                                <Lock size={16} />
+                            ) : (
+                                <div>
+                                    {novedades.aprendizajes && (
+                                        <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-red-600 border-2 border-amber-100" />
+                                    )}
+                                    <Book size={16} />
+                                </div>
+                                
+                            )}
+                            <span className="whitespace-nowrap">
+                                Aprendizaje
+                            </span>
+                        </button>
+                    </div>
                 </div>
             )}
             {mostrar && (

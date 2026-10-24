@@ -1,5 +1,6 @@
 import { Celda } from "./Celda";
 import { mapas, cantidadNiveles, contarObjetos, objetivoDiario } from "../../assets/utils/NivelesGame";
+import { marcarNovedad } from "../../assets/utils/NovedadesJuego";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from 'react-router-dom';
 import { toast } from "react-hot-toast";
@@ -389,6 +390,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             };
             await saveMensajeDesbloqueado(mensajeDesbloqueado);
             await updateContadorMensajes();
+            marcarNovedad("consejos");
         } catch (error: any) {
             console.error(
                 "Error al guardar aprendizaje:",
@@ -424,6 +426,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             await saveAprendizajeDesbloqueado(aprendizajeDesbloqueado);
             await updateContadorAprendizaje();
             console.log("Aprendizaje y contador actualizados en Turso con éxito.");
+            marcarNovedad("aprendizajes");
         } catch (error: any) {
             console.error(
                 "Error al guardar aprendizaje:",
