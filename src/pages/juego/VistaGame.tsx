@@ -116,7 +116,6 @@ export function VistaGame() {
                                      <Paperclip size={16} />
                                 </div>
                             )}
-
                             <span className="whitespace-nowrap">
                                 Para tomar en cuenta
                             </span>
@@ -151,74 +150,95 @@ export function VistaGame() {
                 </div>
             )}
             {mostrar && (
-               <div className="fixed z-50 inset-0 bg-black/40 flex items-center justify-center px-4 py-8 overflow-y-auto">
+                <div className="fixed z-50 inset-0 bg-black/40 flex items-center justify-center px-4 py-8 overflow-y-auto">
                     <div className="w-full max-w-md my-auto bg-amber-50 border-2 border-emerald-700 rounded-2xl shadow-2xl overflow-hidden">
                         <div className="bg-emerald-700 px-6 py-5 text-white text-center">
                             <h3 className="font-bold text-2xl">¿Cómo jugar?</h3>
                             <p className="text-emerald-100 text-sm mt-1">
-                                Explora, encuentra objetos y completa la misión diaria
+                                Explora los laberintos, descubre objetos y completa la misión diaria.
                             </p>
                         </div>
+
                         <div className="px-6 py-5 space-y-4">
                             <div className="flex gap-3 items-start">
                                 <span className="text-2xl">🐿️</span>
                                 <div>
-                                    <p className="font-bold text-emerald-900">Explora el jardín</p>
+                                    <p className="font-bold text-emerald-900">1. Explora con la ardilla</p>
                                     <p className="text-gray-700 text-sm">
-                                        Desplázate por el laberinto junto a la ardilla hasta encontrar todos los objetos.
+                                        Mueve a la ardilla con los botones de dirección en pantalla
+                                        o con las flechas del teclado para recorrer los 5 laberintos.
                                     </p>
                                 </div>
                             </div>
+
                             <div className="flex gap-3 items-start">
                                 <span className="text-2xl">🔎</span>
                                 <div>
-                                    <p className="font-bold text-emerald-900">Descubre lo que hay a tu alrededor</p>
+                                    <p className="font-bold text-emerald-900">2. Descubre el césped antes de avanzar</p>
                                     <p className="text-gray-700 text-sm">
-                                        Haz clic sobre el césped cercano para descubrir los objetos ocultos.
+                                        ¡Importante! Antes de intentar avanzar, haz clic en las
+                                        casillas de césped para descubrir qué se esconde detrás.
+                                        Solo así podrás encontrar los objetos ocultos y reconocer
+                                        el camino que debes seguir.
                                     </p>
                                 </div>
                             </div>
+
                             <div className="flex gap-3 items-start">
                                 <span className="text-2xl">🍎</span>
                                 <div>
-                                    <p className="font-bold text-emerald-900">Encuentra manzanas</p>
+                                    <p className="font-bold text-emerald-900">3. Encuentra manzanas</p>
                                     <p className="text-gray-700 text-sm">
-                                        Las manzanas te permiten desbloquear aprendizajes. Cada 3 manzanas consigues uno.
+                                        Recoge manzanas para desbloquear aprendizajes sobre
+                                        las plantas y el cuidado del medioambiente.
+                                        Cada 3 manzanas desbloqueas un aprendizaje.
                                     </p>
                                 </div>
                             </div>
+
                             <div className="flex gap-3 items-start">
                                 <span className="text-2xl">🌰</span>
                                 <div>
-                                    <p className="font-bold text-emerald-900">Encuentra nueces</p>
+                                    <p className="font-bold text-emerald-900">4. Encuentra nueces</p>
                                     <p className="text-gray-700 text-sm">
-                                        Las nueces te permiten desbloquear consejos.
-                                        Cada 3 nueces consigues uno.
+                                        Recoge nueces para desbloquear consejos útiles.
+                                        Cada 3 nueces desbloqueas un consejo.
                                     </p>
                                 </div>
                             </div>
+
                             <div className="flex gap-3 items-start">
                                 <span className="text-2xl">⚠️</span>
                                 <div>
-                                    <p className="font-bold text-emerald-900">¡Cuida tu salud!</p>
+                                    <p className="font-bold text-emerald-900">5. Evita los peligros</p>
                                     <p className="text-gray-700 text-sm">
-                                        Evita los montones de basura. Si los encuentras, perderás una vida.
+                                        Ten cuidado con los montones de basura.
+                                        Si encuentras uno, perderás una vida.
                                     </p>
                                 </div>
                             </div>
+
                             <div className="flex gap-3 items-start">
                                 <span className="text-2xl">🎯</span>
                                 <div>
-                                    <p className="font-bold text-emerald-900">Completa la misión diaria</p>
+                                    <p className="font-bold text-emerald-900">6. Completa la misión diaria</p>
                                     <p className="text-gray-700 text-sm">
-                                        Cada partida tiene una misión diferente.
-                                        Recorre los 5 laberintos y consigue los objetos necesarios para completar tu reto.
+                                        Cada partida tiene una misión que indica cuántas
+                                        manzanas y nueces debes conseguir. Completa los 5
+                                        laberintos y reúne todos los objetos necesarios
+                                        para superar el reto.
                                     </p>
                                 </div>
                             </div>
                         </div>
+
                         <div className="px-6 py-4 bg-amber-100 border-t border-amber-300 flex justify-center">
-                            <button className="bg-emerald-700 hover:bg-emerald-800 active:scale-[0.98] text-white font-bold py-2.5 px-8 rounded-xl shadow-[0_3px_0_#14532d] transition-all cursor-pointer" onClick={cerrarInstruccion}>¡Entendido!</button>
+                            <button
+                                className="bg-emerald-700 hover:bg-emerald-800 active:scale-[0.98] text-white font-bold py-2.5 px-8 rounded-xl shadow-[0_3px_0_#14532d] transition-all cursor-pointer"
+                                onClick={cerrarInstruccion}
+                            >
+                                ¡Entendido!
+                            </button>
                         </div>
                     </div>
                 </div>

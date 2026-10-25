@@ -132,7 +132,7 @@ export function Step4Resultado({datos}: Acciones){
                   {` ${co2Equivalente} kg de CO₂ `} por su composición química.
                 </p>
                 <br />
-                <b>Dao curioso:</b>
+                <b>Dato curioso:</b>
                 <p className="text-gray-800 text-sm mt-3">
                 Un auto al año puede estar generando un estimado de 340 Kg de CO₂
                 </p>
