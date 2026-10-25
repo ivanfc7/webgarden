@@ -23,7 +23,7 @@ export function BarraNavegacion() {
     };
 
     return (
-      <Navbar className='bg-white border-gray-200 dark:bg-gray-200 p-4' fluid rounded>
+      <Navbar className='bg-white border-gray-200 dark:bg-gray-200 p-4 sticky top-0 z-50' fluid rounded>
         <span className="self-rigth whitespace-nowrap text-xl font-semibold dark:text-black">
           <Indicador />
         </span>
