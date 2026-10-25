@@ -382,15 +382,12 @@ export function Layout1(){
             </div>
             <div className="w-full md:w-1/3 p-4">
                 {divResultado && (
-                    <div>
-                        <p className="text-xl dark:text-teal-900 font-semibold mb-2">Recomendaciones para plantar</p>
-                        <RecomendacionTipo1 
+                    <RecomendacionTipo1 
                         especie={divResultado.especie}
                         tipoPlanta={divResultado.tipoPlanta}
                         etapa={divResultado.etapa}
                         descripcion={divResultado.descripcion}
                     />
-                    </div>
                 )}
             </div>
             {mostrar &&( 

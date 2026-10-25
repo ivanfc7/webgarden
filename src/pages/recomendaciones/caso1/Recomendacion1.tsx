@@ -32,6 +32,7 @@ export function RecomendacionTipo1({especie,tipoPlanta,etapa, descripcion}: Resp
         <div>
             {especie.length >= 4 &&(
                 <div>
+                    <p className="text-xl dark:text-teal-900 font-semibold mb-2">Recomendaciones para plantar</p>
                     <div ref={divRef} className='p-5 bg-green-200 rounded-lg max-w-lg ml-5 mr-5'>
                         {/* Título */}
                         <div className="text-center">

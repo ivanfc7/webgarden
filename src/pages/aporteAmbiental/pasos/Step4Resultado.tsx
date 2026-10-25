@@ -124,13 +124,15 @@ export function Step4Resultado({datos}: Acciones){
                 </h2>
 
                 <p className="text-gray-800 text-sm">
-                  Tus {datos.cantidadPlantas} árboles de {datos.especiePlanta} tienen un contenido estimado de carbono de {carbonoAlmacenado} kg.
+                  Tu/s {datos.cantidadPlantas} árbol/es de {datos.especiePlanta} tienen un sus hojas y ramas un contenido estimado de carbono de {carbonoAlmacenado} kg.
                 </p>
 
                 <p className="text-gray-800 text-sm mt-3">
                   Esa cantidad de carbono equivale aproximadamente a
                   {` ${co2Equivalente} kg de CO₂ `} por su composición química.
                 </p>
+                <br />
+                <b>Dao curioso:</b>
                 <p className="text-gray-800 text-sm mt-3">
                 Un auto al año puede estar generando un estimado de 340 Kg de CO₂
                 </p>

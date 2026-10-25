@@ -68,6 +68,7 @@ export function RecomendacionTipo2({laPlanta, tierra, clima, hojas}: Respuesta){
         <div>
             {laPlanta.especie !== '' &&(
             <div>
+                <p className="text-xl dark:text-teal-900 font-semibold mb-2">Recomendaciones de cuidado</p>
                 <div ref={divRef} className='p-5 bg-green-200 rounded-lg max-w-lg ml-5 mr-5'>
                     <p className='text-center font-semibold'> Cuidados Basicos </p>
                     <p className='text-center'> {laPlanta.especie.charAt(0).toUpperCase()+laPlanta.especie.slice(1).toLowerCase()}</p>
