@@ -15,6 +15,7 @@ export function CreateUsr(){
 
     const crearCuenta = handleSubmit(async (data) => {
         if (enviandoCorreo) return;
+        setEnviandoCorreo(true);
         const datos:Newuser={
             first_name: ocultarNombre?"": data.first_name,
             email: data.email,
