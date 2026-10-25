@@ -81,14 +81,14 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
                                 Altura (en cm.) 
                             </label>
-                            <input  type="number" step="0.01"
+                            <input  type="number" step="0.01" placeholder="110.7"
                                 {...register('alturaComun', {required: true})}
                                 className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5"/> </div>
                         <div className="relative z-0 group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
                                 Diametro aproximado (tronco cm.) 
                             </label>
-                            <input  type="number" step="0.01"
+                            <input  type="number" step="0.01" placeholder="22.1"
                                 {...register('grosorComun', {required: true})}
                                 className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5"/> </div>
                     </div>
@@ -123,7 +123,7 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
                             <input
                                 type="number" step="0.01"
                                 {...register(`altura_${index}`, {required: true})}
-                                placeholder="40"
+                                placeholder="110.7"
                                 className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5"
                             />
                         </div>
@@ -135,7 +135,7 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
                             <input
                                 type="number" step="0.01"
                                 {...register(`grosor_${index}`, {required: true})}
-                                placeholder="110"
+                                placeholder="23.4"
                                 className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5"
                             />
                         </div>
