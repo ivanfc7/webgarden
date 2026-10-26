@@ -163,7 +163,7 @@ export function Layout1(){
             <div className="w-full md:flex-1 p-4">
                 <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                     <div>
-                        <label className="text-sm font-medium">Escribe la especie de tu planta</label>
+                        <label className="text-sm font-medium">Escribe la especie de tu planta <span className="text-red-500 font-bold ml-0.5">*</span> </label>
                         <input type="text" placeholder="Pino, Limon, Girasol" onChange={(e) => {
                                 const valor = e.target.value;
                                 setEspecie(valor);
@@ -173,7 +173,7 @@ export function Layout1(){
                             {errors.especie && <span className="text-orange-600">No ingresaste un nombre de planta</span> }
                     </div>
                     <div className="m-2 p-4 max-w-4xl w-full mx-auto ">
-                        <p className="text-sm font-medium mb-3">Tu planta puede pertenecer a uno de estos tipos</p>
+                        <p className="text-sm font-medium mb-3">Tu planta puede pertenecer a uno de estos tipos <span className="text-red-500 font-bold ml-0.5">*</span></p>
                         <div className="grid grid-cols-2 md:grid-cols-4">
                             <div className="p-2 mx-auto m-2 flex justify-center">
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
@@ -293,7 +293,7 @@ export function Layout1(){
                             >
                                 <Search className="w-5 h-5 text-gray-700" />
                             </button>
-                            <span className="text-sm font-medium text-gray-700">Buscar una descripción de la planta</span>
+                            <span className="text-sm font-medium text-gray-700">Buscar una descripción de la planta <span className="text-red-500 font-bold ml-0.5">*</span></span>
                         </div>
 
                         {/* Estado: cargando */}
@@ -337,7 +337,7 @@ export function Layout1(){
                         )}
                     </div>
                     <br />
-                    {errors.descripcion && <span className="text-orange-600">No buscaste una descripción de tu planta</span>}
+                    {errors.descripcion && !descripcion && <span className="text-orange-600">No buscaste una descripción de tu planta</span>}
                     {mostrarDescripcion && descripcion &&(
                         <div className="m-1.5">
                             {descripcion && <p className="text-sm text-teal-800"><strong>Descripción:</strong> {descripcion}</p>}
@@ -346,7 +346,7 @@ export function Layout1(){
                     )}
                     <br />
                     <div className="w-full max-w-md mx-auto my-4">
-                        <label className="block mb-2 font-semibold">Selecciona la etapa de la planta:</label>
+                        <label className="block mb-2 font-semibold">Selecciona la etapa de la planta: <span className="text-red-500 font-bold ml-0.5">*</span></label>
                         <input
                             type="range"
                             min="0"
