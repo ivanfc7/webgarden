@@ -388,9 +388,16 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                 descripcion: mensaje[2],
                 desbloqueado: true,
             };
+            console.log("Antes de guardar el consejo");
+
             await saveMensajeDesbloqueado(mensajeDesbloqueado);
+            console.log("Consejo guardado");
+
             await updateContadorMensajes();
+            console.log("Contador actualizado");
+
             marcarNovedad("consejos");
+            console.log("Novedad guardada:", localStorage.getItem("novedad_consejos"));
         } catch (error: any) {
             console.error(
                 "Error al guardar aprendizaje:",
@@ -422,11 +429,12 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                 video: tema[5],
                 desbloqueado: true,
             };
-
+            console.log("Antes de guardar el aprendizaje");
             await saveAprendizajeDesbloqueado(aprendizajeDesbloqueado);
             await updateContadorAprendizaje();
             console.log("Aprendizaje y contador actualizados en Turso con éxito.");
             marcarNovedad("aprendizajes");
+            console.log("Novedad guardada:", localStorage.getItem("novedad_aprendizajes"));
         } catch (error: any) {
             console.error(
                 "Error al guardar aprendizaje:",
