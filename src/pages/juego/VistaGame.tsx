@@ -188,7 +188,7 @@ export function VistaGame() {
                                     <p className="font-bold text-emerald-900">6. Completa la misión diaria</p>
                                     <p className="text-gray-700 text-sm">
                                         Cada partida tiene una misión que indica cuántas
-                                        manzanas y nueces debes conseguir. Completa los 5
+                                        manzanas y nueces debes conseguir. Completa los tres
                                         laberintos y reúne todos los objetos necesarios
                                         para superar el reto.
                                     </p>

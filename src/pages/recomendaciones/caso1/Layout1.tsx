@@ -293,7 +293,7 @@ export function Layout1(){
                             >
                                 <Search className="w-5 h-5 text-gray-700" />
                             </button>
-                            <span className="text-sm font-medium text-gray-700">Buscar una descripción de la planta <span className="text-red-500 font-bold ml-0.5">*</span></span>
+                            <span className="text-sm font-medium text-gray-700">Buscar una descripción de la planta (Presiona la lupa) <span className="text-red-500 font-bold ml-0.5">*</span></span>
                         </div>
 
                         {/* Estado: cargando */}
