@@ -37,31 +37,31 @@ const nivel3: string[][] = [
     ['P', '_', '_', '_', '_', 'P', 'P', 'P', '_', 'P']
 ];
 
-// const nivel4: string[][] = [
-//     ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
-//     ['P', '_', '_', '_', '_', 'B', '_', '_', '_', 'P'],
-//     ['P', '_', 'P', '_', '_', 'P', '_', 'P', '_', 'P'],
-//     ['P', 'A', 'P', 'P', '_', '_', 'P', '_', 'P', 'P'],
-//     ['P', '_', 'P', '_', '_', 'P', 'P', '_', 'P', 'P'],
-//     ['P', '_', 'P', '_', 'P', '_', '_', '_', '_', 'P'],
-//     ['_', '_', '_', 'P', 'P', 'P', 'P', '_', 'P', 'P'],
-//     ['_', 'P', '_', '_', 'P', 'P', 'P', '_', 'P', 'P'],
-//     ['_', '_', 'P', '_', '_', '_', '_', '_', '_', 'P'],
-//     ['P', '_', 'P', 'P', '_', 'P', 'P', 'P', '_', 'P']
-// ];
+const nivel4: string[][] = [
+    ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+    ['P', '_', '_', '_', '_', 'B', '_', '_', '_', 'P'],
+    ['P', '_', 'P', '_', '_', 'P', '_', 'P', '_', 'P'],
+    ['P', 'A', 'P', 'P', '_', '_', 'P', '_', 'P', 'P'],
+    ['P', '_', 'P', '_', '_', 'P', 'P', '_', 'P', 'P'],
+    ['P', '_', 'P', '_', 'P', '_', '_', '_', '_', 'P'],
+    ['_', '_', '_', 'P', 'P', 'P', 'P', '_', 'P', 'P'],
+    ['_', 'P', '_', '_', 'P', 'P', 'P', '_', 'P', 'P'],
+    ['_', '_', 'P', '_', '_', '_', '_', '_', '_', 'P'],
+    ['P', '_', 'P', 'P', '_', 'P', 'P', 'P', '_', 'P']
+];
 
-// const nivel5: string[][] = [
-//     ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
-//     ['P', '_', '_', '_', '_', '_', '_', '_', '_', 'P'],
-//     ['P', '_', 'P', '_', '_', 'P', '_', '_', '_', 'P'],
-//     ['P', '_', 'P', 'P', '_', '_', 'P', '_', 'P', 'P'],
-//     ['P', '_', 'P', '_', '_', 'P', 'P', '_', 'P', 'P'],
-//     ['P', '_', 'P', '_', 'P', '_', '_', '_', '_', 'P'],
-//     ['_', 'P', 'A', 'P', 'P', 'P', 'P', '_', 'P', 'P'],
-//     ['_', '_', '_', '_', 'P', 'P', 'P', '_', 'P', 'P'],
-//     ['P', '_', 'P', '_', '_', '_', '_', '_', '_', 'P'],
-//     ['P', '_', 'P', 'P', '_', 'P', 'P', 'P', 'P', 'P']
-// ];
+const nivel5: string[][] = [
+    ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+    ['P', '_', '_', '_', '_', '_', '_', '_', '_', 'P'],
+    ['P', '_', 'P', '_', '_', 'P', '_', '_', '_', 'P'],
+    ['P', '_', 'P', 'P', '_', '_', 'P', '_', 'P', 'P'],
+    ['P', '_', 'P', '_', '_', 'P', 'P', '_', 'P', 'P'],
+    ['P', '_', 'P', '_', 'P', '_', '_', '_', '_', 'P'],
+    ['_', 'P', 'A', 'P', 'P', 'P', 'P', '_', 'P', 'P'],
+    ['_', '_', '_', '_', 'P', 'P', 'P', '_', 'P', 'P'],
+    ['P', '_', 'P', '_', '_', '_', '_', '_', '_', 'P'],
+    ['P', '_', 'P', 'P', '_', 'P', 'P', 'P', 'P', 'P']
+];
 
 const barajarArreglo = <T>(arreglo: T[]): T[] => {
     const copia = [...arreglo];
@@ -82,39 +82,47 @@ const obtenerObjetivoDiario = () => {
     return objetivos[indice];
 };
 
-const obtenerPlanDiario = (objetivo: { M: number; N: number }): string[][] => {
+const obtenerPlanDiario = (objetivo: { M: number; N: number },cantidad: number): string[][] => {
     const bolsaTotal = barajarArreglo([
         ...Array(objetivo.M).fill('M'),
         ...Array(objetivo.N).fill('N'),
         'E'
     ]);
-
-    // Se necesitan al menos 5 objetos para ocupar los 5 laberintos.
-    if (bolsaTotal.length < 5) {
+    if (bolsaTotal.length < cantidad) {
         throw new Error(
             'La misión debe generar al menos 5 objetos para ocupar todos los laberintos.'
         );
     }
 
-    const niveles: string[][] = [[],[],[]];
+    const niveles: string[][] = Array.from(
+        { length: cantidad },
+        () => []
+    );
 
     // Asignar primero un objeto a cada laberinto.
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < cantidad; i++) {
         niveles[i].push(bolsaTotal.pop()!);
     }
 
     // Distribuir aleatoriamente los objetos restantes.
     for (const item of barajarArreglo(bolsaTotal)) {
-        const nivel = Math.floor(Math.random() * 3);
+        const nivel = Math.floor(Math.random() * cantidad);
         niveles[nivel].push(item);
     }
     return niveles;
 };
 
 export const objetivoDiario = obtenerObjetivoDiario();
-const planDiario = obtenerPlanDiario(objetivoDiario);
-const mapaOriginal = [nivel1, nivel2, nivel3];
-const mapaCopia = barajarArreglo(mapaOriginal);
+const mapaOriginal = [nivel1, nivel2, nivel3, nivel4, nivel5];
+
+// Seleccionar aleatoriamente dos mapas diferentes.
+const mapaCopia = barajarArreglo(mapaOriginal).slice(0, 2);
+
+// Generar objetos únicamente para los dos mapas seleccionados.
+const planDiario = obtenerPlanDiario(
+    objetivoDiario,
+    mapaCopia.length
+);
 
 const armarLaberinto = (mapa: string[][], itemsDelNivel: string[]): string[][] => {
     const mapaRespuesta = mapa.map(fila => [...fila]);

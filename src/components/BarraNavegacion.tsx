@@ -1,58 +1,123 @@
-import { Navbar, NavbarCollapse, NavbarToggle } from 'flowbite-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { Indicador } from './Indicador';
-import { LogOut, CircleUser } from 'lucide-react';
+import { LogOut, CircleUser, ChevronDown } from 'lucide-react';
 import { profile } from '../assets/utils/sistema.api';
 import { useState, useEffect } from 'react';
 
 export function BarraNavegacion() {
-    const [nombre, setNombre] = useState('');
-    const location = useLocation();
+  const [nombre, setNombre] = useState('');
+  const [menuAbierto, setMenuAbierto] = useState(false);
+  const [navegacionAbierta, setNavegacionAbierta] = useState(false);
 
-    useEffect(()=> {
-      const fetchData = async()=>{
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let activo = true;
+    const fetchData = async () => {
+      try {
         const response = await profile();
-        setNombre(response.firstName);
-      };
-      fetchData();
-    }, [])
-
-    const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.clear();
+        if (activo) {
+          setNombre(response.firstName || '');
+        }
+      } catch (error) {
+        console.error('Error al obtener el perfil:', error);
+      }
     };
 
-    return (
-      <Navbar className='bg-white border-gray-200 dark:bg-gray-200 p-4 sticky top-0 z-50' fluid rounded>
-        <span className="self-rigth whitespace-nowrap text-xl font-semibold dark:text-black">
-          <Indicador />
-        </span>
-        <NavbarToggle className='bg-white md:hover:bg-white'/>
-        <NavbarCollapse>
-          <div className="flex flex-row space-x-7">
-            <ul><a href="/inicio"  className={`font-semibold block py-2 px-3 text-gray-900 rounded-sm md:bg-transparent md:p-0 dark:text-black ${
-              location.pathname === '/inicio' || location.pathname === '/aporte-ambiental' || location.pathname.startsWith('/juego-educativo') || location.pathname === '/conociendo-tu-planta' || location.pathname.startsWith('/consejos-encontrados') || location.pathname.startsWith('/mis-aprendizajes')
-                ? 'bg-lime-300 md:text-lime-700 md:dark:text-lime-500'
-                : 'hover:bg-lime-100 md:hover:text-lime-700 md:dark:hover:text-lime-500 dark:hover:bg-lime-200 dark:hover:text-black md:dark:hover:bg-transparent'
-            }`}>Inicio</a></ul>
+    fetchData();
+    return () => {
+      activo = false;
+    };
+  }, []);
 
-            <ul><a href="/mis-plantas" className={`font-semibold block py-2 px-3 text-gray-900 rounded-sm md:bg-transparent md:p-0 dark:text-black ${
-              location.pathname === '/mis-plantas' || location.pathname.startsWith('/aportes-plantas')
-                ? 'bg-lime-300 md:text-lime-700 md:dark:text-lime-500'
-                : 'hover:bg-lime-100 md:hover:text-lime-700 md:dark:hover:text-lime-500 dark:hover:bg-lime-200 dark:hover:text-black md:dark:hover:bg-transparent'
-            }`}>Mi Jardin</a></ul>
-            
-            <ul className="menu-boton">
-              <a href="#" className="font-semibold block py-2 px-3 text-gray-900 rounded-sm md:bg-transparent md:p-0 dark:text-black hover:bg-lime-100 md:hover:text-lime-700 md:dark:hover:text-lime-500 dark:hover:bg-lime-200 dark:hover:text-black md:dark:hover:bg-transparent">
-                 <span className='flex flex-row space-x-4 gap-2'> <CircleUser /> {nombre} </span>
-              </a>
-              <ul className="submenu">
-                <li><a onClick={logout} href="/index"> <span className='flex flex-row'><LogOut size={18} />Salir</span></a></li>
-              </ul>
-            </ul>
+  useEffect(() => {
+    setNavegacionAbierta(false);
+    setMenuAbierto(false);
+  }, [location.pathname]);
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate('/index');
+  };
+
+  const inicioActivo =
+    location.pathname === '/inicio' ||
+    location.pathname === '/aporte-ambiental' ||
+    location.pathname.startsWith('/juego-educativo') ||
+    location.pathname === '/conociendo-tu-planta' ||
+    location.pathname.startsWith('/consejos-encontrados') ||
+    location.pathname.startsWith('/mis-aprendizajes');
+
+  return (
+    <nav className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white shadow-sm">
+      <div className="mx-auto flex min-h-16 w-full items-center justify-between px-4 py-3">
+        <div className="shrink-0 text-gray-800">
+          <Indicador />
+        </div>
+        {/* Botón menú móvil */}
+        <button type="button" onClick={() => setNavegacionAbierta(!navegacionAbierta)}
+          className="cursor-pointer rounded-lg p-2 text-gray-600 transition-colors hover:bg-lime-100 md:hidden"
+          aria-label="Abrir menú de navegación" aria-expanded={navegacionAbierta}>
+          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {navegacionAbierta ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/>
+            )}
+          </svg>
+        </button>
+        {/* Navegación y perfil */}
+        <div className={`absolute left-0 top-full w-full border-b border-gray-200 bg-white p-4 shadow-md md:static md:flex md:w-auto md:items-center md:gap-6 md:border-0 md:p-0 md:shadow-none ${navegacionAbierta ? 'block' : 'hidden md:flex'}`}>
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-3">
+            <Link to="/inicio"
+              className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors
+                                ${inicioActivo
+                  ? 'bg-lime-100 text-lime-800'
+                  : 'text-gray-600 hover:bg-lime-50 hover:text-lime-800'
+                }`}> Inicio
+            </Link>
+            <Link to="/mis-plantas"
+              className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors
+                                ${location.pathname === '/mis-plantas' ||
+                  location.pathname.startsWith('/aportes-plantas')
+                  ? 'bg-lime-100 text-lime-800'
+                  : 'text-gray-600 hover:bg-lime-50 hover:text-lime-800'
+                }`}> Mi Jardín
+            </Link>
+            <Link to="/recursos"
+              className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors
+                                ${location.pathname === '/recursos'
+                  ? 'bg-lime-100 text-lime-800'
+                  : 'text-gray-600 hover:bg-lime-50 hover:text-lime-800'
+                }`} > Recursos
+            </Link>
           </div>
-        </NavbarCollapse>
-      </Navbar>
-    );
+          {/* Perfil del usuario */}
+          <div className="relative mt-3 border-t border-gray-100 pt-3 md:mt-0 md:border-0 md:pt-0">
+            <button type="button" onClick={() => setMenuAbierto(!menuAbierto)}
+              className="cursor-pointer flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-gray-700 transition-colors hover:bg-lime-50 md:w-auto"
+              aria-expanded={menuAbierto} >
+              <span className="flex items-center gap-2">
+                <CircleUser size={21} className="text-lime-700" />
+                <span className="text-sm font-semibold">
+                  {nombre || 'Mi cuenta'}
+                </span>
+              </span>
+              <ChevronDown size={16} className={`transition-transform ${menuAbierto ? 'rotate-180' : ''}`} />
+            </button>
+
+            {menuAbierto && (
+              <div className="mt-2 rounded-lg border border-gray-200 bg-white p-1 shadow-md md:absolute md:right-0 md:top-full md:mt-2 md:w-48">
+                <button onClick={logout}
+                  className="cursor-pointer flex w-full items-center gap-2 rounded-md px-3 py-2.5 text-sm text-gray-700 transition-colors hover:bg-red-50 hover:text-red-600"
+                > <LogOut size={17} /> Cerrar sesión
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
 }
-  

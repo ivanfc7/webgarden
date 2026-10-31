@@ -9,6 +9,7 @@ import { Footer } from "../../components/PiePagina";
 import { Link, useNavigate } from "react-router-dom"
 import { getProgresoJuego, profile, getTotalPlantas, getTotalAportes } from "../../assets/utils/sistema.api";
 import { useEffect, useState } from "react";
+import { Consejo } from "./Consejo";
 
 export function Home(){
     const [progresoJuego, setProgresoJuego] = useState<Progreso>();
@@ -72,12 +73,12 @@ export function Home(){
                     {/* Estadísticas */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                         <div className="text-center bg-blue-100 rounded-xl p-2">
-                            <p className="text-sm text-gray-600">Consejos desbloqueados</p>
-                            <p className="text-2xl font-bold text-blue-700">{totalConsejosDesbloqueados}</p>
+                            <p className="text-sm text-gray-600">Recursos desbloqueados</p>
+                            <p className="text-2xl font-bold text-blue-700">{totalTemasDesbloqueados} lecturas</p> 
                         </div>
                         <div className="text-center bg-yellow-100 rounded-xl p-2">
-                            <p className="text-sm text-gray-600">Temas desbloqueados</p>
-                            <p className="text-2xl font-bold text-yellow-700">{totalTemasDesbloqueados}</p>
+                            <p className="text-sm text-gray-600">Consejos para tu jardín</p>
+                            <p className="text-2xl font-bold text-yellow-700">{totalConsejosDesbloqueados} tips</p>
                         </div>
                         <div className="text-center bg-green-100 rounded-xl p-2">
                             <p className="text-sm text-gray-600">Plantas en el jardín</p>
@@ -90,6 +91,7 @@ export function Home(){
                     </div>
                 </div>
             </div>
+            <Consejo></Consejo>
             <div className="grid grid-cols-1 md:grid-cols-3 flex-grow">
                 <div className="m-10">
                     <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-white dark:border-gray-700 hover:bg-gray-100">

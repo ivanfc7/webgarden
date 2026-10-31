@@ -14,8 +14,11 @@ import { ProgresoJuego } from './ProgresoJuego';
 import juegoCompletado from '/audio/juegoCompletado.wav';
 import juegoPerdido from '/audio/juegoPerdido.wav';
 import itemEncontrado from '/audio/itemEncontrado.wav';
-import itemBasuraEncontrado from '/audio/itemBasuraEncontrado.wav';
-import descubrirCesped from '/audio/descubrirCesped.mp3'
+import itemAMN from '/audio/itemAMN.wav';
+import descubrirCesped from '/audio/descubrirCesped.mp3';
+import menosVidas from "/audio/menosVidas.mp3";
+import ModalPregunta from "./ModalPregunta";
+import { usePreguntasJuego } from "../../assets/utils/usePreguntasJuego";
 
 type MensajeData = {
     progreso: number;
@@ -67,8 +70,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     const [mostrarProgreso, setMostrarProgreso] = useState(false);
     const [puedeAvanzar, setPuedeAvanzar] = useState(false);
 
-    const [aviso] = useState('');
-
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
     const [gano, setGano] = useState(false);
     const [encontroItemEspecial, setEncontroItemEspecial] = useState(false);
@@ -81,10 +82,21 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     const audioCompletado = new Audio(juegoCompletado);
     const audioPerdido = new Audio(juegoPerdido);
     const audioItemEncontrado = new Audio(itemEncontrado);
-    const audioBasura = new Audio(itemBasuraEncontrado);
+    const audioAMN = new Audio(itemAMN);
     const audioCesped = new Audio(descubrirCesped);
+    const audioMenosVidas = new Audio(menosVidas);
 
     const { id } = useParams<{ id: string }>();
+
+    const {
+        preguntaActual,
+        modalAbierto,
+        resultado,
+        puntaje,
+        iniciarPregunta,
+        responderPregunta,
+        continuarJuego    
+    } = usePreguntasJuego();
 
     useEffect(() => {
         if (habilitarJuego) {
@@ -174,7 +186,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
         if (mapa[nuevaX][nuevaY] === 'B') {
             let controlVidas = vidas - 1;
             setVidas(controlVidas);
-            audioBasura.play();
+            audioMenosVidas.play();
             if (controlVidas === 0) {
                 setMostrarMensaje(true);
                 completarJuego();
@@ -187,7 +199,8 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             if (nuevasManzanas % 3 !== 0) {
                 setGrupoMDesbloqueado(false);
             }
-            audioBasura.play();
+            audioAMN.play();
+            iniciarPregunta();
             setManzanasPendientes(manzanasPendientes + 1);
         }
 
@@ -197,12 +210,13 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             if (nuevasNueces % 3 !== 0) {
                 setGrupoNDesbloqueado(false);
             }
-            audioBasura.play();
+            audioAMN.play();
+            iniciarPregunta();
             setNuecesPendientes(nuecesPendientes + 1);
         }
 
         if (mapa[nuevaX][nuevaY] === 'E') {
-            audioBasura.play();
+            audioAMN.play();
             setEncontroItemEspecial(true);
             setMostrarConsejoAbeja(true);
             toast.success('Pillaste a una abeja 🐝');
@@ -215,18 +229,10 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     // M, N y E del laberinto actual.
     // ============================================================
     useEffect(() => {
-        const objetosEncontrados =
-            manzanasPendientes +
-            nuecesPendientes +
-            (encontroItemEspecial ? 1 : 0);
+        const objetosEncontrados = manzanasPendientes + nuecesPendientes +(encontroItemEspecial ? 1 : 0);
 
-        if (
-            totalObjetosNivel > 0 &&
-            objetosEncontrados === totalObjetosNivel &&
-            !mostrarProgreso
-        ) {
+        if (totalObjetosNivel > 0 && objetosEncontrados === totalObjetosNivel && !mostrarProgreso) {
             const nuevoNivel = nivel + 1;
-
             if (nuevoNivel < cantidadNiveles()) {
                 setPuedeAvanzar(true);
                 setMostrarProgreso(true);
@@ -282,7 +288,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     useEffect(() => {
         // Cuando se consiguen 3 M
         if (manzanas > 0 && manzanas % 3 === 0 && !grupoMDesbloqueado) {
-            toast.success('Un consejo ha sido Desbloqueado');
+            toast.success('Un consejo para el jardin ha sido Desbloqueado');
             console.log('Grupo de 3 M completado');
             console.log('Desbloqueando consejo...');
             guardarProgresoMensajes();
@@ -292,7 +298,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
 
         // Cuando se consiguen 3 N
         if (nueces > 0 && nueces % 3 === 0 && !grupoNDesbloqueado) {
-            toast.success('Un tema de aprendizaje ha sido Desbloqueado');
+            toast.success('Un recurso de lectura ha sido Desbloqueado');
             console.log('Grupo de 3 N completado');
             console.log('Desbloqueando tema de aprendizaje...');
             guardarProgresoAprendizaje();
@@ -443,6 +449,23 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             );
         }
     }
+
+    const evaluarRespuesta = (indice: number) => {
+        const esCorrecta = responderPregunta(indice);
+        if (esCorrecta === false) {
+            setVidas(prev => Math.max(0, prev - 1));
+            audioMenosVidas.play();
+        }
+    };
+    const continuarBuscando = () => {
+        continuarJuego();
+        if(vidas === 0){
+            setGano(false);
+            audioPerdido.play();
+            setMostrarMensaje(true);
+            completarJuego();
+        }
+    };
     const TAMANO_CELDA = 70;
     const anchoMapa = mapa[0]?.length ?? 0;
     const altoMapa = mapa.length;
@@ -456,23 +479,9 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     const posicionJugadorY =
         posicionX * TAMANO_CELDA + TAMANO_CELDA / 2;
 
-    const desplazamientoX =
-        Math.min(
-            0,
-            Math.max(
-                tamanoCamara.ancho - anchoMundo,
-                tamanoCamara.ancho / 2 - posicionJugadorX
-            )
-        );
+    const desplazamientoX = Math.min(0,Math.max(tamanoCamara.ancho - anchoMundo, tamanoCamara.ancho / 2 - posicionJugadorX));
 
-    const desplazamientoY =
-        Math.min(
-            0,
-            Math.max(
-                tamanoCamara.alto - altoMundo,
-                tamanoCamara.alto / 2 - posicionJugadorY
-            )
-        );
+    const desplazamientoY = Math.min(0,Math.max(tamanoCamara.alto - altoMundo, tamanoCamara.alto / 2 - posicionJugadorY));
     return (
         <div>
             <div className="flex justify-between items-start mt-10">
@@ -481,45 +490,19 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                 </span>
 
                 <div className="flex flex-col items-center gap-2">
-                    <button
-                        onClick={() => setMostrarProgreso(true)}
-                        title="Ver progreso"
-                        className="
-                w-12 h-12 flex items-center justify-center
-                rounded-xl bg-emerald-50
-                border-2 border-emerald-300
-                shadow-[0_3px_0_#6b9f7a]
-                hover:bg-emerald-100 hover:scale-105
-                active:translate-y-[2px]
-                transition-all duration-150 cursor-pointer
-            "
+                    <button onClick={() => setMostrarProgreso(true)} title="Ver progreso"
+                        className="w-12 h-12 flex items-center justify-center rounded-xl bg-emerald-50 border-2 border-emerald-300 shadow-[0_3px_0_#6b9f7a] hover:bg-emerald-100 hover:scale-105 active:translate-y-[2px] transition-all duration-150 cursor-pointer"
                     >
-                        <img
-                            src="/img_juego/map-icon.png"
-                            alt="Progreso"
-                            className="w-9 h-9 object-contain"
-                        />
+                        <img src="/img_juego/map-icon.png" alt="Progreso" className="w-9 h-9 object-contain"/>
                     </button>
 
                     {mostrarConsejoAbeja && (
                         <button
                             onClick={() => setMostrarModalAbeja(true)}
                             title="Consejo de abeja"
-                            className="
-                    w-12 h-12 flex items-center justify-center
-                    rounded-xl bg-amber-50
-                    border-2 border-amber-300
-                    shadow-[0_3px_0_#d6a15c]
-                    hover:bg-amber-100 hover:scale-105
-                    active:translate-y-[2px]
-                    transition-all duration-150 cursor-pointer
-                "
+                            className="w-12 h-12 flex items-center justify-center rounded-xl bg-amber-50 border-2 border-amber-300 shadow-[0_3px_0_#d6a15c] hover:bg-amber-100 hover:scale-105 active:translate-y-[2px] transition-all duration-150 cursor-pointer"
                         >
-                            <img
-                                src="/img_juego/abeja.png"
-                                alt="Consejo"
-                                className="w-9 h-9 object-contain"
-                            />
+                            <img src="/img_juego/abeja.png" alt="Consejo" className="w-9 h-9 object-contain" />
                         </button>
                     )}
                 </div>
@@ -534,12 +517,10 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             )}
             <div className="flex flex-col items-center justify-center pb-20 pt-6 sm:pt-10 px-2">
                 {mapa && (
-                    <div
-                        ref={camaraRef}
+                    <div ref={camaraRef}
                         className="relative w-full max-w-[700px] h-[65vh] sm:h-[70vh] overflow-hidden rounded-xl"
                     >
-                        <div
-                            className="absolute transition-transform duration-200 ease-out"
+                        <div className="absolute transition-transform duration-200 ease-out"
                             style={{
                                 width: `${anchoMundo}px`,
                                 height: `${altoMundo}px`,
@@ -586,14 +567,8 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                 <div className="flex flex-col md:flex-row justify-between items-center px-4 max-w-5xl mx-auto">
                     {/* Botones de dirección */}
                     <div className="flex flex-row space-x-1 sm:space-x-3 mb-1 md:mb-0">
-                        <button
-                            onClick={arriba}
-                            className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center
-                   rounded-lg bg-white border-2 border-amber-300
-                   shadow-[0_3px_0_#d6a15c]
-                   hover:bg-amber-50 hover:border-amber-400
-                   active:translate-y-[2px] active:shadow-[0_1px_0_#d6a15c]
-                   transition-all duration-100 cursor-pointer"
+                        <button onClick={arriba}
+                            className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg bg-white border-2 border-amber-300 shadow-[0_3px_0_#d6a15c] hover:bg-amber-50 hover:border-amber-400 active:translate-y-[2px] active:shadow-[0_1px_0_#d6a15c] transition-all duration-100 cursor-pointer"
                             title="Mover Arriba"
                         >
                             <SquareArrowUp
@@ -603,15 +578,8 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                 strokeWidth={2.25}
                             />
                         </button>
-
-                        <button
-                            onClick={abajo}
-                            className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center
-                   rounded-lg bg-white border-2 border-amber-300
-                   shadow-[0_3px_0_#d6a15c]
-                   hover:bg-amber-50 hover:border-amber-400
-                   active:translate-y-[2px] active:shadow-[0_1px_0_#d6a15c]
-                   transition-all duration-100 cursor-pointer"
+                        <button onClick={abajo}
+                            className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg bg-white border-2 border-amber-300 shadow-[0_3px_0_#d6a15c] hover:bg-amber-50 hover:border-amber-400 active:translate-y-[2px] active:shadow-[0_1px_0_#d6a15c] transition-all duration-100 cursor-pointer"
                             title="Mover Abajo"
                         >
                             <SquareArrowDown
@@ -621,15 +589,8 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                 strokeWidth={2.25}
                             />
                         </button>
-
-                        <button
-                            onClick={izquierda}
-                            className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center
-                   rounded-lg bg-white border-2 border-amber-300
-                   shadow-[0_3px_0_#d6a15c]
-                   hover:bg-amber-50 hover:border-amber-400
-                   active:translate-y-[2px] active:shadow-[0_1px_0_#d6a15c]
-                   transition-all duration-100 cursor-pointer"
+                        <button onClick={izquierda}
+                            className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg bg-white border-2 border-amber-300 shadow-[0_3px_0_#d6a15c] hover:bg-amber-50 hover:border-amber-400 active:translate-y-[2px] active:shadow-[0_1px_0_#d6a15c] transition-all duration-100 cursor-pointer"
                             title="Mover Izquierda"
                         >
                             <SquareArrowLeft
@@ -639,15 +600,8 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                 strokeWidth={2.25}
                             />
                         </button>
-
-                        <button
-                            onClick={derecha}
-                            className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center
-                   rounded-lg bg-white border-2 border-amber-300
-                   shadow-[0_3px_0_#d6a15c]
-                   hover:bg-amber-50 hover:border-amber-400
-                   active:translate-y-[2px] active:shadow-[0_1px_0_#d6a15c]
-                   transition-all duration-100 cursor-pointer"
+                        <button onClick={derecha}
+                            className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg bg-white border-2 border-amber-300 shadow-[0_3px_0_#d6a15c] hover:bg-amber-50 hover:border-amber-400 active:translate-y-[2px] active:shadow-[0_1px_0_#d6a15c] transition-all duration-100 cursor-pointer"
                             title="Mover Derecha"
                         >
                             <SquareArrowRight
@@ -658,15 +612,29 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                             />
                         </button>
                     </div>
-
-                    {/* Indicadores de manzanas, nueces y vidas */}
-                    <div className="flex flex-row space-x-6 items-center">
-                        <p className="font-semibold text-lg flex items-center gap-1">
+                     {/* Indicadores vidas y correctas */}
+                    <div className="flex flex-row flex-wrap gap-4 items-center">
+                        {/* Vidas */}
+                        <div className="font-semibold text-lg flex items-center gap-2">
                             Vidas:
-                            {listaVidas.map((item) => (
-                                <img src={corazon} alt={item} width={24} height={24} />
-                            ))}
-                        </p>
+                            <div className="flex items-center gap-1">
+                                {listaVidas.map((item, index) => (
+                                    <img key={index}
+                                        src={corazon}
+                                        alt="Vida"
+                                        width={24}
+                                        height={24}
+                                        />
+                                    ))}
+                            </div>
+                        </div>
+                        {/* Puntaje */}
+                        <div className="font-semibold text-lg flex items-center gap-2">
+                            <span>Correctas:</span>
+                            <span className="text-green-700 font-bold">
+                                {puntaje}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -699,14 +667,13 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             {mostrarMensaje && (
                 <div className="fixed z-50 inset-0 overflow-y-auto bg-black/50 flex items-center justify-center px-4">
                     <div className="w-full max-w-md bg-amber-100 border-2 border-green-700 rounded-2xl p-6 shadow-xl">
-
                         <h2 className="text-3xl font-bold text-center mb-2 text-emerald-900">
                             {gano ? "¡JUEGO COMPLETADO!" : "¡JUEGO TERMINADO!"}
                         </h2>
 
                         <p className="text-center text-lg font-semibold text-gray-700 mb-5">
                             {gano
-                                ? "¡Lograste recorrer los cinco laberintos!"
+                                ? "¡Lograste recorrer todos los laberintos!"
                                 : "No lograste completar el objetivo diario."}
                         </p>
 
@@ -724,25 +691,31 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                 </span>
 
                                 <span className="font-bold text-emerald-800">
-                                    {gano ? 5 : nivel} / 5
+                                    {gano ? 2 : nivel} / 2
                                 </span>
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className="font-semibold text-gray-700">
-                                    Consejos desbloqueados
+                                    Consejos para el jardín desbloqueados:
                                 </span>
-
                                 <span className="font-bold text-emerald-800">
                                     {Math.floor(manzanas / 3)} / {objetivoRecurso.M / 3}
                                 </span>
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className="font-semibold text-gray-700">
-                                    Aprendizajes desbloqueados
+                                    Recursos de lectura desbloqueados:
                                 </span>
-
                                 <span className="font-bold text-emerald-800">
                                     {Math.floor(nueces / 3)} / {objetivoRecurso.N / 3}
+                                </span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="font-semibold text-gray-700">
+                                    Preguntas respondidas:
+                                </span>
+                                <span className="font-bold text-emerald-800">
+                                    {puntaje} / {objetivoRecurso.N + objetivoRecurso.M}
                                 </span>
                             </div>
 
@@ -780,17 +753,14 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                     )}
                                 </div>
                             </div>
-
-                            {/* Vidas */}
-                            <div className="flex justify-between items-center">
+                              {/* Vidas */}
+                              <div className="flex justify-between items-center">
                                 <span className="font-semibold text-gray-700">
                                     Vidas restantes
                                 </span>
-
                                 <div className="flex gap-1">
                                     {listaVidas.map((_, index) => (
-                                        <img
-                                            key={`vida-${index}`}
+                                        <img key={`vida-${index}`}
                                             src={corazon}
                                             alt="Vida"
                                             className="w-6 h-6 object-contain"
@@ -798,26 +768,14 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                     ))}
                                 </div>
                             </div>
-
                         </div>
-
-                        {aviso !== '' && (
-                            <p className="mt-4 text-sm text-gray-700 text-center">
-                                {aviso}
-                            </p>
-                        )}
-
                         <p className="mt-4 text-sm text-gray-600 text-center">
                             Este es un juego diario. Podrás intentarlo nuevamente mañana.
                         </p>
 
                         <div className="flex justify-center mt-5">
-                            <button
-                                onClick={cerrarMensaje}
-                                className="bg-emerald-700 hover:bg-emerald-800
-                               text-white font-bold rounded-xl
-                               px-6 py-2.5 cursor-pointer
-                               transition-colors"
+                            <button onClick={cerrarMensaje}
+                                className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl px-6 py-2.5 cursor-pointer transition-colors"
                             >
                                 Entendido
                             </button>
@@ -825,6 +783,14 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
 
                     </div>
                 </div>
+            )}
+             {modalAbierto && preguntaActual && (
+                <ModalPregunta
+                    pregunta={preguntaActual}
+                    resultado={resultado}
+                    onResponder={evaluarRespuesta}
+                    onContinuar={continuarBuscando}
+                />
             )}
         </div>
     );

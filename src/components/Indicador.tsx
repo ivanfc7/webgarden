@@ -8,6 +8,7 @@ export function Indicador(){
         '/aporte-ambiental': 'Captura de Carbono',
         '/conociendo-tu-planta': 'Conociendo tus Plantas',
         '/mis-plantas': 'Mis Plantas 🌿',
+        '/recursos': 'Recursos'
     };
 
     let nombreSeccion = '';

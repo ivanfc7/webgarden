@@ -4,6 +4,7 @@ import { VistaHE } from "./pages/aporteAmbiental/VistaHE";
 import { Home } from "./pages/home/Inicio";
 import { LandingPage } from "./pages/home/landingPage";
 import { MisPlantas } from "./pages/jardin/MisPlantas";
+import PaginaRecursos from "./pages/enciclopedia/PaginaRecursos";
 import { MisAfiches } from "./pages/jardin/MisAfiches";
 import { VistaGame } from "./pages/juego/VistaGame";
 import { Toaster } from "react-hot-toast";
@@ -23,6 +24,7 @@ function App(){
         <Route path="/inicio" element={<Home />} />
         <Route path="/aporte-ambiental" element={<VistaHE />} />
         <Route path="/mis-plantas" element={<MisPlantas />}/>
+        <Route path="/recursos" element={<PaginaRecursos /> } />
         <Route path="/aportes-plantas/:id" element={<MisAfiches />}/>
         <Route path="/juego-educativo/:id" element={<VistaGame />}/>
         <Route path="/conociendo-tu-planta" element={<VistaR />}/>

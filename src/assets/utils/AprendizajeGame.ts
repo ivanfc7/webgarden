@@ -16,6 +16,7 @@ Gracias a los cloroplastos, se transforman en:
 - 1 molécula de glucosa (C6H12O6)
 - 6 moléculas de oxígeno (O2)`,
 fuente:  `Resumen en base al Texto: [Ecología Verde: Fotosíntesis Fases e Importancia](https://www.ecologiaverde.com/fotosintesis-que-es-fases-e-importancia-2948.html) 
+
 Imagen recuperada de: [Ecología Verde](https://www.ecologiaverde.com/fotosintesis-que-es-fases-e-importancia-2948.html)`,
 video: "https://www.youtube.com/embed/mtGgo68VM54?si=WpkYM3QAsHPxZhKl"
     },
@@ -42,6 +43,7 @@ El tiempo que una planta o árbol vive varía de especie a especie; desde los pl
 En cualquier caso esta fase inicia con flores y hojas marchitandose, pasando al decaimiento de las ramas y la debilitación de sus raíces.
 `,
         fuente: `Resumen en base al Texto: [EcoTree - El ciclo de vida de un árbol](https://ecotree.green/en/blog/the-life-cycle-of-a-tree)
+
 Imagen recuperada de: [EcoTree](https://s3-eu-west-1.amazonaws.com/blog-ecotree/blog/0001/03/03701ab77ebafed29d375caabb00ea34f09e7154.jpg)`,
         video: "https://www.youtube.com/embed/Cr5xYwWOxAU?si=JqSdr35SLzHc3nsN"
     },
@@ -54,14 +56,14 @@ Esta pérdida de agua es un proceso natural que al igual que la fotosíntesis es
                     
 ## El proceso de la transpiración
                     
-- 🌿 En primer lugar las plantas realizan una apertura y cierre de los estomas; estos se encuentran formados por dos células. Al existir agua sobre las hojas estas células se llenan de agua y es cuando los estomas se abren; de esta forma liberan el vapor de agua. Por tanto, cuando las células pierden agua los estomas se cierran, reduciendo la pérdida de agua por transpiración.
+En primer lugar las plantas realizan una apertura y cierre de los estomas; estos se encuentran formados por dos células. Al existir agua sobre las hojas estas células se llenan de agua y es cuando los estomas se abren; de esta forma liberan el vapor de agua. Por tanto, cuando las células pierden agua los estomas se cierran, reduciendo la pérdida de agua por transpiración.
 
-- 🌿 Existe un concepto denominado 'potencial  hídrico' el agua en las células de las hojas tiene un potencial hídrico mayor al que existe en el aire del ambiente. 
+Existe un concepto denominado 'potencial  hídrico' el agua en las células de las hojas tiene un potencial hídrico mayor al que existe en el aire del ambiente. 
 Esto hace una diferencia química y como resultado el agua se mueve desde las células en las hojas hacia el aire por vía de los estomas.
 
-- 🌿 Otro punto es el transporte de agua desde las raíces, puesto que las plantas absorben el agua del suelo por medio de ellas específicamente por medio de un tejido vascular que se encuentra en las raíces y que lleva el nombre de 'xilema'.
+Otro punto es el transporte de agua desde las raíces, puesto que las plantas absorben el agua del suelo por medio de ellas específicamente por medio de un tejido vascular que se encuentra en las raíces y que lleva el nombre de 'xilema'.
 
-- 🌿 Este proceso es víctima de varios factores ambientales: Factores que afectan la tasa de transpiración; como la temperatura, la humedad, la velocidad del viento y la intensidad de la luz solar, provocan variaciones en el proceso, afectando a que las hojas transpiren menos agua o más agua dependiendo el ambiente.
+Este proceso es víctima de varios factores ambientales: Factores que afectan la tasa de transpiración; como la temperatura, la humedad, la velocidad del viento y la intensidad de la luz solar, provocan variaciones en el proceso, afectando a que las hojas transpiren menos agua o más agua dependiendo el ambiente.
                          
 ## Los beneficios de la transpiración
 
@@ -72,6 +74,7 @@ Esto hace una diferencia química y como resultado el agua se mueve desde las c�
         fuente: `Resumen en base a los Textos:
 [Viatli+ - La importancia de la transpiración en las plantas](https://vitalimas.cl/blogs/news/la-importancia-de-la-transpiracion-en-las-plantas)
 [Bioenciclopedia - Transpiración de las plantas: qué es y proceso](https://www.bioenciclopedia.com/transpiracion-de-las-plantas-que-es-y-proceso-825.html)
+
 Imagen recuperada de: 
 [Bioenciclopedia](https://cdn0.bioenciclopedia.com/es/posts/5/2/8/transpiracion_de_las_plantas_que_es_y_proceso_825_600.webp)`, 
         video: "https://www.youtube.com/embed/VYMpZwzKpmA?si=i4BMYZs93bbXgJ8u"
@@ -98,6 +101,7 @@ Es por ello que alguna vez se proclamó cierta frase famosa "Si las abejas desap
 `,
         fuente: `Resumen en base al Texto: 
 [Ecologia Verde - Importancia de la polinización](https://www.ecologiaverde.com/importancia-de-la-polinizacion-3256.html)
+
 Imagen recuperada de: 
 [BioEnciclopedia](https://cdn0.bioenciclopedia.com/es/posts/8/9/0/proceso_de_polinizacion_1098_1_600.webp)`,
         video: "https://www.youtube.com/embed/NxhxtQbD7F0?si=gfca3s2zaocpjpfa"
@@ -126,6 +130,7 @@ Aguas residuales los desechos que se arrojados a los canales ya sea por activida
 Quizá el tipo de contaminación menos conocida o poco concientizada. Resulta que el suelo es contaminado debido a las sustancias xenobióticos; estos son químicos ajenos al cuerpo humano, pero surgen debido a nuestra actividad como por ejemplo los metales pesados algunos pesticidas y productos farmacéuticos.
         `,
         fuente: `Resumen en base al Texto: [National Geographic - ¿Cuáles son los principales tipos de contaminación ambiental?](https://www.nationalgeographicla.com/medio-ambiente/2022/08/cuales-son-los-principales-tipos-de-contaminacion-ambiental)
+
 Imagen recuperada de: [Aprende en casa](https://nemdigitalstorage.blob.core.windows.net/nem-main/images/2023/06/04/b5e80ec9-0e06-4065-9a0f-2a1ee3b34d62.png)`,
         video: "https://www.youtube.com/embed/jjMAOV1XeOY?si=5qtGhIAOcRpdvYqi"
     },
@@ -135,17 +140,18 @@ Imagen recuperada de: [Aprende en casa](https://nemdigitalstorage.blob.core.wind
         imagen: "/img_juego/aprendizaje/4099384.jpg",
         contenido: `A lo largo del tiempo numerosos estudios han demostrado que exponerse a entornos llenos de naturaleza como bosques, parques, jardines es muy beneficioso para aliviar el estrés que acumulamos a lo largo del día a día.
 
-## Cuales son estos beneficios?
+## ¿Cuáles son estos beneficios?
 
-- Reducción del estrés y ansiedad: La presión arterial se disminuye con el contacto de la naturaleza y calmar el sistema nervioso, Con la exposición a la naturaleza durante unos 20 minutos aproximadamente reduce el cortisol; esta es la hormona que ocasiona el estrés. Incluso los síntomas de la ansiedad y depresión pueden llegar a reducirse con el contacto de los árboles.
+**Reducción del estrés y ansiedad:** La presión arterial se disminuye con el contacto de la naturaleza y calmar el sistema nervioso, Con la exposición a la naturaleza durante unos 20 minutos aproximadamente reduce el cortisol; esta es la hormona que ocasiona el estrés. Incluso los síntomas de la ansiedad y depresión pueden llegar a reducirse con el contacto de los árboles.
 
-- Mejoría en el estado de ánimo: Al igual que el estrés es ocasionado por cortisol, las sustancias químicas neurotransmisoras del bienestar y la felicidad (endorfinas y serotonina), lo opuesto al estrés, Son incrementadas con el contacto de la naturaleza.
+**Mejoría en el estado de ánimo:** Al igual que el estrés es ocasionado por cortisol, las sustancias químicas neurotransmisoras del bienestar y la felicidad (endorfinas y serotonina), lo opuesto al estrés, Son incrementadas con el contacto de la naturaleza.
 
-- Concentración y creatividad: La generación de nuevas ideas es mucho más optima cuando se tiene claridad mental. La claridad mental se incrementa con periodos rodeados de desconexión del mundo y sumergiéndose en un ambiente lleno de naturaleza. La exposición a estos entornos fomenta la creatividad.
+**Concentración y creatividad:** La generación de nuevas ideas es mucho más optima cuando se tiene claridad mental. La claridad mental se incrementa con periodos rodeados de desconexión del mundo y sumergiéndose en un ambiente lleno de naturaleza. La exposición a estos entornos fomenta la creatividad.
 
-- Descanso y relajación: La calidad de sueño es mucho mejor después de un tiempo sumergido en el entorno natural. Al despertarse la persona lo hace con mayor energía y vitalidad.
+**Descanso y relajación:** La calidad de sueño es mucho mejor después de un tiempo sumergido en el entorno natural. Al despertarse la persona lo hace con mayor energía y vitalidad.
         `,
         fuente: `Resumen en base al Texto: [VitalSeguro - Conexión con la Naturaleza: Una Clave para el Bienestar Mental](https://www.vitalseguro.com/blog/salud/conexion-con-la-naturaleza/)
+        
 Imagen de: [Freepik](http://www.freepik.com)`,
         video: "https://www.youtube.com/embed/VXwfekJjk6A"
     }
