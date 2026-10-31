@@ -10,19 +10,19 @@ export interface InfoPlanta{
 
 export const plantas: Record<string, InfoPlanta> = {
     arbol: {
-        ubicacion: "Plantar en espacios amplios no muy pegado a infraestructuras.",
-        separacion: "3-5 metros entre otro árbol",
+        ubicacion: "En zonas amplias, alejados de muros, cimientos, cables y tuberías.",
+        separacion: "De 3 a 5 metros entre árboles pequeños; amplía la distancia si el árbol será grande.",
         etapa: {
             0: {
-                profundidad: "Enterrar a una profundidad de aprox. 2 veces su tamaño",
+                profundidad: "Haz un pequeño hoyo y cubre la semilla con una capa de tierra del doble de su tamaño. Si la semilla mide 0.5 cm, cúbrela con 1 cm de tierra.",
                 riego: "Mantener la tierra húmeda, sin encharcar.",
             },
             1: {
-                profundidad: "Colocar a ras del cepellón",
+                profundidad: "Cava un hoyo del mismo alto que el bloque de tierra de la planta. Colócala de modo que la base del tronco quede justo al nivel del suelo, nunca enterrada.",
                 riego: "Riego profundo y abundante después de plantar.",
             },
             2: {
-                profundidad: "A ras del cepellón con un pequeño cuenco alrededor del tallo para retener agua en los primeros riegos",
+                profundidad: "Asegúrate de que el hoyo tenga la misma profundidad que el bloque de raíces. La base del tronco debe quedar visible y al nivel de la superficie.",
                 riego: "Riego profundo cada 3-4 días durante el primer mes.",
             },
         },
@@ -48,22 +48,22 @@ export const plantas: Record<string, InfoPlanta> = {
         tip: "Los árboles tienden a requerir de mucho espacio tanto de raices como de altura, la mayoria de árboles frutales no ocupan mucho espacio. Considera el espacio a la hora de plantar un árbol"
     },
     flor: {
-        ubicacion: "Entre sol y sombre equilibrada",
-        separacion: "20-30 cm entre flores",
+        ubicacion: "En un lugar bien iluminado (con sol directo o semisombra, según la flor).",
+        separacion: "De 20 a 30 cm de distancia entre cada planta.",
         etapa: {
             0: {
-                profundidad: "Las semillas de flores deben cubrirse con una capa de tierra de aproximadamente 2 veces su tamaño.",
+                profundidad: "Coloca la semilla sobre la tierra. Cúbrela solo con una capa muy fina de tierra. Si la especie necesita luz para nacer, déjala justo en la superficie.",
                 riego: "Mantener el sustrato húmedo, regando con atomizador o lluvia fina para no desplazar la semilla."
             },
             1: {
-                profundidad: "Mantener al mismo nivel del cepellón.",
+                profundidad: "Haz un hoyo del tamaño del bloque de tierra de tu plantín. Colócalo de forma que la tierra del plantín quede alineada con el borde del hoyo.",
                 riego: "Regar de forma regular (cada 2-3 días si es verano) evitando encharcar."
             },
             2: {
-                profundidad: "Mantener al mismo nivel del cepellón.",
+                profundidad: "Acomoda la planta en el hoyo y rellena los lados con tierra. Evita tapar o enterrar la base del tallo.",
                 riego: "Riego equilibrado: frecuente pero moderado, procurando que el suelo no se seque."
             }
-        },    
+        },   
         tierra:{
             pedregoso: "El agua drena más rápido, Buena aireación para las raíces..",
             arenoso: "El suelo retiene poca agua, Se secan demasiado pronto.",
@@ -76,29 +76,29 @@ export const plantas: Record<string, InfoPlanta> = {
             caluroso: "Regar con mayor frecuencia: El agua se evapora rápido",    
         },
         hojas:{
-            tipoA: "Hojas amarillas y sin brillo: falta de agua.",
-            tipoB: "Hojas nuevas pequeñas: falta de luz solar.",
-            tipoC: "Manchas o secas: exceso de sol, necesita más sombra.",
-            tipoD: "Hojas blandas: exceso de agua.",
-            tipoE: "Pequeños agujeros: insectos alimentándose.",
-            tipoF: "Manchas oscuras: posible presencia de hongos."
+            tipoA: "Falta de agua.",
+            tipoB: "Falta de luz solar.",
+            tipoC: "Exceso de sol, necesita más sombra.",
+            tipoD: "Exceso de agua.",
+            tipoE: "Insectos alimentándose.",
+            tipoF: "Posible presencia de hongos."
         },
         tip: "La primavera es excelente para la mayoría de las flores",
     },
     arbusto: {
-        ubicacion: "En cualquier espacio abierto",
-        separacion: "1 metro entre otros arbustos",
+        ubicacion: "En jardines o espacios donde tengan espacio para crecer hacia los lados y recibir sol.",
+        separacion: "Al menos 1 metro de distancia entre cada arbusto.",
         etapa: {
             0: {
-                profundidad: "Las semillas de arbustos deben cubrirse con tierra equivalente a 2 veces su tamaño.",
+                profundidad: "Haz un hoyo pequeño y tapa la semilla con una capa de tierra que equivalga a dos veces su grosor.",
                 riego: "Riego ligero y constante hasta la germinación, manteniendo humedad superficial."
             },
             1: {
-                profundidad: "El plantín debe colocarse a ras del cepellón.",
+                profundidad: "Cava un hoyo del mismo alto que la maceta actual. Al colocar el plantín, la parte superior de su tierra debe quedar al ras del suelo.",
                 riego: "Regar profundo después del trasplante (2-3 veces por semana) para estimular raíces fuertes."
             },
             2: {
-                profundidad: "Mantener a ras del cepellón.",
+                profundidad: "Planta a la misma altura a la que venía creciendo. Rellena los huecos laterales sin tapar el tallo principal.",
                 riego: "Riego moderado pero profundo 1-2 veces por semana, aumentando en épocas de calor prolongado."
             }
         },
@@ -114,29 +114,29 @@ export const plantas: Record<string, InfoPlanta> = {
             caluroso: "Regar con mayor frecuencia: El agua se evapora rápido",    
         },
         hojas:{
-            tipoA: "Hojas amarillas y sin brillo: falta de agua.",
-            tipoB: "Hojas nuevas pequeñas: falta de luz solar.",
-            tipoC: "Manchas o secas: exceso de sol, necesita más sombra.",
-            tipoD: "Hojas blandas: exceso de agua.",
-            tipoE: "Pequeños agujeros: insectos alimentándose.",
-            tipoF: "Manchas oscuras: posible presencia de hongos."
+            tipoA: "Falta de agua.",
+            tipoB: "Falta de luz solar.",
+            tipoC: "Exceso de sol, necesita más sombra.",
+            tipoD: "Exceso de agua.",
+            tipoE: "Insectos alimentándose.",
+            tipoF: "Posible presencia de hongos."
         },
         tip: "Los arbustos son resistentes y útiles para delimitar espacios o crear barreras naturales.",
     },
     suculenta: {
-        ubicacion: "En macetas, dentro el hogar o al pie de ventanas",
-        separacion: "10-15 cm entre todo tipo de planta",  
+        ubicacion: "En macetas con buena luz, muy cerca de ventanas o en exteriores soleados.",
+        separacion: "De 10 a 15 cm de distancia respecto a otras plantas.",
         etapa: {
             0: {
-                profundidad: "Las semillas de suculentas deben cubrirse con una capa muy fina de tierra o arena (no más de 2 mm).",
+                profundidad: "Esparce las semillas sobre la superficie. Espolvorea apenas una pizca de arena o tierra encima, sin enterrarlas.",
                 riego: "Rociar con atomizador manteniendo humedad ligera pero sin encharcar."
             },
             1: {
-                profundidad: "Trasplantar el plantín a ras del cepellón.",
+                profundidad: "Coloca el plantín procurando que la tierra de la raíz quede al mismo nivel que el suelo. La superficie no debe tocar las hojas inferiores.",
                 riego: "Riego ligero cada 7-10 días; esperar a que el sustrato se seque por completo antes de volver a regar."
             },
             2: {
-                profundidad: "Mantener a ras del cepellón, en maceta o suelo con excelente drenaje.",
+                profundidad: "Mantén la misma profundidad a la que venía creciendo en su maceta anterior. Las hojas de la base deben quedar suspendidas por encima de la tierra.",
                 riego: "Riego espaciado: cada 10-15 días en clima cálido; reducir a 1 vez al mes en invierno."
             }
         },
@@ -152,12 +152,12 @@ export const plantas: Record<string, InfoPlanta> = {
             caluroso: "Similar a los dias nublados"
         },
         hojas:{
-            tipoA: "Hojas amarillas y sin brillo: falta de agua.",
-            tipoB: "Hojas nuevas pequeñas: falta de luz solar.",
-            tipoC: "Manchas o secas: exceso de sol, necesita más sombra.",
-            tipoD: "Hojas blandas: exceso de agua.",
-            tipoE: "Pequeños agujeros: insectos alimentándose.",
-            tipoF: "Manchas oscuras: posible presencia de hongos."
+            tipoA: "Falta de agua.",
+            tipoB: "Falta de luz solar.",
+            tipoC: "Exceso de sol, necesita más sombra.",
+            tipoD: "Exceso de agua.",
+            tipoE: "Insectos alimentándose.",
+            tipoF: "Posible presencia de hongos."
         },
         tip: "Perfectas para climas secos.",
     }

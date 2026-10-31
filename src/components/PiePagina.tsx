@@ -9,14 +9,9 @@ export function Footer() {
         </p>
 
         <div className="flex items-center gap-4">
-          <a 
-            href="https://github.com" 
-            target="_blank" 
-            rel="noreferrer" 
-            className="p-2 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-full transition-colors"
-            aria-label="GitHub"
-          >
-            <Github className="w-4 h-4" />
+          <a href="https://github.com/ivanfc/webgarden" target="_blank" rel="noreferrer" 
+            className="p-2 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-full transition-colors" aria-label="GitHub">
+              <Github className="w-4 h-4" />
           </a>
           <span className="font-medium text-slate-400">© 2026 Webgarden</span>
         </div>
