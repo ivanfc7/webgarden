@@ -26,8 +26,8 @@ export function Home(){
             const res = await getProgresoJuego();
             setProgresoJuego(res.data[0]);
             console.log(progresoJuego);
-            setTotalConsejosDesbloqueados(res.data[0].cantidadMsjDesbloqueados)
-            setTotalTemasDesbloqueados(res.data[0].cantidadApzjDesbloqueados)
+            setTotalConsejosDesbloqueados(res.data[0].cantidadMsjDesbloqueados);
+            setTotalTemasDesbloqueados(res.data[0].cantidadApzjDesbloqueados);
         };
         const perfilUsuario = async()=>{
             const response = await profile();
@@ -110,7 +110,7 @@ export function Home(){
                     <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-white dark:border-gray-700 hover:bg-gray-100">
                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-teal-900">Captura de carbono</h5>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-500">¿Sabes cuánto carbono están reteniendo los árboles de tu hogar?</p><br />
-                        <Link to='/aporte-ambiental' className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                        <Link to='/captura-carbono' className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                             Vamos!
                             <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>

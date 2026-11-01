@@ -1,19 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { listaTemas, cantidadTemas } from "../../assets/utils/AprendizajeGame";
 import { LockKeyholeOpen } from "lucide-react";
 import { BarraNavegacion } from "../../components/BarraNavegacion";
+import {getAprendizajeDesbloqueado, getProgresoJuego} from "../../assets/utils/sistema.api";
 
-type Tema = [number, string, string, string, string, string];
+interface AprendizajeData {
+    id: number;
+    titulo: string;
+    contenido: string;
+    imagen: string;
+    fuente: string;
+    video: string;
+    desbloqueado: boolean;
+}
+
+interface Progreso {
+    id: number;
+    cantidadMsj: number;
+    cantidadApzj: number;
+}
 
 export default function PaginaRecursos() {
-    const temas: Tema[] = Array.from(
-        { length: cantidadTemas() },
-        (_, indice) => listaTemas(indice)
-    );
-    const [temaSeleccionado, setTemaSeleccionado] = useState<Tema | null>(null);
+    const [temas, setTemas] = useState<AprendizajeData[]>([]);
+    const [progresoJuego, setProgresoJuego] = useState<Progreso | null>(null);
+    const [temaSeleccionado, setTemaSeleccionado] = useState<AprendizajeData | null>(null);
+    const [cargando, setCargando] = useState(true);
 
-    /**Vista inicial: listado de temas */
+    useEffect(() => {
+        const cargarDatos = async () => {
+            try {
+                const resProgreso = await getProgresoJuego();
+                if (!resProgreso.data || resProgreso.data.length === 0) {
+                    setTemas([]);
+                    return;
+                }
+
+                const progreso = resProgreso.data[0];
+                setProgresoJuego(progreso);
+                console.log(progresoJuego);
+                const resAprendizajes = await getAprendizajeDesbloqueado(progreso.id);
+                setTemas(resAprendizajes.data);
+            } catch (error) {
+                console.error("Error al cargar los aprendizajes:", error);
+            } finally {
+                setCargando(false);
+            }
+        };
+
+        cargarDatos();
+    }, []);
+
+    /**Vista inicial: Temasdo de temas */
     if (!temaSeleccionado) {
         return (
             <section className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300 flex flex-col">
@@ -40,15 +77,15 @@ export default function PaginaRecursos() {
                         {temas.length > 0 ? (
                             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                 {temas.map((tema) => (
-                                    <button key={tema[0]} type="button"
+                                    <button key={tema.id} type="button"
                                         onClick={() => {
                                             setTemaSeleccionado(tema);
                                             window.scrollTo({ top: 0, behavior: "smooth" });
                                         }}
                                         className="group overflow-hidden rounded-2xl border border-[#b6d7a8]/70 bg-white text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#9acf00] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#9acf00] cursor-pointer">
                                         <div className="h-48 overflow-hidden bg-[#e5e7eb]">
-                                            {tema[3] ? (
-                                                <img src={tema[3]} alt={tema[1]} loading="lazy"
+                                            {tema.imagen ? (
+                                                <img src={tema.imagen} alt={tema.imagen} loading="lazy"
                                                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"/>
                                             ) : (
                                                 <div className="flex h-full items-center justify-center text-5xl">🌱</div>
@@ -56,7 +93,7 @@ export default function PaginaRecursos() {
                                         </div>
 
                                         <div className="p-5">
-                                            <h3 className="text-lg font-bold text-[#0b4f4a]"> {tema[1]} </h3>
+                                            <h3 className="text-lg font-bold text-[#0b4f4a]"> {tema.titulo} </h3>
                                             <div className="mt-4 flex border-t border-[#e5e7eb] pt-3">
                                                 <span className="text-xs text-[#7b7290]">
                                                     Explorar contenido
@@ -90,7 +127,7 @@ export default function PaginaRecursos() {
         );
     }
     /** Vista de lectura */
-    const [id, titulo, contenido, imagen, fuente] = temaSeleccionado;
+    const {id, imagen, fuente,} = temaSeleccionado;
     return (
         <div >
             <BarraNavegacion></BarraNavegacion>
@@ -99,9 +136,7 @@ export default function PaginaRecursos() {
                     {/* Índice lateral de temas */}
                     <aside className="w-full border-b border-[#b6d7a8] bg-white lg:sticky lg:top-0 lg:h-screen lg:w-72 lg:shrink-0 lg:overflow-y-auto lg:border-b-0 lg:border-r">
                         <div className="p-5">
-                            <button
-                                type="button"
-                                onClick={() => setTemaSeleccionado(null)}
+                            <button type="button" onClick={() => setTemaSeleccionado(null)}
                                 className="mb-5 flex items-center gap-2 text-sm font-semibold text-[#2d572c] transition-colors hover:text-[#9acf00] cursor-pointer">
                                 &#9664; Volver a los temas
                             </button>
@@ -115,12 +150,14 @@ export default function PaginaRecursos() {
                             </div>
                             <div className="mb-4 h-1 w-12 rounded-full bg-[#9acf00]" />
                                 <nav className="flex gap-2 overflow-x-auto pb-3 lg:flex-col lg:overflow-visible lg:pb-0">
-                                {temas.map((tema, indice) => {
-                                    const activo = tema[0] === id;
+                                {cargando ? (
+                                    <p className="text-center py-10">
+                                        Cargando aprendizajes...
+                                    </p>
+                                ) : temas.map((tema, indice) => {
+                                    const activo = tema.id === id;
                                     return (
-                                        <button
-                                            key={tema[0]}
-                                            type="button"
+                                        <button key={tema.id} type="button"
                                             onClick={() => {
                                                 setTemaSeleccionado(tema);
                                                 window.scrollTo({ top: 0, behavior: "smooth" });
@@ -144,7 +181,7 @@ export default function PaginaRecursos() {
                                                         ? "text-[#0b4f4a]"
                                                         : "text-[#7b7290]"
                                                     }`}>
-                                                    {tema[1]}
+                                                    {tema.titulo}
                                                 </span>
                                             </div>
                                         </button>
@@ -163,14 +200,14 @@ export default function PaginaRecursos() {
                                     Recurso
                                 </span>
                                 <h1 className="mt-4 text-3xl font-bold leading-tight text-[#2d572c] sm:text-4xl">
-                                    {titulo}
+                                    {temaSeleccionado.titulo}
                                 </h1>
                                 <div className="mt-5 h-1 w-20 rounded-full bg-[#9acf00]" />
                             </div>
                             {/* Imagen principal */}
                             {imagen && (
                                 <div className="mb-8 overflow-hidden rounded-2xl border border-[#b6d7a8]/60 bg-white shadow-sm">
-                                    <img src={imagen} alt={titulo} className="max-h-[420px] w-full object-contain rounded-xl"  />
+                                    <img src={temaSeleccionado.imagen} alt={temaSeleccionado.titulo} className="max-h-[420px] w-full object-contain rounded-xl"  />
                                 </div>
                             )}
                             {/* Texto del tema */}
@@ -195,7 +232,7 @@ export default function PaginaRecursos() {
                                             ),
                                         }}
                                     >
-                                        {contenido || "No hay contenido disponible para este tema."}
+                                        {temaSeleccionado.contenido || "No hay contenido disponible para este tema."}
                                     </ReactMarkdown>
                                 </div>
                             </div>
@@ -227,7 +264,7 @@ export default function PaginaRecursos() {
                                                 ),
                                             }}
                                         >
-                                            {fuente}
+                                            {temaSeleccionado.fuente}
                                         </ReactMarkdown>
                                     </div>
                                 </div>
@@ -237,31 +274,29 @@ export default function PaginaRecursos() {
                             <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
                                 <button type="button"
                                     onClick={() => {
-                                        const indice = temas.findIndex(t => t[0] === id);
-
+                                        const indice = temas.findIndex(t => t.id === id);
                                         if (indice > 0) {
                                             setTemaSeleccionado(temas[indice - 1]);
                                             window.scrollTo({ top: 0, behavior: "smooth" });
                                         }
                                     }}
-                                    disabled={temas.findIndex(t => t[0] === id) === 0}
+                                    disabled={temas.findIndex(t => t.id === id) === 0}
                                     className="rounded-xl border border-[#b6d7a8] bg-white px-5 py-3 text-sm font-semibold text-[#2d572c] transition hover:bg-[#f7fee7] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
                                 > 
                                     &#9664; Tema anterior
                                 </button>
                                 <button type="button"
                                     onClick={() => {
-                                        const indice = temas.findIndex(t => t[0] === id);
-
+                                        const indice = temas.findIndex(t => t.id === id);
                                         if (indice < temas.length - 1) {
                                             setTemaSeleccionado(temas[indice + 1]);
                                             window.scrollTo({ top: 0, behavior: "smooth" });
                                         }
                                     }}
-                                    disabled={temas.findIndex(t => t[0] === id) === temas.length - 1}
+                                    disabled={temas.findIndex(t => t.id === id) === temas.length - 1}
                                     className="rounded-xl bg-[#2d572c] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#0b4f4a] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
                                 >
-                                    Siguiente tema &#9654;
+                                    Tema siguiente &#9654;
                                 </button>
                             </div>
                         </article>

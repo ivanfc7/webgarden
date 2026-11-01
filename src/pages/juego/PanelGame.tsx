@@ -88,15 +88,8 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
 
     const { id } = useParams<{ id: string }>();
 
-    const {
-        preguntaActual,
-        modalAbierto,
-        resultado,
-        puntaje,
-        iniciarPregunta,
-        responderPregunta,
-        continuarJuego    
-    } = usePreguntasJuego();
+    const [puntajeAux, setPuntajeAux] = useState(0);
+    const { preguntaActual, modalAbierto, resultado, puntaje, iniciarPregunta, responderPregunta, reiniciarPreguntas, continuarJuego} = usePreguntasJuego();
 
     useEffect(() => {
         if (habilitarJuego) {
@@ -166,7 +159,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     const mover = (dx: number, dy: number) => {
         const nuevaX = posicionX + dx;
         const nuevaY = posicionY + dy;
-
         // Verifica si está dentro del mapa y no es una piedra
         if (
             nuevaX >= 0 && nuevaX < mapa.length &&
@@ -242,14 +234,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                 completarJuego();
             }
         }
-    }, [
-        manzanasPendientes,
-        nuecesPendientes,
-        encontroItemEspecial,
-        totalObjetosNivel,
-        nivel,
-        mostrarProgreso
-    ]);
+    }, [manzanasPendientes, nuecesPendientes, encontroItemEspecial, totalObjetosNivel, nivel, mostrarProgreso]);
 
     // ============================================================
     // EDITAR: desbloqueo de recursos por grupos de 3
@@ -306,12 +291,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             setGrupoNDesbloqueado(true);
         }
 
-    }, [
-        manzanas,
-        nueces,
-        grupoMDesbloqueado,
-        grupoNDesbloqueado
-    ]);
+    }, [manzanas, nueces, grupoMDesbloqueado, grupoNDesbloqueado]);
 
     useEffect(() => {
         if (mostrarMensaje && gano) {
@@ -338,7 +318,9 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     }
 
     async function completarJuego() {
+        setPuntajeAux(puntaje);
         await updateFechaJuego();
+        reiniciarPreguntas();
     }
 
     const cerrarMensaje = () => {
@@ -710,7 +692,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                     Preguntas respondidas:
                                 </span>
                                 <span className="font-bold text-emerald-800">
-                                    {puntaje} / {objetivoRecurso.N + objetivoRecurso.M}
+                                    {puntajeAux} / {objetivoRecurso.N + objetivoRecurso.M}
                                 </span>
                             </div>
 

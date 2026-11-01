@@ -5,7 +5,7 @@ export function Indicador(){
 
     const rutas: {[key:string]:string}={
         '/inicio': 'Bienvenido !! 👏',
-        '/aporte-ambiental': 'Captura de Carbono',
+        '/captura-carbono': 'Captura de Carbono',
         '/conociendo-tu-planta': 'Conociendo tus Plantas',
         '/mis-plantas': 'Mis Plantas 🌿',
         '/recursos': 'Recursos'

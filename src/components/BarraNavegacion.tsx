@@ -43,7 +43,7 @@ export function BarraNavegacion() {
 
   const inicioActivo =
     location.pathname === '/inicio' ||
-    location.pathname === '/aporte-ambiental' ||
+    location.pathname === '/captura-carbono' ||
     location.pathname.startsWith('/juego-educativo') ||
     location.pathname === '/conociendo-tu-planta' ||
     location.pathname.startsWith('/consejos-encontrados') ||
