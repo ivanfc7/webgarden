@@ -618,14 +618,9 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                         <div className="font-semibold text-lg flex items-center gap-2">
                             Vidas:
                             <div className="flex items-center gap-1">
-                                {listaVidas.map((item, index) => (
-                                    <img key={index}
-                                        src={corazon}
-                                        alt="Vida"
-                                        width={24}
-                                        height={24}
-                                        />
-                                    ))}
+                                {listaVidas.map((index) => (
+                                    <img key={index} src={corazon} alt="Vida" width={24} height={24}/>
+                                ))}
                             </div>
                         </div>
                         {/* Puntaje */}

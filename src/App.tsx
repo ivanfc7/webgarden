@@ -9,7 +9,6 @@ import { MisAfiches } from "./pages/jardin/MisAfiches";
 import { VistaGame } from "./pages/juego/VistaGame";
 import { Toaster } from "react-hot-toast";
 import { VistaR } from "./pages/recomendaciones/VistaR";
-import { VistaMensajes } from "./pages/juego/VistaMensajes";
 import { VistaAprendizaje } from "./pages/juego/VistaAprendizaje";
 import { CreateUsr } from "./pages/usuario/CreateUsr";
 import { ValidarUsuario } from "./pages/usuario/ValidarUsr";
@@ -28,7 +27,6 @@ function App(){
         <Route path="/aportes-plantas/:id" element={<MisAfiches />}/>
         <Route path="/juego-educativo/:id" element={<VistaGame />}/>
         <Route path="/conociendo-tu-planta" element={<VistaR />}/>
-        <Route path="/consejos-encontrados/:id" element={<VistaMensajes /> }/>
         <Route path="/mis-aprendizajes/:id" element={<VistaAprendizaje /> }/>
         <Route path="/crear-cuenta" element={<CreateUsr/>} />
         <Route path="/verify-magic/:token" element={<ValidarUsuario /> } />
