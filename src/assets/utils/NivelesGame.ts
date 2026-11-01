@@ -83,10 +83,10 @@ const obtenerObjetivoDiario = () => {
 };
 
 const obtenerPlanDiario = (objetivo: { M: number; N: number },cantidad: number): string[][] => {
+    
     const bolsaTotal = barajarArreglo([
         ...Array(objetivo.M).fill('M'),
-        ...Array(objetivo.N).fill('N'),
-        'E'
+        ...Array(objetivo.N).fill('N')
     ]);
     if (bolsaTotal.length < cantidad) {
         throw new Error(
@@ -98,6 +98,8 @@ const obtenerPlanDiario = (objetivo: { M: number; N: number },cantidad: number):
         { length: cantidad },
         () => []
     );
+    
+    niveles[0].push('E');
 
     // Asignar primero un objeto a cada laberinto.
     for (let i = 0; i < cantidad; i++) {

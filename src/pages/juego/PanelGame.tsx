@@ -692,7 +692,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                     Preguntas respondidas:
                                 </span>
                                 <span className="font-bold text-emerald-800">
-                                    {puntajeAux} / {objetivoRecurso.N + objetivoRecurso.M}
+                                    {puntajeAux} / {objetivoRecurso.N + objetivoRecurso.M - 1}
                                 </span>
                             </div>
 
