@@ -1,12 +1,16 @@
+// 1. Interfaz alineada con los campos reales del serializer de Django
 interface Progreso {
-    id: number;
-    cantidadMsj: number;
-    cantidadApzj: number;
+    id?: number;
+    usuario?: number;
+    cantidadMsjDesbloqueados?: number;
+    cantidadApzjDesbloqueados?: number;
+    fechaJuego?: string | null;
+    experiencia?: number;
 }
 
-import { BarraNavegacion } from "../../components/BarraNavegacion"
+import { BarraNavegacion } from "../../components/BarraNavegacion";
 import { Footer } from "../../components/PiePagina";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { getProgresoJuego, profile, getTotalPlantas, getTotalAportes } from "../../assets/utils/sistema.api";
 import { useEffect, useState } from "react";
 import { Consejo } from "./Consejo";
@@ -25,7 +29,9 @@ export function Home(){
             try {
                 const res = await getProgresoJuego();
                 console.log("Respuesta de progreso:", res.data);
-                const progreso = res.data?.[0];
+                
+                // Extraer el primer elemento si res.data es un Array, o usar res.data directamente si es un objeto
+                const progreso = Array.isArray(res.data) ? res.data[0] : res.data;
     
                 if (!progreso) {
                     console.warn("El usuario todavía no tiene un progreso registrado.");
@@ -63,16 +69,18 @@ export function Home(){
         cargarPerfil();
     
     }, []);
+
+    // 2. Fallback de ID: Si 'id' no está explícito en el objeto, usa 'usuario'
+    const idProgresoValido = progresoJuego?.id ?? progresoJuego?.usuario;
+
     return (
         <section className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300 flex flex-col">
             <BarraNavegacion />
             <div className="max-w-5xl mx-auto mt-10 bg-white rounded-2xl shadow-md p-6 flex flex-col md:flex-row items-center gap-6">
-                {/* Imagen o inicial en círculo */}
                 <div className="w-28 h-28 rounded-full bg-emerald-400 flex items-center justify-center text-5xl font-bold text-emerald-900">
                     {nombreCompleto.charAt(0)}
                 </div>
 
-                {/* Info de usuario */}
                 <div className="flex-1">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                         <div>
@@ -81,7 +89,6 @@ export function Home(){
                         </div>
                     </div>
 
-                    {/* Estadísticas */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                         <div className="text-center bg-blue-100 rounded-xl p-2">
                             <p className="text-sm text-gray-600">Recursos desbloqueados</p>
@@ -102,7 +109,9 @@ export function Home(){
                     </div>
                 </div>
             </div>
-            <Consejo progresoJuegoId={progresoJuego?.id}></Consejo>
+            
+            {/* Se pasa 'idProgresoValido' asegurando que nunca envíe 'undefined' */}
+            <Consejo progresoJuegoId={idProgresoValido} />
             <div className="grid grid-cols-1 md:grid-cols-3 flex-grow">
                 <div className="m-10">
                     <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-white dark:border-gray-700 hover:bg-gray-100">
