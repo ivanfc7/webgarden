@@ -19,8 +19,8 @@ const LOCAL_URL: string = 'http://127.0.0.1:8000';
 //     return data;
 // }
 
-const BASE_URL = `${DEPLOY_URL}/sistemaWeb/api`;
-console.log(LOCAL_URL);
+const BASE_URL = `${LOCAL_URL}/sistemaWeb/api`;
+console.log(DEPLOY_URL);
 
 async function apiFetch(endpoint: string, opciones: RequestInit = {}) {
     // 1. Preparar headers con el token actual
@@ -51,29 +51,9 @@ async function apiFetch(endpoint: string, opciones: RequestInit = {}) {
 
     // (Token expirado)
     if (response.status === 401) {
-        const refreshRes = await fetch(`${BASE_URL}/token/refresh/`, {
-            method: "POST",
-            credentials: "include", // Envía la cookie refresh_token a Django
-        });
-
-        if (refreshRes.ok) {
-            const data = await refreshRes.json();
-            localStorage.setItem('token', data.access); // Guardamos el nuevo access_token
-
-            // Reintentamos la petición original con el nuevo token
-            return await fetch(`${BASE_URL}${endpoint}`, {
-                ...opciones,
-                headers: {
-                    ...opciones.headers,
-                    'Authorization': `Bearer ${data.access}`
-                },
-                credentials: "include"
-            });
-        } else {
             // El Refresh Token también caduco (pasaron 30 días)
-            localStorage.removeItem('token');
-            window.location.href = "/"; //pagina raiz
-        }
+        localStorage.removeItem('token');
+        window.location.href = "/"; //pagina raiz
     }
     return response;
 }
