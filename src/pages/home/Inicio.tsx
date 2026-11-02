@@ -6,7 +6,7 @@ interface Progreso {
 
 import { BarraNavegacion } from "../../components/BarraNavegacion"
 import { Footer } from "../../components/PiePagina";
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { getProgresoJuego, profile, getTotalPlantas, getTotalAportes } from "../../assets/utils/sistema.api";
 import { useEffect, useState } from "react";
 import { Consejo } from "./Consejo";
@@ -19,39 +19,50 @@ export function Home(){
     const [totalTemasDesbloqueados, setTotalTemasDesbloqueados] = useState(0);
     const [totalPlantas, setTotalPlantas] = useState(0);
     const [totalAportes, setTotalAportes] = useState(0);
-    const navigate = useNavigate();
 
-    useEffect(()=> {
-        const cargarProgreso = async ()=>{
-            const res = await getProgresoJuego();
-            setProgresoJuego(res.data[0]);
-            console.log(progresoJuego);
-            setTotalConsejosDesbloqueados(res.data[0].cantidadMsjDesbloqueados);
-            setTotalTemasDesbloqueados(res.data[0].cantidadApzjDesbloqueados);
-        };
-        const perfilUsuario = async()=>{
-            const response = await profile();
-            console.log(response);
-            
-            setNombreCompleto(response.firstName + " "+ response.lastName);
-            setEmail(response.email);
-            
-            const resPlants = await getTotalPlantas();
-            setTotalPlantas(resPlants.total);
-           
-            const resAport = await getTotalAportes();
-            console.log(resAport);
-            setTotalAportes(resAport.total);
-        }
-        cargarProgreso();
-        perfilUsuario();
-    }, []);
     useEffect(() => {
-        const token = localStorage.getItem('access_token');
-        if (!token) {
-            navigate('/');
-        }
-    }, [navigate]);
+        const cargarProgreso = async () => {
+            try {
+                const res = await getProgresoJuego();
+                console.log("Respuesta de progreso:", res.data);
+                const progreso = res.data?.[0];
+    
+                if (!progreso) {
+                    console.warn("El usuario todavía no tiene un progreso registrado.");
+                    setProgresoJuego(undefined);
+                    setTotalConsejosDesbloqueados(0);
+                    setTotalTemasDesbloqueados(0);
+                    return;
+                }
+    
+                setProgresoJuego(progreso);
+                setTotalConsejosDesbloqueados(progreso.cantidadMsjDesbloqueados ?? 0);
+                setTotalTemasDesbloqueados(progreso.cantidadApzjDesbloqueados ?? 0);
+    
+            } catch (error) {
+                console.error("Error al cargar el progreso:", error);
+            }
+        };
+    
+        const cargarPerfil = async () => {
+            try {
+                const response = await profile();
+                setNombreCompleto(`${response.firstName} ${response.lastName}`);
+                setEmail(response.email);
+    
+                const [resPlants, resAport] = await Promise.all([getTotalPlantas(), getTotalAportes()]);
+    
+                setTotalPlantas(resPlants.total ?? 0);
+                setTotalAportes(resAport.total ?? 0);
+            } catch (error) {
+                console.error("Error al cargar el perfil:", error);
+            }
+        };
+    
+        cargarProgreso();
+        cargarPerfil();
+    
+    }, []);
     return (
         <section className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300 flex flex-col">
             <BarraNavegacion />

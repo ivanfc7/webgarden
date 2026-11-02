@@ -1,15 +1,15 @@
-import { CreateUsr } from "../usuario/CreateUsr";
+import LoginUsr from "../usuario/LoginUsr";
 import { Carrusel } from "./Carrusel";
 import { Footer } from "../../components/PiePagina";
 import { useEffect, useState } from "react";
 import { XIcon, Leaf } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
 
 export function LandingPage() {
     const [mostrarModal, setMostrarModal] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
-        const token = localStorage.getItem('access_token'); 
+        const token = localStorage.getItem('token'); 
         if (token) {
             navigate('/inicio');
         }
@@ -56,7 +56,7 @@ export function LandingPage() {
                     <div className="bg-white border-green-700 border-2 rounded-lg shadow-xl overflow-hidden relative">
                         <button onClick={()=>setMostrarModal(false)} className='p-2 cursor-pointer' title='Cerrar'> <XIcon className='text-gray-500 hover:text-gray-800'/></button>
                         <div>
-                            <CreateUsr />
+                            <LoginUsr />
                         </div>
                     </div>
                 </div>

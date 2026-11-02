@@ -1,20 +1,5 @@
 const consejos = [
     {
-        id: 1,
-        titulo: "¡¡Es importante pensar en que sitio plantaras tu planta!!",
-        descripcion: "Evita plantar cerca a los muros de tu hogar, especialmente si es un árbol que crecerá a una gran altura. Este tipo de árboles pueden tener raíces muy grandes y destrozar el pavimento."
-    },
-    {
-        id: 2,
-        titulo: "Las plantas no deben estar rodeadas de cemento",
-        descripcion: "Si piensas plantar sobre tu acera, dale un espacio de un metro a la planta, no cubras de cemento al rededor del tallo, las plantas neceesitan estar rodeadas de tierra."
-    },
-    {
-        id: 3,
-        titulo: "Algunas plantas siempre van a perecer",
-        descripcion: "Los plantines son muy hermosos, pero estos tienen un ciclo de vida corto, luego de que florezcan poda sus brotes, poco a poco empezara a debilitarse, no crecen más. Es inevitale sacarlo y lo aconsejable es reemplazarlo."
-    }, 
-    {
         id: 4,
         titulo: "Uno sale, otro entra",
         descripcion: "Si vas a quitar una planta por el motivo que sea, procura poner una nueva planta en su lugar."

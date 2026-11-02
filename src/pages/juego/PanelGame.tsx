@@ -33,7 +33,6 @@ type AprendizajeData = {
     contenido: string;
     imagen: string;
     fuente: string;
-    video: string;
     desbloqueado: boolean;
 }
 
@@ -414,7 +413,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                 contenido: tema[2],
                 imagen: tema[3],
                 fuente: tema[4],
-                video: tema[5],
                 desbloqueado: true,
             };
             console.log("Antes de guardar el aprendizaje");

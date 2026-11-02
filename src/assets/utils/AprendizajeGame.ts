@@ -1,26 +1,5 @@
 const temas = [
     {
-        id: 1,
-        titulo: "La fotosintesis en las plantas",
-        imagen: "/img_juego/aprendizaje/fotosintesis.JPG",
-        contenido: `Todas las plantas realizan un proceso a lo largo de su vida. Este proceso consiste en crear materia orgánica a partir de materia inorgánica.  
-Es por esta capacidad que el medio ambiente depende de ellas. 
-                    
-## Fórmula química 
-- 6 moléculas de agua
-- 6 moléculas de dióxido de carbono
-- Luz solar
-
-Gracias a los cloroplastos, se transforman en:
-
-- 1 molécula de glucosa (C6H12O6)
-- 6 moléculas de oxígeno (O2)`,
-fuente:  `Resumen en base al Texto: [Ecología Verde: Fotosíntesis Fases e Importancia](https://www.ecologiaverde.com/fotosintesis-que-es-fases-e-importancia-2948.html) 
-
-Imagen recuperada de: [Ecología Verde](https://www.ecologiaverde.com/fotosintesis-que-es-fases-e-importancia-2948.html)`,
-video: "https://www.youtube.com/embed/mtGgo68VM54?si=WpkYM3QAsHPxZhKl"
-    },
-    {
         id: 2,
         titulo: "El árbol y las plantas, su ciclo de vida",
         imagen: "/img_juego/aprendizaje/cicloVida.jpg",
@@ -45,7 +24,6 @@ En cualquier caso esta fase inicia con flores y hojas marchitandose, pasando al 
         fuente: `Resumen en base al Texto: [EcoTree - El ciclo de vida de un árbol](https://ecotree.green/en/blog/the-life-cycle-of-a-tree)
 
 Imagen recuperada de: [EcoTree](https://s3-eu-west-1.amazonaws.com/blog-ecotree/blog/0001/03/03701ab77ebafed29d375caabb00ea34f09e7154.jpg)`,
-        video: "https://www.youtube.com/embed/Cr5xYwWOxAU?si=JqSdr35SLzHc3nsN"
     },
     {
         id: 3,
@@ -77,7 +55,6 @@ Este proceso es víctima de varios factores ambientales: Factores que afectan la
 
 Imagen recuperada de: 
 [Bioenciclopedia](https://cdn0.bioenciclopedia.com/es/posts/5/2/8/transpiracion_de_las_plantas_que_es_y_proceso_825_600.webp)`, 
-        video: "https://www.youtube.com/embed/VYMpZwzKpmA?si=i4BMYZs93bbXgJ8u"
     },
     {
         id: 4,
@@ -104,7 +81,6 @@ Es por ello que alguna vez se proclamó cierta frase famosa "Si las abejas desap
 
 Imagen recuperada de: 
 [BioEnciclopedia](https://cdn0.bioenciclopedia.com/es/posts/8/9/0/proceso_de_polinizacion_1098_1_600.webp)`,
-        video: "https://www.youtube.com/embed/NxhxtQbD7F0?si=gfca3s2zaocpjpfa"
     },
     {
         id: 5,
@@ -132,7 +108,6 @@ Quizá el tipo de contaminación menos conocida o poco concientizada. Resulta qu
         fuente: `Resumen en base al Texto: [National Geographic - ¿Cuáles son los principales tipos de contaminación ambiental?](https://www.nationalgeographicla.com/medio-ambiente/2022/08/cuales-son-los-principales-tipos-de-contaminacion-ambiental)
 
 Imagen recuperada de: [Aprende en casa](https://nemdigitalstorage.blob.core.windows.net/nem-main/images/2023/06/04/b5e80ec9-0e06-4065-9a0f-2a1ee3b34d62.png)`,
-        video: "https://www.youtube.com/embed/jjMAOV1XeOY?si=5qtGhIAOcRpdvYqi"
     },
     {
         id: 6,
@@ -153,12 +128,11 @@ Imagen recuperada de: [Aprende en casa](https://nemdigitalstorage.blob.core.wind
         fuente: `Resumen en base al Texto: [VitalSeguro - Conexión con la Naturaleza: Una Clave para el Bienestar Mental](https://www.vitalseguro.com/blog/salud/conexion-con-la-naturaleza/)
         
 Imagen de: [Freepik](http://www.freepik.com)`,
-        video: "https://www.youtube.com/embed/VXwfekJjk6A"
     }
 ]
 
-export function listaTemas(indice:number): [number, string, string, string, string, string]{
-    return [temas[indice].id, temas[indice].titulo, temas[indice].contenido, temas[indice].imagen, temas[indice].fuente, temas[indice].video];
+export function listaTemas(indice:number): [number, string, string, string, string]{
+    return [temas[indice].id, temas[indice].titulo, temas[indice].contenido, temas[indice].imagen, temas[indice].fuente];
 }
 
 export const cantidadTemas = () =>{

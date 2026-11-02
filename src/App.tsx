@@ -10,7 +10,7 @@ import { VistaGame } from "./pages/juego/VistaGame";
 import { Toaster } from "react-hot-toast";
 import { VistaR } from "./pages/recomendaciones/VistaR";
 import { CreateUsr } from "./pages/usuario/CreateUsr";
-import { ValidarUsuario } from "./pages/usuario/ValidarUsr";
+import ResetPassword from "./pages/usuario/ResetPassword";
 
 function App(){
   return(
@@ -27,7 +27,7 @@ function App(){
         <Route path="/juego-educativo/:id" element={<VistaGame />}/>
         <Route path="/conociendo-tu-planta" element={<VistaR />}/>
         <Route path="/crear-cuenta" element={<CreateUsr/>} />
-        <Route path="/verify-magic/:token" element={<ValidarUsuario /> } />
+        <Route path="/reset-password/:uid/:token" element={<ResetPassword />}/>        
       </Routes>
       <Toaster />
     </BrowserRouter>

@@ -10,7 +10,6 @@ interface AprendizajeData {
     contenido: string;
     imagen: string;
     fuente: string;
-    video: string;
     desbloqueado: boolean;
 }
 

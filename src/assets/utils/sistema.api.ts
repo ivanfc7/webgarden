@@ -1,29 +1,33 @@
 import axios from "axios";
 
-/** API REST DEL LINK PARA GENERAR USUARIO */
-export const createUser = async (
-    newuser: {     
-       first_name: string,
-       email: string, 
-    }
-) => {
-    const response = await fetch("https://webgarden-backend.onrender.com/sistemaWeb/api/generar-link", {
-        method: "POST", 
-        headers: {"Content-Type": "application/json"}, 
-        body: JSON.stringify(newuser), 
-    });
-    const data = await response.json();
-    return data;
-}
+const DEPLOY_URL: string = 'https://webgarden-backend.onrender.com';
+const LOCAL_URL: string = 'http://127.0.0.1:8000';
 
-const BASE_URL = "https://webgarden-backend.onrender.com/sistemaWeb/api";
+/** API REST DEL LINK PARA GENERAR USUARIO */
+// export const createUser = async (
+//     newuser: {     
+//        first_name: string,
+//        email: string, 
+//     }
+// ) => {
+//     const response = await fetch(`${LOCAL_URL}/sistemaWeb/api/generar-link`, {
+//         method: "POST", 
+//         headers: {"Content-Type": "application/json"}, 
+//         body: JSON.stringify(newuser), 
+//     });
+//     const data = await response.json();
+//     return data;
+// }
+
+const BASE_URL = `${DEPLOY_URL}/sistemaWeb/api`;
+console.log(LOCAL_URL);
 
 async function apiFetch(endpoint: string, opciones: RequestInit = {}) {
     // 1. Preparar headers con el token actual
     const headers: Record<string, string> = {
         // Convertimos posibles headers previos a un objeto simple
         ...(opciones.headers as Record<string, string>),
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
     };
 
     if (opciones.body) {
@@ -54,7 +58,7 @@ async function apiFetch(endpoint: string, opciones: RequestInit = {}) {
 
         if (refreshRes.ok) {
             const data = await refreshRes.json();
-            localStorage.setItem('access_token', data.access); // Guardamos el nuevo access_token
+            localStorage.setItem('token', data.access); // Guardamos el nuevo access_token
 
             // Reintentamos la petición original con el nuevo token
             return await fetch(`${BASE_URL}${endpoint}`, {
@@ -67,7 +71,7 @@ async function apiFetch(endpoint: string, opciones: RequestInit = {}) {
             });
         } else {
             // El Refresh Token también caduco (pasaron 30 días)
-            localStorage.removeItem('access_token');
+            localStorage.removeItem('token');
             window.location.href = "/"; //pagina raiz
         }
     }
@@ -141,7 +145,6 @@ export const saveAprendizajeDesbloqueado = async (aprendizaje: {
     titulo:string;
     contenido:string;
     imagen:string;
-    video:string;
     fuente:string;
     desbloqueado:boolean;
 }) => {
@@ -196,7 +199,52 @@ export const getAportesByPlanta = async(id: string) => {
 
 /** API REST DE FUNCION BUSQUEDA */
 export const findDescripcion = (palabra: string) =>
-    axios.get(`https://webgarden-backend.onrender.com/sistemaWeb/api/buscar_descripcion/`, {
+    axios.get(`${BASE_URL}/buscar_descripcion/`, {
       params: { palabra }
-});
+}); 
 
+/** API REST DE OLVIDAR PASSWORD */
+export const forgotPassword = (correo: string) =>
+    axios.post(`${BASE_URL}/generar_token/`, {
+        correo
+});
+  
+/** API REST DE USUARIO */
+export const createUser = async (
+    newuser: {
+       first_name: string, 
+       last_name: string
+       email: string, 
+       username: string, 
+       password: string, 
+    }
+) => {
+    const response = await fetch(`${BASE_URL}/registrar_usuario`, {
+        method: "POST", 
+        headers: {"Content-Type": "application/json"}, 
+        body: JSON.stringify(newuser), 
+    });
+    const data = await response.json();
+    return {
+        ok: response.ok,
+        data
+    };
+}
+
+/** API REST PARA EL LOGIN */
+export const login = async (userData: { username: string, password: string }) => {
+    const response = await fetch(`${BASE_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+    });
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Usuario o contraseña incorrectos");
+    }
+    const data = await response.json();
+    // Guardar en localStorage
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    return data; 
+};
