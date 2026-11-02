@@ -19,8 +19,8 @@ const LOCAL_URL: string = 'http://127.0.0.1:8000';
 //     return data;
 // }
 
-const BASE_URL = `${LOCAL_URL}/sistemaWeb/api`;
-console.log(DEPLOY_URL);
+const BASE_URL = `${DEPLOY_URL}/sistemaWeb/api`;
+console.log(LOCAL_URL);
 
 async function apiFetch(endpoint: string, opciones: RequestInit = {}) {
     // 1. Preparar headers con el token actual
