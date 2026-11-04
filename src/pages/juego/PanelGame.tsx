@@ -2,7 +2,6 @@ import { Celda } from "./Celda";
 import { mapas, cantidadNiveles, contarObjetos, objetivoDiario } from "../../assets/utils/NivelesGame";
 import { marcarNovedad } from "../../assets/utils/NovedadesJuego";
 import { useEffect, useState, useRef } from "react";
-import { useParams } from 'react-router-dom';
 import { toast } from "react-hot-toast";
 import { SquareArrowDown, SquareArrowLeft, SquareArrowRight, SquareArrowUp, XIcon } from "lucide-react";
 import { saveAprendizajeDesbloqueado, saveMensajeDesbloqueado, updateContadorAprendizaje, updateContadorMensajes, getProgresoJuego, updateFechaJuego } from "../../assets/utils/sistema.api";
@@ -21,14 +20,12 @@ import ModalPregunta from "./ModalPregunta";
 import { usePreguntasJuego } from "../../assets/utils/usePreguntasJuego";
 
 type MensajeData = {
-    progreso: number;
     titulo: string;
     descripcion: string;
     desbloqueado: boolean;
 }
 
 type AprendizajeData = {
-    progreso: number;
     titulo: string;
     contenido: string;
     imagen: string;
@@ -84,8 +81,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     const audioAMN = new Audio(itemAMN);
     const audioCesped = new Audio(descubrirCesped);
     const audioMenosVidas = new Audio(menosVidas);
-
-    const { id } = useParams<{ id: string }>();
 
     const [puntajeAux, setPuntajeAux] = useState(0);
     const { preguntaActual, modalAbierto, resultado, puntaje, iniciarPregunta, responderPregunta, reiniciarPreguntas, continuarJuego} = usePreguntasJuego();
@@ -361,12 +356,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     };
 
     async function guardarProgresoMensajes() {
-        const progresoId = parseInt(id || '', 10);
-        if (isNaN(progresoId)) {
-            console.error("No se pudo obtener un ID de progreso válido de la URL:", id);
-            return;
-        }
-    
         try {
             const res = await getProgresoJuego();
             const cantidadMensajes = res.data[0].cantidadMsjDesbloqueados;
@@ -374,7 +363,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             const mensaje = listaMensajes(cantidadMensajes);
 
             const mensajeDesbloqueado: MensajeData = {
-                progreso: progresoId,
                 titulo: mensaje[1],
                 descripcion: mensaje[2],
                 desbloqueado: true,
@@ -399,12 +387,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
     }
 
     async function guardarProgresoAprendizaje() {
-        const progresoId = parseInt(id || '', 10);
-        if (isNaN(progresoId)) {
-            console.error("No se pudo obtener un ID de progreso válido de la URL:", id);
-            return;
-        }
-
         try {
             const res = await getProgresoJuego();
             const cantidadAprendizaje = res.data[0].cantidadApzjDesbloqueados;
@@ -412,7 +394,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             const tema = listaTemas(cantidadAprendizaje);
 
             const aprendizajeDesbloqueado: AprendizajeData = {
-                progreso: progresoId,
                 titulo: tema[1],
                 contenido: tema[2],
                 imagen: tema[3],
