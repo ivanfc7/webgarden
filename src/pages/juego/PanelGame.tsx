@@ -187,7 +187,10 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             }
             audioAMN.play();
             setManzanasPendientes(manzanasPendientes + 1);
-            if (manzanas !== objetivoDiario.M) {
+             // Mostrar pregunta solamente si todavía quedan objetos por recoger.
+            const totalRecogidos = nuevasManzanas + nueces;
+
+            if (totalRecogidos < objetivoDiario.M + objetivoDiario.N) {
                 iniciarPregunta();
             }
         }
@@ -200,7 +203,10 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
             }
             audioAMN.play();
             setNuecesPendientes(nuecesPendientes + 1);
-            if (nueces !== objetivoDiario.N) {
+              // Mostrar pregunta solamente si todavía quedan objetos por recoger.
+            const totalRecogidos = manzanas + nuevasNueces;
+
+            if (totalRecogidos < objetivoDiario.M + objetivoDiario.N) {
                 iniciarPregunta();
             }
         }
