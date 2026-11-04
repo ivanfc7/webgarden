@@ -191,8 +191,10 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                 setGrupoMDesbloqueado(false);
             }
             audioAMN.play();
-            iniciarPregunta();
             setManzanasPendientes(manzanasPendientes + 1);
+            if (manzanas !== objetivoDiario.M) {
+                iniciarPregunta();
+            }
         }
 
         if (mapa[nuevaX][nuevaY] === 'N') {
@@ -202,8 +204,10 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                 setGrupoNDesbloqueado(false);
             }
             audioAMN.play();
-            iniciarPregunta();
             setNuecesPendientes(nuecesPendientes + 1);
+            if (nueces !== objetivoDiario.N) {
+                iniciarPregunta();
+            }
         }
 
         if (mapa[nuevaX][nuevaY] === 'E') {

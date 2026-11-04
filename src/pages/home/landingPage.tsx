@@ -28,7 +28,7 @@ export function LandingPage() {
                     {/* Lado Derecho: Hero Text & Acción */}
                     <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
                         <span className="text-xs font-bold tracking-wider uppercase text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-200">
-                            Sistema Web Educativo
+                            Sistema Web con recursos informativos
                         </span>
 
                         <h1 className="text-3xl sm:text-4xl lg:text-4xl font-black text-slate-900 leading-tight">
@@ -36,7 +36,7 @@ export function LandingPage() {
                         </h1>
 
                         <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
-                            Diseñado para educar, concientizar y ofrecer una ayuda diferente a quienes disfrutan de cuidar un jardín en sus hogares, valorando el gran aporte de los árboles al medio ambiente.
+                            Diseñado para ofrecer una ayuda diferente a quienes disfrutan de cuidar un jardín en sus hogares, valorando el gran aporte de los árboles al medio ambiente.
                         </p>
 
                         <div className="pt-2">
