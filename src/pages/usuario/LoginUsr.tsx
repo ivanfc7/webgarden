@@ -7,7 +7,7 @@ import ForgotPassword from "./OlvidePassword";
 
 export default function(){
     const navegador = useNavigate();
-    const {register, handleSubmit, formState:{errors}} = useForm();
+    const {register, handleSubmit, formState:{errors, isSubmitting}} = useForm();
     const [huboError,  setHuboError] = useState(false);
     const [mostrarPassword, setMostrarPassword] = useState(false);
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -100,9 +100,9 @@ export default function(){
                             {mostrarPassword ? <span>Ocultar Contraseña</span>: <span>Mostrar Contraseña</span>} 
                         </button>
                 </div>
-                <button type="submit" className="cursor-pointer w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">Ingresar</button>
+                <button type="submit" disabled={isSubmitting} className="cursor-pointer w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">  {isSubmitting ? "Iniciando..." : "Ingresar"}</button>
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-700">
-                    Todavia no tienes una cuenta? <a href="/crear-cuenta" className="text-green-700 hover:underline dark:text-green-500">Crea una</a>
+                ¿Todavia no tienes una cuenta? <a href="/crear-cuenta" className="text-green-700 hover:underline dark:text-green-500">Crea una</a>
                 </div>
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-700">
                     <button onClick={()=>{setMostrarModal(true)}} className="text-green-700 hover:underline dark:text-green-500 cursor-pointer">Olvide mi contraseña</button>

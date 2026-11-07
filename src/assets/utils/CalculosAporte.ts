@@ -16,7 +16,7 @@ interface ResultadoArbol {
     co2: number;
 }
 
-function calcularCarbonoPorPlanta(planta: {altura: number, espesura: number}): number[]{
+function calcularCarbonoPorArbol(planta: {altura: number, espesura: number}): number[]{
     /** Primero calculamos el volumen del arbol */ 
     const numero_PI: number = Math.PI;
     var DAP: number = planta.espesura/numero_PI;
@@ -39,7 +39,6 @@ function calcularCarbonoPorPlanta(planta: {altura: number, espesura: number}): n
     /** CAPTURA DE CARBONO */
     var CAT: number = BS * 0.5;
     var CR: number = CAT * 0.24;
-
     var C_almacenado: number = CAT + CR;
 
     /** CO2 absorbido equivalente */
@@ -61,7 +60,7 @@ export const calcularImpacto = (datos: DatosPlanta) => {
 
     for (let i = 0; i < cantidad; i++) {
         const planta = datos.plantas[i];
-        var resultadosParciales : number[] = calcularCarbonoPorPlanta(planta);
+        var resultadosParciales : number[] = calcularCarbonoPorArbol(planta);
         carbonoTotal = carbonoTotal + resultadosParciales[0];
         CO2Total = CO2Total + resultadosParciales[1];
         resultados.push({

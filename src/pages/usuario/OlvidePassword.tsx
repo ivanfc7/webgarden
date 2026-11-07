@@ -1,23 +1,30 @@
 import { useState } from "react";
 import { forgotPassword } from "../../assets/utils/sistema.api";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 
 export default function ForgotPassword({onClose}: { onClose?:()=> void}) {
-  const [email, setEmail] = useState("");
   const [mensaje, setMensaje] = useState(""); 
+  const {register, handleSubmit, formState:{errors, isSubmitting}} = useForm();
 
-  async function enviarCorreo() {
-    const res = await forgotPassword(email);
-    console.log(res);
-    if(res.data.success){
-      toast.success("Enviando mensaje... Revisa tu correo dentro un momento");
-      setMensaje("Revisa tu correo para continuar");
-      onClose?.();
-    }else{
-      toast.error("Hubo un error");
-      setMensaje(res.data.response);
+  const enviarCorreo = handleSubmit(async data => {
+    try {
+        const res = await forgotPassword(data.email);
+
+        if (res.data.success) {
+            toast.success("Mensaje enviado. Revisa tu correo.");
+            setMensaje("Revisa tu correo para continuar");
+            onClose?.();
+        }
+    } catch (error: any) {
+        const mensajeError =
+            error.response?.data?.error || "No se pudo enviar el correo.";
+
+        toast.error(mensajeError);
+        setMensaje(mensajeError);
+        console.error("Error al recuperar contraseña:", error);
     }
-  }
+});
 
   return (
     <div className="p-4 sm:p-6">
@@ -28,15 +35,24 @@ export default function ForgotPassword({onClose}: { onClose?:()=> void}) {
         Introduce el correo registrado en el sistema
       </p>
 
-      <form onSubmit={(e)=>{e.preventDefault(); enviarCorreo();}} className="space-y-4">
+      <form onSubmit={enviarCorreo} className="space-y-4">
         <input
           type="email"
-          placeholder="Tu correo"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="correo@gmail.com"
+          {...register("email", {
+            required: "Este campo es obligatorio.",
+            validate: value =>
+                value.trim().length > 0 ||
+                "Ingresa un correo valido."
+          })}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
         />
-        <button type="submit" className="cursor-pointer w-full bg-green-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors">Enviar</button>
+        {errors.email && (
+            <span className="text-red-500 text-sm">
+                {errors.email.message?.toString()}
+            </span>
+        )}
+        <button type="submit" disabled={isSubmitting} className="cursor-pointer w-full bg-green-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors">  {isSubmitting ? "Enviando correo..." : "Enviar correo"}</button>
       </form>
 
       {mensaje && (

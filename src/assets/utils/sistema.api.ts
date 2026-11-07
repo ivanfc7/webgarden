@@ -3,22 +3,6 @@ import axios from "axios";
 const DEPLOY_URL: string = 'https://webgarden-backend.onrender.com';
 const LOCAL_URL: string = 'http://127.0.0.1:8000';
 
-/** API REST DEL LINK PARA GENERAR USUARIO */
-// export const createUser = async (
-//     newuser: {     
-//        first_name: string,
-//        email: string, 
-//     }
-// ) => {
-//     const response = await fetch(`${LOCAL_URL}/sistemaWeb/api/generar-link`, {
-//         method: "POST", 
-//         headers: {"Content-Type": "application/json"}, 
-//         body: JSON.stringify(newuser), 
-//     });
-//     const data = await response.json();
-//     return data;
-// }
-
 const BASE_URL = `${DEPLOY_URL}/sistemaWeb/api`;
 console.log(LOCAL_URL);
 
@@ -184,9 +168,9 @@ export const findDescripcion = (palabra: string) =>
 }); 
 
 /** API REST DE OLVIDAR PASSWORD */
-export const forgotPassword = (correo: string) =>
+export const forgotPassword = (email: string) =>
     axios.post(`${BASE_URL}/generar_token/`, {
-        correo
+        correo: email
 });
   
 /** API REST DE USUARIO */

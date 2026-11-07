@@ -27,6 +27,7 @@ export function CreateUsr() {
 
     const [errorServidor, setErrorServidor] = useState("");
     const navegacion = useNavigate();
+    const [mostrarPassword, setMostrarPassword] = useState(false);
 
     const crearCuenta = async (data: FormularioUsuario) => {
         setErrorServidor("");
@@ -249,7 +250,7 @@ export function CreateUsr() {
 
                                     <input
                                         id="password"
-                                        type="password"
+                                        type={mostrarPassword ? "text" : "password"}
                                         autoComplete="new-password"
                                         {...register("password", {
                                             required: "La contraseña es obligatoria.",
@@ -267,6 +268,9 @@ export function CreateUsr() {
                                             {errors.password.message}
                                         </p>
                                     )}
+                                    <button type="button" className="cursor-pointer text-sm text-teal-700" onClick={() => setMostrarPassword(!mostrarPassword)}>
+                                        {mostrarPassword ? <span>Ocultar Contraseña</span>: <span>Mostrar Contraseña</span>} 
+                                    </button>
                                 </div>
                             </div>
                         </div>

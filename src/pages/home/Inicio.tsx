@@ -19,6 +19,7 @@ export function Home(){
     const [progresoJuego, setProgresoJuego] = useState<Progreso>();
     const [nombreCompleto, setNombreCompleto] = useState('');
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [totalConsejosDesbloqueados, setTotalConsejosDesbloqueados] = useState(0);
     const [totalTemasDesbloqueados, setTotalTemasDesbloqueados] = useState(0);
     const [totalPlantas, setTotalPlantas] = useState(0);
@@ -55,6 +56,7 @@ export function Home(){
                 const response = await profile();
                 setNombreCompleto(`${response.firstName} ${response.lastName}`);
                 setEmail(response.email);
+                setUsername(response.username);
     
                 const [resPlants, resAport] = await Promise.all([getTotalPlantas(), getTotalAportes()]);
     
@@ -81,11 +83,22 @@ export function Home(){
                     {nombreCompleto.charAt(0)}
                 </div>
 
-                <div className="flex-1">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                        <div>
-                            <p className="text-2xl font-semibold text-gray-800">{nombreCompleto}</p>
-                            <p className="text-sm text-gray-500">Correo registrado: {email}</p>
+                <div className="flex-1 w-full">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        {/* Bloque de información del usuario mejorado */}
+                        <div className="space-y-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">{nombreCompleto}</h1>
+                                <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    @{username}
+                                </span>
+                            </div>
+                            <p className="text-sm text-gray-500 flex items-center gap-1.5">
+                                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                {email}
+                            </p>
                         </div>
                     </div>
 
