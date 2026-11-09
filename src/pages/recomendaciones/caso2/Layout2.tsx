@@ -17,6 +17,7 @@ type Resultado = {
     clima: string;
     hojas: string;
 }
+type TamanoMaceta = "pequena" | "mediana" | "grande";
 
 export function Layout2() {
     const [lista, setLista] = useState<Planta[]>([]);
@@ -27,6 +28,7 @@ export function Layout2() {
     const [tipoTierra, setTipoTierra] = useState('');
     const [clima, setClima] = useState('');
     const [tipoHojas, setTipoHojas] = useState('');
+    const [tamanoMaceta, setTamanoMaceta] = useState<TamanoMaceta | "">("");
     const [divResultado, setDivResultado] = useState<Resultado | null>(null);
 
     const hojas = [
@@ -62,6 +64,10 @@ export function Layout2() {
 
         setDivResultado(nuevaRecomendacion);
     },[especiePlanta,tipoTierra,clima,tipoHojas]);
+    useEffect(() => {
+        setTamanoMaceta("");
+    }, [idPlanta]);
+    const esSuculenta = tipoPlanta === "suculenta";
 
     return (
         <div className="grid grid-cols-1 md:flex m-1">
@@ -191,16 +197,16 @@ export function Layout2() {
                                     <div className="flex justify-center p-1 sm:p-2">
                                         <label
                                             className={`w-full h-full cursor-pointer border rounded-lg p-2 sm:p-3 text-center transition-all
-                                                ${clima.includes('nublado')
+                                                ${clima.includes('templado')
                                                     ? 'border-green-500 bg-green-50'
                                                     : 'border-gray-300'}`}
                                         >
                                             <input
                                                 className="hidden"
                                                 type="radio"
-                                                value="nublado"
+                                                value="templado"
                                                 onChange={e => setClima(e.target.value)}
-                                                checked={clima.includes('nublado')}
+                                                checked={clima.includes('templado')}
                                                 name="clima"
                                             />
                                             <span className="flex justify-center mb-1">
@@ -238,9 +244,40 @@ export function Layout2() {
                                 ))}
                             </div>
                         </section>
-                        {especiePlanta && (
+                        {especiePlanta && !esSuculenta && (
                             <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                                 <TimeLine idPlanta={idPlanta} tipo={tipoPlanta} etapa={etapaPlanta}/>
+                                <TimeLine idPlanta={idPlanta} tipo={tipoPlanta} etapa={etapaPlanta} />
+                            </section>
+                        )}
+
+                        {especiePlanta && esSuculenta && (
+                            <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
+                                <h3 className="text-lg font-semibold text-[#315D36] mb-3">
+                                    Tamaño de la maceta
+                                </h3>
+                                <p className="text-sm text-[#668263] mb-4">
+                                    Las suculentas se riegan según el tamaño de su maceta.
+                                </p>
+                                <div className="flex items-center justify-center flex-wrap gap-3">
+                                    {([
+                                        { valor: "pequena", etiqueta: "Pequeña (5–10 cm)" },
+                                        { valor: "mediana", etiqueta: "Mediana (10–20 cm)" },
+                                        { valor: "grande",  etiqueta: "Grande (más de 20 cm)" },
+                                    ] as const).map(({ valor, etiqueta }) => (
+                                        <button
+                                            key={valor}
+                                            type="button"
+                                            onClick={() => setTamanoMaceta(valor)}
+                                            className={`px-4 py-2 rounded-lg border-2 transition-colors text-sm font-medium ${
+                                                tamanoMaceta === valor
+                                                    ? "border-green-500 bg-green-50"
+                                                    : "bg-white border-gray-300 text-[#315D36] hover:border-lime-500"
+                                            }`}
+                                        >
+                                            {etiqueta}
+                                        </button>
+                                    ))}
+                                </div>
                             </section>
                         )}
                     </div>
@@ -253,6 +290,7 @@ export function Layout2() {
                         tierra={divResultado.tierra}
                         clima={divResultado.clima}
                         hojas={divResultado.hojas}
+                        tamanoMaceta={tamanoMaceta} 
                     />
                 )}
             </div>

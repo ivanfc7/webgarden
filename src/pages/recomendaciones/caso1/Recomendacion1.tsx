@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { toPng } from 'html-to-image';
-import {Leaf, Trees, Download, Flower2, Cannabis, MapPin, Ruler, Shovel, Droplets,} from 'lucide-react';
+import {Leaf, Trees, Download, Flower2, Cannabis, MapPin, Shovel} from 'lucide-react';
 import { plantas } from '../../../assets/utils/recomendaciones';
 
 type Respuesta = {
@@ -13,6 +13,7 @@ type Respuesta = {
 export function RecomendacionTipo1({especie, tipoPlanta, etapa, descripcion}: Respuesta) {
     const divRef = useRef<HTMLDivElement>(null);
     const descargarRecomendacion = async () => {
+        console.log(descripcion);
         if (!divRef.current) return;
 
         const dataUrl = await toPng(divRef.current);
@@ -27,7 +28,7 @@ export function RecomendacionTipo1({especie, tipoPlanta, etapa, descripcion}: Re
         link.href = dataUrl;
         link.click();
     };
-    console.log(descripcion);
+    
     const iconos = {
         arbol: Trees,
         suculenta: Leaf,
@@ -97,17 +98,6 @@ export function RecomendacionTipo1({especie, tipoPlanta, etapa, descripcion}: Re
                                         {informacion.ubicacion}
                                     </p>
                                 </div>
-                                <div className="mt-3 ml-8 bg-[#E7F1DF] rounded-xl p-3">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <Ruler className="w-4 h-4 text-lime-800" />
-                                        <p className="text-xs font-bold text-[#47733D]">
-                                            SEPARACIÓN RECOMENDADA
-                                        </p>
-                                    </div>
-                                    <p className="text-sm font-semibold text-[#315D36]">
-                                        {informacion.separacion}
-                                    </p>
-                                </div>
                             </section>
                             <div className="border-t border-[#D8E3D2]" />
                             {/* PASO 2: PROFUNDIDAD */}
@@ -137,30 +127,7 @@ export function RecomendacionTipo1({especie, tipoPlanta, etapa, descripcion}: Re
                                     </div>
                                 </section>
                             )}
-                            <div className="border-t border-[#D8E3D2]" />
-                            {/* PASO 3: RIEGO */}
-                            {etapa !== -1 && informacion.etapa[etapa] && (
-                                <section>
-                                    <div className="flex items-center gap-2 mb-3">
-                                        <span className="bg-lime-700 text-white text-xs font-bold w-7 h-7 rounded-full flex items-center justify-center">
-                                            03
-                                        </span>
-
-                                        <h3 className="font-bold text-base text-[#315D36]">
-                                            REALIZA EL PRIMER RIEGO
-                                        </h3>
-                                    </div>
-
-                                    <div className="flex gap-3 items-start">
-                                        <Droplets className="w-6 h-6 text-sky-600 shrink-0" />
-
-                                        <p className="text-sm leading-relaxed">
-                                            {informacion.etapa[etapa].riego}
-                                        </p>
-                                    </div>
-
-                                </section>
-                            )}                        
+                            <div className="border-t border-[#D8E3D2]" />               
                         </div>
                         {/* PIE DEL AFICHE */}
                         <div className="bg-[#315D36] px-5 py-5 text-center">

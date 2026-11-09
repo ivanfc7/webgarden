@@ -264,7 +264,6 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
 
         setManzanasPendientes(0);
         setNuecesPendientes(0);
-        setEncontroItemEspecial(false);
     };
     const continuarProgreso = () => {
         if (puedeAvanzar) {
@@ -651,7 +650,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                             </h3>
 
                             {/* Laberintos */}
-                            <div className="flex justify-between items-center">
+                            <div className="text-sm flex justify-between items-center">
                                 <span className="font-semibold text-gray-700">
                                     Laberintos recorridos
                                 </span>
@@ -660,7 +659,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                     {gano ? 2 : nivel} / 2
                                 </span>
                             </div>
-                            <div className="flex justify-between items-center">
+                            <div className="text-sm flex justify-between items-center">
                                 <span className="font-semibold text-gray-700">
                                     Consejos para el jardín desbloqueados:
                                 </span>
@@ -668,7 +667,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                     {Math.floor(manzanas / 3)} / {objetivoRecurso.M / 3}
                                 </span>
                             </div>
-                            <div className="flex justify-between items-center">
+                            <div className="text-sm flex justify-between items-center">
                                 <span className="font-semibold text-gray-700">
                                     Recursos de lectura desbloqueados:
                                 </span>
@@ -676,7 +675,7 @@ export function PanelGame({ habilitarJuego, onJuegoCompletado }: Readonly<props>
                                     {Math.floor(nueces / 3)} / {objetivoRecurso.N / 3}
                                 </span>
                             </div>
-                            <div className="flex justify-between items-center">
+                            <div className="text-sm flex justify-between items-center">
                                 <span className="font-semibold text-gray-700">
                                     Preguntas respondidas:
                                 </span>

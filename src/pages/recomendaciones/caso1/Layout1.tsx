@@ -126,7 +126,7 @@ export function Layout1(){
                       } else {
                         setError(
                             "La búsqueda es ambigua o no corresponde claramente a una planta. " +
-                            "Prueba de nuevo o busca información en Google y escribir una descripción manualmente."
+                            "Prueba de nuevo o busca información en Google y copia una descripción en el campo de texto."
                           );
                         console.log(err);
                       }

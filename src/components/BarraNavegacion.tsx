@@ -90,7 +90,7 @@ export function BarraNavegacion() {
                                 ${location.pathname === '/recursos'
                   ? 'bg-lime-100 text-lime-800'
                   : 'text-gray-600 hover:bg-lime-50 hover:text-lime-800'
-                }`} > Recursos
+                }`} > Recursos de Lectura
             </Link>
           </div>
           {/* Perfil del usuario */}

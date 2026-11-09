@@ -8,7 +8,7 @@ export function Indicador(){
         '/captura-carbono': 'Captura de Carbono',
         '/conociendo-tu-planta': 'Conociendo tus Plantas',
         '/mis-plantas': 'Mis Plantas 🌿',
-        '/recursos': 'Recursos'
+        '/recursos': 'Recursos de Lectura'
     };
 
     let nombreSeccion = '';

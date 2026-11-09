@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { toPng } from 'html-to-image';
 import {Leaf, Trees, Download, Flower2, Cannabis, Sprout, CloudSun, Droplets,Mountain} from "lucide-react";
-import {TipoPlanta, Clima, plantas, EtapasArbol, EtapasArbusto, EtapasFlor, EtapasSuculenta, estimarFrecuenciaRiego} from '../../../assets/utils/recomendaciones';
+import {plantas, estimarFrecuenciaRiego, frecuenciaSuculenta, litrosRecomendados} from '../../../assets/utils/recomendaciones';
 
 interface Planta {
     especie: string;
@@ -14,9 +14,10 @@ type Respuesta = {
     tierra: string;
     clima: string;
     hojas: string;
+    tamanoMaceta?: "pequena" | "mediana" | "grande" | "";
 }
 
-export function RecomendacionTipo2({laPlanta, tierra, clima, hojas}: Respuesta) {
+export function RecomendacionTipo2({laPlanta, tierra, clima, hojas, tamanoMaceta = ""}: Respuesta) {
     const divRef = useRef<HTMLDivElement>(null);
     const descargarRecomendacion = async () => {
         if (!divRef.current) return;
@@ -31,21 +32,6 @@ export function RecomendacionTipo2({laPlanta, tierra, clima, hojas}: Respuesta) 
         link.click();
     };
 
-    function toTipoPlanta(value: string): TipoPlanta | null {
-        switch (value) {
-            case 'arbol':
-                return TipoPlanta.Arbol;
-            case 'arbusto':
-                return TipoPlanta.Arbusto;
-            case 'flor':
-                return TipoPlanta.Flor;
-            case 'suculenta':
-                return TipoPlanta.Suculenta;
-            default:
-                return null;
-        }
-    }
-
     const significadoHojas = [
         { nombre: 'tipoA', significado: 'hojas amarillas y sin brillo' },
         { nombre: 'tipoB', significado: 'hojas nuevas pequeñas' },
@@ -58,26 +44,12 @@ export function RecomendacionTipo2({laPlanta, tierra, clima, hojas}: Respuesta) 
         item => item.nombre === hojas
     )?.significado;
 
-    const estimacionRiego =
-        (laPlanta.tipo && laPlanta.etapa && clima && tierra)
-            ? (() => {
-                const tipoEnum = toTipoPlanta(laPlanta.tipo);
-                if (!tipoEnum) return null;
+    const estimacionRiego = estimarFrecuenciaRiego(clima, tierra);
 
-                return estimarFrecuenciaRiego(
-                    tipoEnum,
-                    laPlanta.etapa as keyof (
-                        EtapasArbol |
-                        EtapasArbusto |
-                        EtapasFlor |
-                        EtapasSuculenta
-                    ),
-                    clima as Clima,
-                    tierra
-                );
-            })()
-            : null;
+    const estimacionSuculenta = frecuenciaSuculenta(tamanoMaceta);
 
+    const estimacionLitros = litrosRecomendados(laPlanta.tipo, laPlanta.etapa)
+            
     return (
         <div className="w-full">
             {laPlanta.especie !== '' && (
@@ -198,26 +170,39 @@ export function RecomendacionTipo2({laPlanta, tierra, clima, hojas}: Respuesta) 
                                 </section>
                             )}
                             {/* FRECUENCIA DE RIEGO */}
-                            {clima && tierra && (
+                            {clima && tierra && laPlanta.tipo !== "suculenta" &&(
                                 <section className="bg-[#E1F0D7] border-2 border-[#A5C98A] rounded-xl p-4">
                                     <div className="flex items-center justify-center gap-2 mb-3">
-                                        <Droplets className="w-6 h-6 text-sky-700" />
-                                        <h3 className="font-bold text-base text-[#315D36] text-center">
+                                        <h3 className="text-sm text-[#47733D] text center">
                                             Frecuencia de riego recomendada segun el clima {clima} y el suelo {tierra}
                                         </h3>
                                     </div>
                                     <div className="bg-white/70 rounded-lg p-3 text-center">
-                                        <p className="text-sm text-[#47733D]">
-                                            Un riego entre
-                                        </p>
-                                        <p className="text-xl font-bold text-[#315D36] mt-1">
-                                            {estimacionRiego}
+                                        <p className="flex text-xl font-bold text-[#315D36] mt-1 items-center justify-center">
+                                            <Droplets className="w-6 h-6 text-sky-700" /> {estimacionRiego}
                                         </p>
                                     </div>
                                     <p className="text-xs text-center text-[#668263] mt-3">
-                                        La frecuencia puede variar según las condiciones de la planta.
+                                       {estimacionLitros}
                                     </p>
                                 </section>
+                            )}
+                            {tamanoMaceta && (
+                                <section className="bg-[#E1F0D7] border-2 border-[#A5C98A] rounded-xl p-4">
+                                <div className="flex items-center justify-center gap-2 mb-3">
+                                    <h3 className="text-sm text-[#47733D] text center">
+                                        Frecuencia de riego recomendada segun una maceta {tamanoMaceta}
+                                    </h3>
+                                </div>
+                                <div className="bg-white/70 rounded-lg p-3 text-center">
+                                    <p className="flex text-xl font-bold text-[#315D36] mt-1 items-center justify-center">
+                                        <Droplets className="w-6 h-6 text-sky-700" /> {estimacionSuculenta}
+                                    </p>
+                                </div>
+                                <p className="text-xs text-center text-[#668263] mt-3">
+                                    La frecuencia puede variar según las condiciones de la planta.
+                                </p>
+                            </section>
                             )}
                         </div>
 

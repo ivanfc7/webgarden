@@ -32,7 +32,7 @@ export function LandingPage() {
                         </span>
 
                         <h1 className="text-3xl sm:text-4xl lg:text-4xl font-black text-slate-900 leading-tight">
-                            Seguimiento y Cuidado de <span className="text-emerald-600">Plantas y Árboles</span>
+                            Cuidado de <span className="text-emerald-600">Plantas y Árboles</span> del hogar
                         </h1>
 
                         <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">

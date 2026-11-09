@@ -78,7 +78,7 @@ export function CreateUsr() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-100 px-4">
             <Salir />
-            <div className="mx-auto flex max-w-5xl flex-col items-center">
+            <div className="mx-auto flex max-w-5xl flex-col items-center ">
 
                 {/* Encabezado */}
                 <div className="mb-7 text-center">
@@ -302,10 +302,6 @@ export function CreateUsr() {
 
                     </form>
                 </div>
-
-                <p className="mt-6 text-center text-xs text-gray-500">
-                    WebGarden · Aprende, registra y cuida tu jardín.
-                </p>
             </div>
         </div>
     );
