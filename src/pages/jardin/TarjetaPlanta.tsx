@@ -82,7 +82,7 @@ export function Tarjeta({ plantaGuardada, recargar }: PlantaProps) {
                                 className="inline-flex items-center justify-center gap-1 text-xs font-semibold text-teal-900 bg-teal-200/70 hover:bg-teal-300/70 px-2.5 py-1.5 rounded-lg transition-colors whitespace-nowrap"
                             >
                                 <TreePineIcon className="w-3.5 h-3.5 shrink-0" />
-                                <span>Historial</span>
+                                <span>Historial de carbono</span>
                             </a>
                         )}
                     </div>
