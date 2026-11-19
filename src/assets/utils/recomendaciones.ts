@@ -1,6 +1,98 @@
+export interface OpcionEtapa {
+    valor: number;      // Mantiene compatibilidad con tu estado numérico (0, 1, 2)
+    etiqueta: string;   // Texto corto para el botón y setValue
+    icono: string;      // Emoji visual
+    descripcion: string;// Ayuda corta para que el usuario identifique su planta
+}
+
+export const ETAPAS_POR_TIPO: Record<string, OpcionEtapa[]> = {
+    arbol: [
+        {
+            valor: 0,
+            etiqueta: 'Semilla (Almácigo)',
+            icono: '🌰',
+            descripcion: 'Para germinar en bolsa o maceta antes de pasar a tierra.',
+        },
+        {
+            valor: 1,
+            etiqueta: 'Plantín en bolsa',
+            icono: '🌱',
+            descripcion: 'Brote pequeño con primeras hojas y cepellón formado.',
+        },
+        {
+            valor: 2,
+            etiqueta: 'Árbol joven',
+            icono: '🌳',
+            descripcion: 'Tallo leñoso firme, listo para trasplante a suelo definitivo.',
+        },
+    ],
+    flor: [
+        {
+            valor: 0,
+            etiqueta: 'Semilla',
+            icono: '🌰',
+            descripcion: 'Siembra directa o en semillero.',
+        },
+        {
+            valor: 1,
+            etiqueta: 'Plantín',
+            icono: '🌱',
+            descripcion: 'Plántula pequeña lista para pasar a maceta o jardín.',
+        },
+        {
+            valor: 2,
+            etiqueta: 'Planta en flor',
+            icono: '🌸',
+            descripcion: 'Planta desarrollada lista para florecer o ya en flor.',
+        },
+    ],
+    arbusto: [
+        {
+            valor: 1,
+            etiqueta: 'Esqueje / Plantín',
+            icono: '🌿',
+            descripcion: 'Rama enraizada o ejemplar pequeño en maceta de vivero.',
+        },
+        {
+            valor: 2,
+            etiqueta: 'Arbusto joven',
+            icono: '🌳',
+            descripcion: 'Con ramas principales formadas, listo para jardín o cerco.',
+        },
+    ],
+    suculenta: [
+        {
+            valor: 0,
+            etiqueta: 'Hoja / Esqueje',
+            icono: '🍃',
+            descripcion: 'Sin raíz aún o con raíces recién asomando.',
+        },
+        {
+            valor: 1,
+            etiqueta: 'Roseta / Brote',
+            icono: '🌵',
+            descripcion: 'Ejemplar pequeño ya enraizado en maceta.',
+        },
+        {
+            valor: 2,
+            etiqueta: 'Planta adulta',
+            icono: '🌵',
+            descripcion: 'Bien formada, lista para cambio de maceta o arreglo.',
+        },
+    ],
+};
+
+export interface DetalleEtapa {
+    etiqueta: string;
+    instruccion: string;
+    tipClave: string;
+}
+
 export interface InfoPlanta{
+    subtituloAfiche: string;
     ubicacion: string;
-    etapa: Record<number,  { profundidad: string }>; 
+    sustrato: string;
+    etapa: Record<number, DetalleEtapa>;
     tierra: Record<string, string>; 
     clima: Record<string, string>;
     hojas: Record<string, string>;
@@ -9,16 +101,27 @@ export interface InfoPlanta{
 
 export const plantas: Record<string, InfoPlanta> = {
     arbol: {
-        ubicacion: "En zonas amplias, alejados de muros, cimientos, cables y tuberías.",
+        subtituloAfiche: "GUÍA DE PLANTACIÓN · ÁRBOL",
+        ubicacion: "En espacios abiertos y amplios, alejados al menos 3 a 4 metros de muros, cimientos, aceras, cables y tuberías.",
+        sustrato: "Tierra mixta o franca.",
         etapa: {
             0: {
-                profundidad: "Haz un pequeño hoyo y cubre la semilla con una capa de tierra del doble de su tamaño. Si la semilla mide 0.5 cm, cúbrela con 1 cm de tierra.",
+                etiqueta: "Semilla (Almácigo)",
+                instruccion:
+                    "No la siembres directo en el suelo; usa una bolsa de vivero o maceta profunda. Haz un pequeño hoyo y cubre la semilla con una capa de tierra del doble de su grosor.",
+                tipClave: "Mantén la tierra húmeda sin encharcar hasta que salgan las primeras hojas.",
             },
             1: {
-                profundidad: "Cava un hoyo del mismo plantaJoven que el bloque de tierra de la planta. Colócala de modo que la base del tronco quede justo al nivel del suelo, nunca enterrada.",
+                etiqueta: "Plantín en bolsa",
+                instruccion:
+                    "Cava un hoyo del doble de ancho y de la misma profundidad que su bloque de tierra. Retira la bolsa con cuidado y colócalo de modo que la base del tallo quede al ras del suelo.",
+                tipClave: "Nunca entierres la base del tronco o podría pudrirse por la humedad.",
             },
             2: {
-                profundidad: "Asegúrate de que el hoyo tenga la misma profundidad que el bloque de raíces. La base del tronco debe quedar visible y al nivel de la superficie.",
+                etiqueta: "Árbol joven",
+                instruccion:
+                    "Asegúrate de que el hoyo tenga la misma profundidad que el bloque de raíces y el doble de ancho. Rellena afirmando suave la tierra y pon una estaca de apoyo si hay viento.",
+                tipClave: "Haz un pequeño borde de tierra alrededor para que el agua no se escape al regar.",
             },
         },
         tierra:{
@@ -43,18 +146,30 @@ export const plantas: Record<string, InfoPlanta> = {
         tip: "Los árboles tienden a requerir de mucho espacio tanto de raices como de altura, la mayoria de árboles frutales no ocupan mucho espacio. Considera el espacio a la hora de plantar un árbol"
     },
     flor: {
-        ubicacion: "En un lugar bien iluminado (con sol directo o semisombra, según la flor).",
+        subtituloAfiche: "GUÍA DE PLANTACIÓN · FLOR",
+        ubicacion:
+            "En un lugar bien iluminado (con sol directo de mañana o semisombra luminosa, según la especie).",
+            sustrato: "Tierra mixta (con un poco de arena).",
         etapa: {
             0: {
-                profundidad: "Coloca la semilla sobre la tierra. Cúbrela solo con una capa muy fina de tierra. Si la especie necesita luz para nacer, déjala justo en la superficie.",
+                etiqueta: "Semilla",
+                instruccion:
+                    "Coloca las semillas sobre tierra previamente humedecida y cúbrelas apenas con una capa muy fina. Si la especie necesita luz para nacer, déjalas encima de la superficie.",
+                tipClave: "Usa un rociador los primeros días para no mover las semillas de su lugar.",
             },
             1: {
-                profundidad: "Haz un hoyo del tamaño del bloque de tierra de tu plantín. Colócalo de forma que la tierra del plantín quede alineada con el borde del hoyo.",
+                etiqueta: "Plantín",
+                instruccion:
+                    "Haz un hoyo del tamaño exacto del bloque de tierra de tu plantín. Colócalo de forma que su tierra quede alineada con el borde del suelo y presiona suavemente los lados.",
+                tipClave: "Deja unos 15 a 25 cm entre plantines para que tengan espacio al crecer.",
             },
             2: {
-                profundidad: "Acomoda la planta en el hoyo y rellena los lados con tierra. Evita tapar o enterrar la base del tallo.",
-            }
-        },   
+                etiqueta: "Planta en flor",
+                instruccion:
+                    "Plántala al atardecer para que el sol fuerte no la debilite. Rellena los lados con tierra fértil sin enterrar la base del tallo ni las hojas inferiores.",
+                tipClave: "Evita mojar directamente los pétalos o capullos cuando la riegues.",
+            },
+        },
         tierra:{
             pedregoso: "El agua drena más rápido, Buena aireación para las raíces..",
             arenoso: "El suelo retiene poca agua, Se secan demasiado pronto.",
@@ -77,17 +192,23 @@ export const plantas: Record<string, InfoPlanta> = {
         tip: "La primavera es excelente para la mayoría de las flores",
     },
     arbusto: {
-        ubicacion: "En jardines o espacios donde tengan espacio para crecer hacia los lados y recibir sol.",
+        subtituloAfiche: "GUÍA DE PLANTACIÓN · ARBUSTO",
+        ubicacion:
+            "En jardines, bordes o macetas grandes donde tenga espacio libre hacia los lados para extender sus ramas.",
+        sustrato: "Tierra mixta o ligeramente arcillosa.",
         etapa: {
-            0: {
-                profundidad: "Haz un hoyo pequeño y tapa la semilla con una capa de tierra que equivalga a dos veces su grosor.",
-            },
             1: {
-                profundidad: "Cava un hoyo del mismo plantaJoven que la maceta actual. Al colocar el plantín, la parte superior de su tierra debe quedar al ras del suelo.",
+                etiqueta: "Esqueje / Plantín",
+                instruccion:
+                    "Cava un hoyo de la misma profundidad que su maceta actual y un poco más ancho. Al colocarlo, la parte superior de su tierra debe quedar al ras del suelo.",
+                tipClave: "Protégelo del sol fuerte del mediodía durante los primeros 3 días.",
             },
             2: {
-                profundidad: "Planta a la misma altura a la que venía creciendo. Rellena los huecos laterales sin tapar el tallo principal.",
-            }
+                etiqueta: "Arbusto joven",
+                instruccion:
+                    "Plántalo a la misma altura a la que venía creciendo en su maceta. Rellena los huecos de los lados presionando suave sin tapar el tallo principal.",
+                tipClave: "Deja al menos 60 a 80 cm de distancia respecto a otras plantas grandes.",
+            },
         },
         tierra:{
             pedregoso: "El agua drena más rápido, Buena aireación para las raíces..",
@@ -111,17 +232,29 @@ export const plantas: Record<string, InfoPlanta> = {
         tip: "Los arbustos son resistentes y útiles para delimitar espacios o crear barreras naturales.",
     },
     suculenta: {
-        ubicacion: "En macetas con buena luz, muy cerca de ventanas o en exteriores soleados.",
+        subtituloAfiche: "GUÍA DE PLANTACIÓN · SUCULENTA",
+        ubicacion:
+            "En macetas con agujeros de drenaje, cerca de ventanas luminosas o en exteriores con luz filtrada.",
+        sustrato: "Tierra arenosa y pedregosa (que no retenga agua).",
         etapa: {
             0: {
-                profundidad: "Esparce las semillas sobre la superficie. Espolvorea apenas una pizca de arena o tierra encima, sin enterrarlas.",
+                etiqueta: "Hoja / Esqueje",
+                instruccion:
+                    "Deja secar el corte a la sombra por 2 a 3 días hasta que cicatrice. Luego apóyalo encima de la tierra seca sin enterrarlo hasta que saque raíces.",
+                tipClave: "Humedece apenas la tierra solo cuando veas asomar las primeras raíces.",
             },
             1: {
-                profundidad: "Coloca el plantín procurando que la tierra de la raíz quede al mismo nivel que el suelo. La superficie no debe tocar las hojas inferiores.",
+                etiqueta: "Roseta / Brote",
+                instruccion:
+                    "Coloca el brote procurando que sus raíces queden cubiertas por la tierra, pero que las hojas de abajo queden libres sin tocar la superficie.",
+                tipClave: "Usa una maceta pequeña acorde a su tamaño para que no guarde humedad de más.",
             },
             2: {
-                profundidad: "Mantén la misma profundidad a la que venía creciendo en su maceta anterior. Las hojas de la base deben quedar suspendidas por encima de la tierra.",
-            }
+                etiqueta: "Planta adulta",
+                instruccion:
+                    "Quita la tierra vieja con cuidado y pásala a tierra seca manteniendo la misma altura anterior. Asegúrate de que la base de la planta no quede hundida.",
+                tipClave: "Espera unos 3 días antes de regarla por primera vez para que sus raíces se adapten.",
+            },
         },
         tierra:{
             pedregoso: "El agua drena más rápido, Buena aireación para las raíces..",

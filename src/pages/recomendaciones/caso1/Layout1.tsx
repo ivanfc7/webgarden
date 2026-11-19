@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { RecomendacionTipo1 } from "./Recomendacion1";
+import { ETAPAS_POR_TIPO, OpcionEtapa } from "../../../assets/utils/recomendaciones";
 import { findDescripcion, createPlanta, getPlantas, profile } from "../../../assets/utils/sistema.api";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -27,6 +28,15 @@ export function Layout1(){
     const [tipoPlanta, setTipoPlanta] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [etapa, setEtapa] = useState(0); // 0: Semilla, 1: Plantín, 2: Planta joven
+    // 1. Obtener las opciones según el tipoPlanta seleccionado (fallback a flor si aún no eligió)
+    const opcionesEtapa = ETAPAS_POR_TIPO[tipoPlanta] || ETAPAS_POR_TIPO.flor;
+    const etapaActualObj = opcionesEtapa.find((item) => item.valor === etapa);
+
+    // 2. Función auxiliar cuando el usuario selecciona una etapa
+    const seleccionarEtapa = (opcion: OpcionEtapa) => {
+        setEtapa(opcion.valor);
+        setValue('etapa', opcion.etiqueta, { shouldValidate: true });
+    };
 
     const [buscando, setBuscando] = useState(false);
     const [mostrarDescripcion, setMostrarDescripcion] = useState(false);
@@ -183,6 +193,14 @@ export function Layout1(){
                                             const valor = e.target.value;
                                             setTipoPlanta(valor);
                                             setValue('tipo', valor);
+                                            const handleCambioTipoPlanta = (nuevoTipo: string) => {
+                                                setTipoPlanta(nuevoTipo);
+                                                const primerasOpciones = ETAPAS_POR_TIPO[nuevoTipo];
+                                                if (primerasOpciones && primerasOpciones.length > 0) {
+                                                    setEtapa(primerasOpciones[0].valor);
+                                                    setValue('etapa', primerasOpciones[0].etiqueta);
+                                                }
+                                            };
                                         }}
                                         checked={tipoPlanta.includes('arbol')}
                                         name="tipoPlanta" />
@@ -209,6 +227,14 @@ export function Layout1(){
                                             const valor = e.target.value;
                                             setTipoPlanta(valor);
                                             setValue('tipo', valor);
+                                            const handleCambioTipoPlanta = (nuevoTipo: string) => {
+                                                setTipoPlanta(nuevoTipo);
+                                                const primerasOpciones = ETAPAS_POR_TIPO[nuevoTipo];
+                                                if (primerasOpciones && primerasOpciones.length > 0) {
+                                                    setEtapa(primerasOpciones[0].valor);
+                                                    setValue('etapa', primerasOpciones[0].etiqueta);
+                                                }
+                                            };
                                         }}
                                         checked={tipoPlanta.includes('arbusto')}
                                         name="tipoPlanta" />
@@ -235,6 +261,14 @@ export function Layout1(){
                                             const valor = e.target.value;
                                             setTipoPlanta(valor);
                                             setValue('tipo', valor);
+                                            const handleCambioTipoPlanta = (nuevoTipo: string) => {
+                                                setTipoPlanta(nuevoTipo);
+                                                const primerasOpciones = ETAPAS_POR_TIPO[nuevoTipo];
+                                                if (primerasOpciones && primerasOpciones.length > 0) {
+                                                    setEtapa(primerasOpciones[0].valor);
+                                                    setValue('etapa', primerasOpciones[0].etiqueta);
+                                                }
+                                            };
                                         }}
                                         checked={tipoPlanta.includes('flor')}
                                         name="tipoPlanta" />
@@ -260,7 +294,14 @@ export function Layout1(){
                                          onChange={(e) => {
                                             const valor = e.target.value;
                                             setTipoPlanta(valor);
-                                            setValue('tipo', valor);
+                                            setValue('tipo', valor);const handleCambioTipoPlanta = (nuevoTipo: string) => {
+                                                setTipoPlanta(nuevoTipo);
+                                                const primerasOpciones = ETAPAS_POR_TIPO[nuevoTipo];
+                                                if (primerasOpciones && primerasOpciones.length > 0) {
+                                                    setEtapa(primerasOpciones[0].valor);
+                                                    setValue('etapa', primerasOpciones[0].etiqueta);
+                                                }
+                                            };
                                         }}
                                         checked={tipoPlanta.includes('suculenta')}
                                         name="tipoPlanta" />
@@ -345,30 +386,62 @@ export function Layout1(){
                         </div>
                     )}
                     <br />
-                    <div className="w-full max-w-md mx-auto my-4">
-                        <label className="block mb-2 font-semibold">Selecciona la etapa de la planta: <span className="text-red-500 font-bold ml-0.5">*</span></label>
-                        <input
-                            type="range"
-                            min="0"
-                            max="2"
-                            step="1"
-                            value={etapa}
-                            onChange={(e) => {
-                                const valor = e.target.value;
-                                const nuevoValor = parseInt(valor);
-                                setEtapa(nuevoValor);
-                                setValue('etapa',clasificar(nuevoValor));
-                            }}
-                            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-500"
-                        />
-                        <div className="flex justify-between mt-2 text-sm font-medium text-gray-700">
-                            <span>Semilla 🌱</span>
-                            <span>Plantín 🌿</span>
-                            <span>Planta joven 🌳</span>
+                    <div className="m-2 p-4 max-w-4xl w-full mx-auto ">
+                        <label className="block mb-2 font-semibold text-gray-800">
+                            Selecciona la etapa de la planta:
+                            <span className="text-red-500 font-bold ml-0.5">*</span>
+                        </label>
+
+                        {/* Mensaje guía si aún no eligió tipoPlanta */}
+                        {!tipoPlanta && (
+                            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-2">
+                                Primero selecciona el tipo de planta para ver sus etapas reales.
+                            </p>
+                        )}
+
+                        {/* Botones dinámicos (2 o 3 columnas según cuántas etapas tenga ese tipo) */}
+                        <div
+                            className={`grid gap-2.5 ${
+                                opcionesEtapa.length === 2 ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-3'
+                            }`}
+                        >
+                            {opcionesEtapa.map((opcion) => {
+                                const estaSeleccionado = etapa === opcion.valor;
+                                return (
+                                    <button
+                                        key={opcion.valor}
+                                        type="button"
+                                        disabled={!tipoPlanta}
+                                        onClick={() => seleccionarEtapa(opcion)}
+                                        className={`flex flex-col items-center justify-center text-center p-3 rounded-xl border-2 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
+                                            estaSeleccionado
+                                                ? 'border-green-600 bg-lime-100/80 text-green-900 shadow-xs'
+                                                : 'border-gray-200 bg-white hover:border-lime-400 text-gray-700'
+                                        }`}
+                                    >
+                                        <span className="text-2xl mb-1">{opcion.icono}</span>
+                                        <span className="text-xs sm:text-sm font-bold leading-tight">
+                                            {opcion.etiqueta}
+                                        </span>
+                                    </button>
+                                );
+                            })}
                         </div>
-                        {errors.etapa && <span className="text-orange-600">No seleccionaste la etapa actual de tu planta</span>}
-                        {etapa !== -1 &&(
-                            <p className="mt-2 font-semibold">Etapa seleccionada: {etapa === 0 ? "Semilla" : etapa === 1 ? "Plantín" : etapa === 2 ? "Planta joven": ""}</p>
+
+                        {/* Descripción contextual de la etapa elegida */}
+                        {tipoPlanta && etapaActualObj && (
+                            <div className="mt-2.5 p-2.5 rounded-lg bg-lime-50 border border-lime-200 text-xs text-gray-700">
+                                <span className="font-semibold text-green-900">
+                                    {etapaActualObj.etiqueta}:
+                                </span>{' '}
+                                {etapaActualObj.descripcion}
+                            </div>
+                        )}
+
+                        {errors.etapa && (
+                            <span className="text-sm text-orange-600 block mt-1">
+                                No seleccionaste la etapa actual de tu planta
+                            </span>
                         )}
                     </div>
                     <form onSubmit={handleSubmit(confirmarPlanta)}>
