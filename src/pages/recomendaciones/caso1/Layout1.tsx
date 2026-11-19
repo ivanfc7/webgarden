@@ -201,6 +201,7 @@ export function Layout1(){
                                                     setValue('etapa', primerasOpciones[0].etiqueta);
                                                 }
                                             };
+                                            console.log(handleCambioTipoPlanta);
                                         }}
                                         checked={tipoPlanta.includes('arbol')}
                                         name="tipoPlanta" />
@@ -235,6 +236,7 @@ export function Layout1(){
                                                     setValue('etapa', primerasOpciones[0].etiqueta);
                                                 }
                                             };
+                                            console.log(handleCambioTipoPlanta);
                                         }}
                                         checked={tipoPlanta.includes('arbusto')}
                                         name="tipoPlanta" />
@@ -269,6 +271,7 @@ export function Layout1(){
                                                     setValue('etapa', primerasOpciones[0].etiqueta);
                                                 }
                                             };
+                                            console.log(handleCambioTipoPlanta);
                                         }}
                                         checked={tipoPlanta.includes('flor')}
                                         name="tipoPlanta" />
@@ -302,6 +305,7 @@ export function Layout1(){
                                                     setValue('etapa', primerasOpciones[0].etiqueta);
                                                 }
                                             };
+                                            console.log(handleCambioTipoPlanta);
                                         }}
                                         checked={tipoPlanta.includes('suculenta')}
                                         name="tipoPlanta" />
