@@ -20,7 +20,7 @@ type Respuesta = {
     descripcion: string;
 };
 
-export function RecomendacionTipo1({ especie, tipoPlanta, etapa, descripcion }: Respuesta) {
+export function RecomendacionTipo1({ especie, tipoPlanta, etapa}: Respuesta) {
     const divRef = useRef<HTMLDivElement>(null);
 
     const descargarRecomendacion = async () => {
