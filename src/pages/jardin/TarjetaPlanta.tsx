@@ -30,10 +30,11 @@ export function Tarjeta({ plantaGuardada, recargar }: PlantaProps) {
 
     return (
         <>
-            <div className="group bg-white border border-lime-200/80 hover:border-lime-400 rounded-xl p-3.5 shadow-sm hover:shadow-md transition-all flex items-start gap-4">
+            {/* Tono verde original (bg-lime-100) con borde sutil */}
+            <div className="group bg-lime-100 border border-lime-200 hover:border-lime-400 rounded-xl p-3 shadow-sm hover:shadow-md transition-all flex items-start gap-3.5">
                 
-                {/* Contenedor de imagen de tamaño fijo (evita deformación con fotos verticales de celular) */}
-                <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 rounded-lg overflow-hidden bg-lime-50 border border-lime-100">
+                {/* Contenedor de imagen de tamaño fijo (cuadrado perfecto para fotos de celular) */}
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 rounded-lg overflow-hidden bg-lime-50 border border-lime-300/60">
                     <img
                         src={plantaGuardada.foto}
                         alt={plantaGuardada.especie}
@@ -55,40 +56,40 @@ export function Tarjeta({ plantaGuardada, recargar }: PlantaProps) {
                             <h3 className="font-bold text-gray-800 text-base sm:text-lg truncate">
                                 {formatear(plantaGuardada.especie)}
                             </h3>
-                            <span className="shrink-0 text-xs font-medium px-2.5 py-0.5 rounded-full bg-lime-100 text-lime-800 border border-lime-200">
+                            <span className="shrink-0 text-xs font-medium px-2 py-0.5 rounded-full bg-lime-200/80 text-lime-900 border border-lime-300">
                                 {formatear(plantaGuardada.etapa)}
                             </span>
                         </div>
 
-                        <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
-                            Tipo: <span className="font-medium text-gray-700">{formatear(plantaGuardada.tipo)}</span>
+                        <p className="text-xs sm:text-sm text-gray-600 mt-0.5">
+                            Tipo: <span className="font-medium text-gray-800">{formatear(plantaGuardada.tipo)}</span>
                         </p>
                     </div>
 
-                    {/* Botones de acción */}
-                    <div className="flex flex-wrap items-center gap-2 mt-3 pt-2.5 border-t border-gray-100">
+                    {/* Botones lado a lado en fila */}
+                    <div className="flex items-center gap-2 mt-2.5 pt-2 border-t border-lime-200/90">
                         <button
                             onClick={() => setModalAbierto(true)}
-                            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-green-700 bg-green-50 hover:bg-green-100 px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1 text-xs font-semibold text-green-900 bg-lime-200/80 hover:bg-lime-300/80 px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer whitespace-nowrap"
                         >
-                            <FileTextIcon className="w-4 h-4" />
-                            Descripción
+                            <FileTextIcon className="w-3.5 h-3.5 shrink-0" />
+                            <span>Descripción</span>
                         </button>
 
                         {plantaGuardada.tipo.toLowerCase() === 'arbol' && (
                             <a
                                 href={enlace}
-                                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 px-2.5 py-1.5 rounded-lg transition-colors"
+                                className="inline-flex items-center justify-center gap-1 text-xs font-semibold text-teal-900 bg-teal-200/70 hover:bg-teal-300/70 px-2.5 py-1.5 rounded-lg transition-colors whitespace-nowrap"
                             >
-                                <TreePineIcon className="w-4 h-4" />
-                                Captura de Carbono
+                                <TreePineIcon className="w-3.5 h-3.5 shrink-0" />
+                                <span>Historial</span>
                             </a>
                         )}
                     </div>
                 </div>
             </div>
 
-            {/* MODAL 1: Descripción completa (renderizado en document.body para evitar el Navbar) */}
+            {/* MODAL 1: Descripción completa */}
             {modalAbierto &&
                 createPortal(
                     <div
@@ -97,30 +98,28 @@ export function Tarjeta({ plantaGuardada, recargar }: PlantaProps) {
                     >
                         <div
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150"
+                            className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] flex flex-col overflow-hidden"
                         >
-                            {/* Cabecera del modal */}
-                            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+                            <div className="flex items-center justify-between px-5 py-4 border-b border-lime-200 bg-lime-100">
                                 <div>
                                     <h3 className="text-lg font-bold text-gray-800">
                                         {formatear(plantaGuardada.especie)}
                                     </h3>
-                                    <p className="text-xs text-gray-500">
+                                    <p className="text-xs text-gray-600">
                                         {formatear(plantaGuardada.tipo)} • Etapa: {formatear(plantaGuardada.etapa)}
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setModalAbierto(false)}
-                                    className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                                    className="p-1.5 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-lime-200/70 transition-colors cursor-pointer"
                                     title="Cerrar"
                                 >
                                     <XIcon className="w-5 h-5" />
                                 </button>
                             </div>
 
-                            {/* Contenido con scroll */}
                             <div className="p-5 overflow-y-auto space-y-4">
-                                <div className="w-full h-56 rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
+                                <div className="w-full h-56 rounded-xl overflow-hidden bg-lime-50 border border-lime-200">
                                     <img
                                         src={plantaGuardada.foto}
                                         alt={plantaGuardada.especie}
@@ -137,11 +136,10 @@ export function Tarjeta({ plantaGuardada, recargar }: PlantaProps) {
                                 </div>
                             </div>
 
-                            {/* Pie del modal */}
                             <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 flex justify-end">
                                 <button
                                     onClick={() => setModalAbierto(false)}
-                                    className="bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-semibold py-2 px-4 rounded-lg transition-colors cursor-pointer"
+                                    className="bg-lime-200 hover:bg-lime-300 text-green-900 text-sm font-semibold py-2 px-4 rounded-lg transition-colors cursor-pointer"
                                 >
                                     Cerrar
                                 </button>
@@ -151,7 +149,7 @@ export function Tarjeta({ plantaGuardada, recargar }: PlantaProps) {
                     document.body
                 )}
 
-            {/* MODAL 2: Cambiar foto (renderizado en document.body para evitar el Navbar) */}
+            {/* MODAL 2: Cambiar foto */}
             {cambiarFoto &&
                 createPortal(
                     <div
@@ -160,15 +158,15 @@ export function Tarjeta({ plantaGuardada, recargar }: PlantaProps) {
                     >
                         <div
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-white border border-green-600/30 rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden"
+                            className="bg-white border border-lime-300 rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden"
                         >
-                            <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100 bg-lime-50/50">
+                            <div className="flex items-center justify-between px-5 py-3.5 border-b border-lime-200 bg-lime-100">
                                 <h3 className="font-semibold text-gray-800">
                                     Actualizar foto — {formatear(plantaGuardada.especie)}
                                 </h3>
                                 <button
                                     onClick={() => setCambiarFoto(false)}
-                                    className="p-1.5 rounded-lg text-gray-500 hover:text-gray-800 hover:bg-gray-200/70 transition-colors cursor-pointer"
+                                    className="p-1.5 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-lime-200/70 transition-colors cursor-pointer"
                                     title="Cerrar"
                                 >
                                     <XIcon className="w-5 h-5" />
